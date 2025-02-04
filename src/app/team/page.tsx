@@ -57,7 +57,7 @@ export default function Team() {
                     description={item.desc}
                     image={item.image}
                     title={item.title}
-                    background={item.background}
+                    bgIndex={index}
                     socialNetworks={item.socialNetworks}
                   />
                 );
@@ -85,7 +85,7 @@ export default function Team() {
                     description={item.desc}
                     image={item.image}
                     title={item.title}
-                    background={item.background}
+                    bgIndex={index}
                     socialNetworks={item.socialNetworks}
                   />
                 );

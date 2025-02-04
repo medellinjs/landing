@@ -33,7 +33,7 @@ const ActiveOrganizersSection: FC = () => {
                   description={item.desc}
                   image={item.image}
                   title={item.title}
-                  background={item.background}
+                  bgIndex={index}
                   socialNetworks={item.socialNetworks}
                 />
               );

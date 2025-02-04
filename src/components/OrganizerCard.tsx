@@ -14,40 +14,67 @@ export type Organizer = {
   description?: string;
   image: string;
   title: string;
-  background: string;
   socialNetworks?: SocialNetwork[];
+  bgIndex: number;
 };
+
+const background = [
+  "bg-indigo-600/10 dark:bg-indigo-600/30",
+  "bg-emerald-600/10 dark:bg-emerald-600/30",
+  "bg-red-600/10 dark:bg-red-600/30",
+  "bg-sky-600/10 dark:bg-sky-600/30",
+  "bg-indigo-600/10 dark:bg-indigo-600/30",
+  "bg-emerald-600/10 dark:bg-emerald-600/30",
+  "bg-red-600/10 dark:bg-red-600/30",
+  "bg-sky-600/10 dark:bg-sky-600/30",
+  "bg-indigo-600/10 dark:bg-indigo-600/30",
+  "bg-emerald-600/10 dark:bg-emerald-600/30",
+  "bg-red-600/10 dark:bg-red-600/30",
+  "bg-sky-600/10 dark:bg-sky-600/30",
+  "bg-indigo-600/10 dark:bg-indigo-600/30",
+  "bg-emerald-600/10 dark:bg-emerald-600/30",
+  "bg-red-600/10 dark:bg-red-600/30",
+  "bg-sky-600/10 dark:bg-sky-600/30",
+  "bg-indigo-600/10 dark:bg-indigo-600/30",
+  "bg-emerald-600/10 dark:bg-emerald-600/30",
+  "bg-red-600/10 dark:bg-red-600/30",
+  "bg-sky-600/10 dark:bg-sky-600/30",
+];
 
 export const OrganizerCard: FC<Organizer> = ({
   name,
   description,
   image,
   title,
-  background,
   socialNetworks = [],
+  bgIndex,
 }) => (
   <div className="lg:col-span-3 md:col-span-6">
     <div className="team p-6 rounded-md shadow-md dark:shadow-gray-800 dark:border-gray-700 bg-white dark:bg-slate-900 relative">
       <div
-        className={`absolute inset-0 rounded-md -mt-[10px] -ms-[10px] h-[98%] w-[98%] -z-1 ${background}`}
+        className={`absolute inset-0 rounded-md -mt-[10px] -ms-[10px] h-[98%] w-[98%] -z-1 bg-sky-600/10 dark:bg-sky-600/30 ${background[bgIndex]}`}
       ></div>
       <Image
         src={image}
         height={96}
         width={96}
-        className="size-24 rounded-full shadow-md dark:shadow-gray-800"
+        className="size-24 rounded-full shadow-md dark:shadow-gray-800 mx-auto"
         alt="Profile Image"
       />
 
       <div className="content mt-4">
-        <p className="text-lg font-medium hover:text-indigo-600 block">
+        <p className="text-center md:text-left text-lg font-medium hover:text-indigo-600 block">
           {name}
         </p>
-        <span className="text-slate-400 block">{title}</span>
+        <span className="text-center md:text-left text-slate-400 block">
+          {title}
+        </span>
 
-        <p className="text-slate-400 mt-4">{description}</p>
+        <p className="text-center md:text-left text-slate-400 mt-4">
+          {description}
+        </p>
 
-        <ul className="list-none mt-4 space-x-1">
+        <ul className="list-none mt-4 space-x-1 text-center md:text-left ">
           {socialNetworks.map((network, index) => (
             <li key={index} className="inline">
               <Link
