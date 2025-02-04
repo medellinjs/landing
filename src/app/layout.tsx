@@ -44,9 +44,9 @@ const alex = Alex_Brush({
 });
 
 export const metadata: Metadata = {
-  title: "JSConf Latam",
+  title: "MedellinJS",
   description:
-    "The future of JavaScript awaits you in Medellin - join JSConf Latam!",
+    "Somos una comunidad vibrante de desarrolladores JavaScript comprometidos con el aprendizaje continuo y el crecimiento profesional en Medellín.",
 };
 
 export default async function LocaleLayout({
