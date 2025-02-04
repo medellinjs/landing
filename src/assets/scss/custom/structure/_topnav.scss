@@ -2,298 +2,297 @@
 /*         Menu                  */
 /*===============================*/
 #topnav {
-    @apply fixed start-0 end-0 top-0 z-999 bg-transparent border-0 duration-500;
-    .logo {
-        @apply ltr:float-left rtl:float-right text-black dark:text-white #{!important};
-        .l-dark {
-            @apply hidden;
-        }
-        .l-light {
-            @apply inline-block;
-        }
-        &:focus {
-          @apply outline-none;
-        }
+  @apply fixed end-0 start-0 top-0 z-999 border-0 bg-transparent duration-500;
+  .logo {
+    @apply text-black dark:text-white ltr:float-left rtl:float-right #{!important};
+    .l-dark {
+      @apply hidden;
     }
-    .has-submenu{
-      @apply relative;
+    .l-light {
+      @apply inline-block;
+    }
+    &:focus {
+      @apply outline-none;
+    }
+  }
+  .has-submenu {
+    @apply relative;
+    &.active {
+      a {
+        @apply text-white dark:text-slate-900;
+      }
+      .submenu {
+        li {
+          &.active {
+            > a {
+              @apply text-indigo-600 dark:text-indigo-600 #{!important};
+            }
+          }
+        }
+      }
       &.active {
-        a {
-          @apply text-white dark:text-slate-900;
+        .menu-arrow {
+          @apply border-indigo-600 dark:border-indigo-600;
+        }
+      }
+    }
+    .submenu {
+      .submenu-arrow {
+        border-width: 0px 0.125rem 0.125rem 0px;
+        @apply absolute end-[1.25rem] top-[15px] inline-block rounded-[0.5px] border-black p-[2px] dark:border-white ltr:-rotate-[45deg] rtl:rotate-[135deg];
+      }
+      .has-submenu {
+        &:hover {
+          /* .submenu-arrow {
+              @apply border-indigo-600 dark:border-indigo-600;
+            } */
+          > .submenu-arrow {
+            @apply border-indigo-600 dark:border-indigo-600;
+          }
         }
         .submenu {
-          li{
-            
-            &.active {
-              > a {
-                @apply text-indigo-600 dark:text-indigo-600 #{!important};
-                
+          .has-submenu {
+            &:hover {
+              .submenu-arrow {
+                @apply border-indigo-600 dark:border-indigo-600;
+              }
+              > .submenu-arrow {
+                @apply border-indigo-600 dark:border-indigo-600;
               }
             }
           }
         }
+      }
+    }
+  }
+  .navigation-menu {
+    & > li {
+      .submenu {
+        li {
+          @apply relative ms-0;
+        }
+      }
+    }
+  }
+  .navbar-toggle {
+    @apply relative m-0 cursor-pointer border-0 p-0;
+    .lines {
+      @apply relative mb-[26px] me-0 ms-[10px] mt-[30px] block h-[18px] w-[25px];
+    }
+    span {
+      transition: transform 0.5s ease;
+      @apply mb-[5px] block h-[2px] w-full bg-black dark:bg-white;
+      &:last-child {
+        @apply mb-0;
+      }
+    }
+    &.open {
+      span {
+        @apply absolute;
+        &:first-child {
+          @apply top-[6px] rotate-[45deg];
+        }
+        &:nth-child(2) {
+          @apply invisible;
+        }
+        &:last-child {
+          @apply top-[6px] w-full -rotate-[45deg];
+        }
+        &:hover {
+          @apply bg-indigo-600;
+        }
+      }
+    }
+    &:hover,
+    &:focus,
+    .navigation-menu > li > a:hover {
+      @apply bg-transparent;
+    }
+  }
+  .buy-button {
+    @apply leading-[74px] ltr:float-right rtl:float-left;
+    > li {
+      @apply leading-[initial];
+    }
+    .login-btn-primary,
+    .btn-icon-dark {
+      @apply hidden;
+    }
+    .login-btn-light,
+    .btn-icon-light {
+      @apply inline-block;
+    }
+    .search-bar {
+      .menu-search {
+        form {
+          @apply relative;
+        }
+      }
+      .searchform {
+        @apply after:pointer-events-none after:absolute after:end-[14px] after:top-[14px] after:text-xl after:leading-5;
+        input[type='text'] {
+          @apply block h-11 py-[10px] pe-[42px] ps-3 text-sm shadow-none outline-none #{!important};
+        }
+        input[type='submit'] {
+          @apply hidden;
+        }
+        &:after {
+          content: '\f0349';
+          font-family: 'Material Design Icons';
+        }
+      }
+    }
+  }
+  .buy-button,
+  .buy-menu-btn {
+    .dropdown {
+      .dropdown-toggle {
+        @apply after:hidden;
+      }
+    }
+  }
+  .navigation-menu {
+    @apply m-0 list-none p-0;
+    > li {
+      @apply relative mx-[10px] my-0 block ltr:float-left rtl:float-right;
+      > a {
+        @apply block bg-transparent px-[14px] text-[13px] font-bold uppercase leading-6 tracking-[1px] text-black dark:text-white #{!important};
+        &:hover,
+        &:active {
+          @apply text-indigo-600;
+        }
+      }
+      &:hover,
+      &.active {
+        > a {
+          @apply text-indigo-600 dark:text-indigo-600 #{!important};
+        }
+      }
+      .submenu.megamenu {
+        li {
+          .megamenu-head {
+            @apply whitespace-nowrap px-5 py-[10px] text-xs font-bold uppercase tracking-[0.04em] text-slate-400 #{!important};
+          }
+        }
+      }
+    }
+    .has-submenu {
+      .menu-arrow {
+        border-width: 0 2px 2px 0;
+        @apply absolute end-0 top-8 inline-block rotate-[45deg] rounded-[0.5px] border-black p-[2px] duration-500 dark:border-white;
+      }
+      &:hover {
+        .menu-arrow {
+          @apply rotate-[225deg];
+        }
+      }
+    }
+  }
+  .menu-extras {
+    @apply ltr:float-right rtl:float-left;
+  }
+  &.scroll {
+    @apply border-none bg-white shadow dark:bg-slate-900;
+    .navigation-menu {
+      > li {
+        > a {
+          @apply text-black dark:text-white;
+        }
+        > .menu-arrow {
+          @apply border-black dark:border-white;
+        }
+        &:hover,
         &.active {
-          .menu-arrow {
+          > a {
+            @apply text-indigo-600;
+          }
+          > .menu-arrow {
             @apply border-indigo-600 dark:border-indigo-600;
           }
         }
       }
-      .submenu {
-        .submenu-arrow {
-          border-width: 0px 0.125rem 0.125rem 0px;
-          @apply absolute end-[1.25rem] top-[15px] border-black dark:border-white rounded-[0.5px] inline-block p-[2px] ltr:-rotate-[45deg] rtl:rotate-[135deg];
+    }
+  }
+  &.defaultscroll {
+    &.dark-menubar {
+      .logo {
+        @apply leading-[70px];
+      }
+    }
+    &.scroll {
+      .logo {
+        @apply leading-[62px];
+      }
+    }
+  }
+  &.nav-sticky {
+    @apply bg-white shadow dark:bg-slate-900 dark:shadow-gray-800;
+    .navigation-menu {
+      &.nav-light {
+        > li {
+          > a {
+            @apply text-black dark:text-white #{!important};
+          }
+          &.active {
+            > a {
+              @apply text-indigo-600 dark:text-indigo-600 #{!important};
+            }
+          }
+          &:hover,
+          &.active {
+            > .menu-arrow {
+              @apply border-indigo-600 #{!important};
+            }
+          }
+
+          &:hover,
+          &.active {
+            > a {
+              @apply text-indigo-600 dark:text-indigo-600 #{!important};
+            }
+          }
         }
         .has-submenu {
-          &:hover {
-            /* .submenu-arrow {
-              @apply border-indigo-600 dark:border-indigo-600;
-            } */
-            > .submenu-arrow {
-              @apply border-indigo-600 dark:border-indigo-600;
-            }
-          }
-          .submenu {
-            .has-submenu{
-              &:hover {
-                .submenu-arrow {
-                  @apply border-indigo-600 dark:border-indigo-600;
-                }
-                > .submenu-arrow {
-                  @apply border-indigo-600 dark:border-indigo-600;
-                }
-              }
-            }
+          .menu-arrow {
+            @apply border-black dark:border-white;
           }
         }
       }
     }
-    .navigation-menu {
-      &>li {
-        .submenu {
-          li {
-            @apply relative ms-0;
-          }
-        }
-      }
-    }
-    .navbar-toggle {
-      @apply border-0 relative p-0 m-0 cursor-pointer;
-      .lines {
-        @apply w-[25px] block relative h-[18px] mt-[30px] me-0 mb-[26px] ms-[10px];
-      }
-      span {
-        transition: transform 0.5s ease;
-        @apply h-[2px] w-full bg-black dark:bg-white block mb-[5px];
-        &:last-child {
-          @apply mb-0;
-        }
-      }
-      &.open {
-        span {
-          @apply absolute;
-          &:first-child {
-            @apply top-[6px] rotate-[45deg];
-          }
-          &:nth-child(2) {
-            @apply invisible;
-          }
-          &:last-child {
-            @apply w-full top-[6px] -rotate-[45deg];
-          }
-          &:hover {
-            @apply bg-indigo-600;
-          }
-        }
-      }
-      &:hover, &:focus,
-      .navigation-menu > li > a:hover {
-        @apply bg-transparent;
-      }
+    &.tagline-height {
+      @apply top-0 #{!important};
     }
     .buy-button {
-      @apply ltr:float-right rtl:float-left leading-[74px];
-      > li {
-        @apply leading-[initial];
-      }
       .login-btn-primary,
       .btn-icon-dark {
-        @apply hidden;
+        @apply inline-block;
       }
       .login-btn-light,
       .btn-icon-light {
+        @apply hidden;
+      }
+    }
+
+    .logo {
+      .l-dark {
         @apply inline-block;
       }
-      .search-bar {
-        .menu-search {
-          form {
-            @apply relative;
-          }
-        }
-        .searchform {
-          @apply after:absolute after:end-[14px] after:top-[14px] after:text-xl after:leading-5 after:pointer-events-none;
-          input[type=text] {
-            @apply shadow-none py-[10px] pe-[42px] ps-3 h-11 text-sm block outline-none  #{!important};
-          }
-          input[type=submit] {
-            @apply hidden;
-          }
-          &:after {
-            content: "\f0349";
-            font-family: "Material Design Icons";
-          }
-        }
+      .l-light {
+        @apply hidden;
       }
-    }
-    .buy-button,
-    .buy-menu-btn {
-      .dropdown {
-        .dropdown-toggle {
-          @apply after:hidden;
-        }
-      }
-    }
-    .navigation-menu {
-      @apply list-none m-0 p-0;
-      > li {
-        @apply ltr:float-left rtl:float-right block relative my-0 mx-[10px];
-        > a {
-          @apply block text-black dark:text-white text-[13px] bg-transparent font-bold tracking-[1px] leading-6 uppercase px-[14px] #{!important};
-          &:hover, 
-          &:active {
-            @apply text-indigo-600;
-          }
-        }
-        &:hover, 
-        &.active{
-          > a {
-            @apply text-indigo-600 dark:text-indigo-600 #{!important};
-          }
-        }
-        .submenu.megamenu {
-          li {
-            .megamenu-head {
-              @apply py-[10px] px-5 whitespace-nowrap text-xs uppercase tracking-[0.04em] font-bold text-slate-400 #{!important};
-            }
-          }
-        }
-      }
-      .has-submenu {
-        .menu-arrow {
-          border-width: 0 2px 2px 0;
-          @apply border-black dark:border-white rounded-[0.5px] inline-block p-[2px] rotate-[45deg] absolute duration-500 end-0 top-8;
-        }
-        &:hover {
-          .menu-arrow {
-            @apply rotate-[225deg];
-          }
-        }
-      }
-    }
-    .menu-extras {
-      @apply ltr:float-right rtl:float-left;
-    }
-    &.scroll {
-      @apply bg-white dark:bg-slate-900 border-none shadow;
-      .navigation-menu {
-        > li {
-          > a {
-            @apply text-black dark:text-white;
-          }
-          > .menu-arrow {
-            @apply border-black dark:border-white;
-          }
-          &:hover, 
-          &.active{
-            > a {
-              @apply text-indigo-600;
-            }
-            > .menu-arrow {
-              @apply border-indigo-600 dark:border-indigo-600;
-            }
-          }
-        }
-      }
-    }
-    &.defaultscroll{
-      &.dark-menubar {
-        .logo {
-          @apply leading-[70px];
-        }
-      }
-      &.scroll {
-        .logo {
-          @apply leading-[62px];
-        }
-      }
-    }
-    &.nav-sticky {
-      @apply bg-white dark:bg-slate-900 shadow dark:shadow-gray-800;
-      .navigation-menu{
-        &.nav-light {
-          > li {
-            > a {
-              @apply text-black dark:text-white #{!important};
-            }
-            &.active {
-              > a {
-                @apply text-indigo-600 dark:text-indigo-600 #{!important};
-              }
-            }
-            &:hover, 
-            &.active{
-              > .menu-arrow {
-                @apply border-indigo-600 #{!important};
-              }
-            }
-            
-            &:hover, 
-            &.active {
-              > a {
-                @apply text-indigo-600 dark:text-indigo-600 #{!important};
-              }
-            }
-          }
-          .has-submenu {
-            .menu-arrow {
-              @apply border-black dark:border-white;
-            }
-          }
-        }
-      }
-      &.tagline-height {
-        @apply top-0 #{!important};
-      }
-      .buy-button {
-        .login-btn-primary,
-        .btn-icon-dark {
-          @apply inline-block;
-        }
-        .login-btn-light,
-        .btn-icon-light {
-          @apply hidden;
-        }
-      }
-      
-      .logo {
-        .l-dark {
-          @apply inline-block;
-        }
-        .l-light {
-          @apply hidden;
-        }
     }
   }
 }
 
 .logo {
-  @apply font-bold text-[24px] me-[15px] pe-[15px] pt-0 pb-0 tracking-[1px] leading-[68px];
+  @apply me-[15px] pb-0 pe-[15px] pt-0 text-[24px] font-bold leading-[68px] tracking-[1px];
 }
 
 @media (min-width: 1025px) {
   #topnav {
     .navigation-menu {
       > li {
-        .submenu{
+        .submenu {
           &.megamenu {
             @apply w-[1120px] #{!important};
           }
@@ -307,7 +306,7 @@
   #topnav {
     .navigation-menu {
       > li {
-        .submenu{
+        .submenu {
           &.megamenu {
             @apply w-[936px] #{!important};
           }
@@ -355,61 +354,61 @@
       > li {
         .submenu {
           transition: all 0.2s ease;
-          @apply absolute top-full start-0 z-[1000] py-[15px] px-0 list-none min-w-[180px] invisible opacity-0 mt-[10px] rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800;
+          @apply invisible absolute start-0 top-full z-[1000] mt-[10px] min-w-[180px] list-none rounded-md bg-white px-0 py-[15px] opacity-0 shadow dark:bg-slate-900 dark:shadow-gray-800;
           li {
             @apply relative;
             a {
               transition: all 0.3s;
-              @apply block py-[10px] px-5 clear-both whitespace-nowrap text-[11px] uppercase tracking-[0.04em] font-bold text-black dark:text-white leading-[17px];
+              @apply clear-both block whitespace-nowrap px-5 py-[10px] text-[11px] font-bold uppercase leading-[17px] tracking-[0.04em] text-black dark:text-white;
               &:hover {
                 @apply text-indigo-600 dark:text-indigo-600 #{!important};
               }
             }
             ul {
-              @apply list-none ps-0 m-0;
+              @apply m-0 list-none ps-0;
             }
           }
           &.megamenu {
-            @apply whitespace-nowrap start-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 fixed top-auto flex;
+            @apply fixed start-1/2 top-auto flex whitespace-nowrap ltr:-translate-x-1/2 rtl:translate-x-1/2;
             > li {
-              @apply overflow-hidden align-top w-1/5;
+              @apply w-1/5 overflow-hidden align-top;
               .submenu {
-                @apply start-full top-0 ms-[10px] -mt-px;
+                @apply start-full top-0 -mt-px ms-[10px];
               }
             }
           }
           > li {
             .submenu {
-              @apply start-[101%] top-0 ms-[10px] -mt-px;
+              @apply start-[101%] top-0 -mt-px ms-[10px];
             }
           }
         }
         > a {
-          @apply py-[25px] min-h-[62px];
+          @apply min-h-[62px] py-[25px];
         }
         &:hover {
           > .menu-arrow {
             @apply border-indigo-600 dark:border-indigo-600;
           }
         }
-        &:hover, 
-        a{
-          &.active{
+        &:hover,
+        a {
+          &.active {
             @apply text-indigo-600 dark:text-indigo-600 #{!important};
           }
         }
-        &.active{
+        &.active {
           > a {
             @apply text-indigo-600 dark:text-indigo-600 #{!important};
           }
         }
-        &.last-elements{
+        &.last-elements {
           .submenu {
-            @apply start-auto end-0 before:start-auto before:end-[10px];
-            > li{
+            @apply end-0 start-auto before:end-[10px] before:start-auto;
+            > li {
               &.has-submenu {
                 .submenu {
-                  @apply start-auto end-full ms-0 me-[10px];
+                  @apply end-full start-auto me-[10px] ms-0;
                 }
               }
             }
@@ -448,7 +447,7 @@
       }
     }
     .buy-button {
-      @apply ps-[15px] ms-[15px];
+      @apply ms-[15px] ps-[15px];
     }
     .navbar-toggle {
       @apply hidden;
@@ -480,7 +479,7 @@
 
 @media (max-width: 991px) {
   #topnav {
-    @apply bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 min-h-[74px];
+    @apply min-h-[74px] bg-white shadow dark:bg-slate-900 dark:shadow-gray-800;
     .logo {
       .l-dark {
         @apply inline-block #{!important};
@@ -500,17 +499,17 @@
       > li {
         @apply float-none #{!important};
         .submenu {
-          @apply hidden list-none ps-5 m-0;
+          @apply m-0 hidden list-none ps-5;
           li {
             a {
               transition: all 0.3s;
-              @apply block relative py-[7px] px-[15px] uppercase text-[11px] tracking-[0.04em] font-bold text-black dark:text-white #{!important};
+              @apply relative block px-[15px] py-[7px] text-[11px] font-bold uppercase tracking-[0.04em] text-black dark:text-white #{!important};
             }
           }
           &.megamenu {
             li {
               .megamenu-head {
-                @apply py-[7px] px-[15px];
+                @apply px-[15px] py-[7px];
               }
             }
             > li {
@@ -518,7 +517,7 @@
                 @apply list-none ps-0;
                 > li {
                   > span {
-                    @apply block relative py-[10px] px-[15px] uppercase text-xs tracking-[2px] text-slate-200;
+                    @apply relative block px-[15px] py-[10px] text-xs uppercase tracking-[2px] text-slate-200;
                   }
                 }
               }
@@ -535,7 +534,7 @@
           }
         }
         > a {
-          @apply text-black dark:text-white py-[10px] px-[20px] after:absolute after:end-[15px];
+          @apply px-[20px] py-[10px] text-black after:absolute after:end-[15px] dark:text-white;
         }
         > a:hover,
         .submenu li a:hover,
@@ -566,7 +565,7 @@
     .has-submenu {
       .submenu {
         .submenu-arrow {
-          @apply rotate-[45deg] absolute end-5 top-3;
+          @apply absolute end-5 top-3 rotate-[45deg];
         }
       }
       &.active {
@@ -576,9 +575,9 @@
       }
     }
   }
-  
+
   #navigation {
-    @apply absolute top-[74px] start-0 w-full hidden h-auto bg-white dark:bg-slate-900 overflow-auto;
+    @apply absolute start-0 top-[74px] hidden h-auto w-full overflow-auto bg-white dark:bg-slate-900;
     &.open {
       @apply block overflow-y-auto;
     }
@@ -600,20 +599,20 @@
 @media (min-width: 768px) {
   #topnav {
     .navigation-menu {
-      > li{
-        &.has-submenu{
+      > li {
+        &.has-submenu {
           &:hover {
             > .submenu {
-              @apply visible opacity-100 mt-0;
-              > li{
-                &.has-submenu{
+              @apply visible mt-0 opacity-100;
+              > li {
+                &.has-submenu {
                   &:hover {
                     > .submenu {
-                      @apply visible opacity-100 ms-0;
-                      > li{
+                      @apply visible ms-0 opacity-100;
+                      > li {
                         &:hover {
                           > .submenu {
-                            @apply visible opacity-100 ms-0;
+                            @apply visible ms-0 opacity-100;
                           }
                         }
                       }
@@ -635,9 +634,9 @@
 @media (max-width: 425px) {
   #topnav {
     .buy-menu-btn {
-      @apply block my-0 mx-[10px] py-[10px] px-5 #{!important};
+      @apply mx-[10px] my-0 block px-5 py-[10px] #{!important};
       .dropdown {
-        .dropdown-menu{
+        .dropdown-menu {
           &.show {
             transform: translate3d(0px, -54px, 0px) !important;
           }
@@ -647,49 +646,49 @@
   }
 }
 .tagline {
-    @apply absolute w-full z-[99] text-sm py-[13px] px-0;
+  @apply absolute z-[99] w-full px-0 py-[13px] text-sm;
 }
 @media screen and (max-width: 575px) {
-    .tagline {
-        @apply hidden;
-    }
-    .tagline-height {
-        @apply top-0 #{!important};
-    }
+  .tagline {
+    @apply hidden;
+  }
+  .tagline-height {
+    @apply top-0 #{!important};
+  }
 }
 @media (min-width: 576px) {
   .tagline-height {
     @apply top-[59px] #{!important};
   }
 }
-  
+
 .sidebar-nav {
-      > .navbar-item {
-        &:hover,
-        &.active {
-          .navbar-link {
-            @apply text-indigo-600;
-          }
-        }
-    }
-    li{
-      a{
-        &.active{
-          @apply text-indigo-600;
-        }
+  > .navbar-item {
+    &:hover,
+    &.active {
+      .navbar-link {
+        @apply text-indigo-600;
       }
+    }
+  }
+  li {
+    a {
       &.active {
-        a {
-          @apply text-indigo-600;
-        }
+        @apply text-indigo-600;
       }
-      &.account-menu {
-        &.active,
-        &:hover{
-          .navbar-link {
-            @apply text-indigo-600 dark:text-white #{!important};
-          }
+    }
+    &.active {
+      a {
+        @apply text-indigo-600;
+      }
+    }
+    &.account-menu {
+      &.active,
+      &:hover {
+        .navbar-link {
+          @apply text-indigo-600 dark:text-white #{!important};
         }
       }
     }
+  }
 }

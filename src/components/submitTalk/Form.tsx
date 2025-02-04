@@ -1,23 +1,23 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 
-import { Input } from "@components/ui/input";
+import { Input } from '@components/ui/input';
 
 export const SubmitTalkForm = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    talkTitle: "",
-    talkType: "",
-    talkDescription: "",
-    speakerBio: "",
-    technologyLevel: "",
+    name: '',
+    email: '',
+    talkTitle: '',
+    talkType: '',
+    talkDescription: '',
+    speakerBio: '',
+    technologyLevel: '',
   });
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -30,16 +30,16 @@ export const SubmitTalkForm = () => {
     e.preventDefault();
     // Aquí iría la lógica para enviar los datos del formulario
     console.log(formData);
-    alert("Propuesta enviada con éxito!");
+    alert('Propuesta enviada con éxito!');
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h4 className="md:text-3xl text-2xl lg:leading-normal leading-normal font-medium my-4">
+      <h4 className="my-4 text-2xl font-medium leading-normal md:text-3xl lg:leading-normal">
         Ponente
       </h4>
-      <div className="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6 mb-12">
-        <div className="grid lg:grid-cols-12 gap-6">
+      <div className="mb-12 rounded-md bg-white p-6 shadow dark:bg-slate-900 dark:shadow-gray-800">
+        <div className="grid gap-6 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <div className="text-start">
               <label htmlFor="name" className="font-semibold">
@@ -49,7 +49,7 @@ export const SubmitTalkForm = () => {
                 name="name"
                 id="name"
                 type="text"
-                className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
                 placeholder="Nombre Completo :"
                 required
               />
@@ -65,7 +65,7 @@ export const SubmitTalkForm = () => {
                 name="email"
                 id="email"
                 type="email"
-                className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
                 placeholder="Correo Electrónico :"
                 required
               />
@@ -81,7 +81,7 @@ export const SubmitTalkForm = () => {
                 name="role"
                 id="role"
                 type="text"
-                className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
                 placeholder="Role :"
               />
             </div>
@@ -92,7 +92,7 @@ export const SubmitTalkForm = () => {
               Imagen
             </label>
             <input
-              className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+              className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
               id="profileImage"
               type="url"
               placeholder="Url de la imagen del Ponente :"
@@ -107,7 +107,7 @@ export const SubmitTalkForm = () => {
               <textarea
                 name="speakerBio"
                 id="speakerBio"
-                className="form-input mt-3 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                className="form-input mt-3 h-28 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
                 placeholder="Biografía :"
               ></textarea>
             </div>
@@ -115,11 +115,11 @@ export const SubmitTalkForm = () => {
         </div>
       </div>
 
-      <h4 className="md:text-3xl text-2xl lg:leading-normal leading-normal font-medium my-4 ">
+      <h4 className="my-4 text-2xl font-medium leading-normal md:text-3xl lg:leading-normal">
         Charla/Taller
       </h4>
-      <div className="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6 mb-8">
-        <div className="grid lg:grid-cols-12 gap-6">
+      <div className="mb-8 rounded-md bg-white p-6 shadow dark:bg-slate-900 dark:shadow-gray-800">
+        <div className="grid gap-6 lg:grid-cols-12">
           <div className="lg:col-span-12">
             <div className="text-start">
               <label htmlFor="talkTitle" className="font-semibold">
@@ -128,7 +128,7 @@ export const SubmitTalkForm = () => {
               <Input
                 name="talkTitle"
                 id="talkTitle"
-                className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
                 placeholder="Titulo :"
                 type="text"
                 required
@@ -144,7 +144,7 @@ export const SubmitTalkForm = () => {
               id="talkType"
               required
               onChange={handleChange}
-              className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+              className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
             >
               <option value="">Selecciona una opción</option>
               <option value="charla">Charla (30-45 minutos)</option>
@@ -161,7 +161,7 @@ export const SubmitTalkForm = () => {
               id="technologyLevel"
               required
               onChange={handleChange}
-              className="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+              className="form-input mt-3 h-10 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
             >
               <option value="">Selecciona una opción</option>
               <option value="principiante">Principiante</option>
@@ -178,18 +178,18 @@ export const SubmitTalkForm = () => {
               <textarea
                 name="talkDescription"
                 id="talkDescription"
-                className="form-input mt-3 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                className="form-input mt-3 h-28 w-full rounded border border-gray-200 bg-transparent px-3 py-2 outline-none focus:border-indigo-600 focus:ring-0 dark:border-gray-800 dark:bg-slate-900 dark:text-slate-200 dark:focus:border-indigo-600"
                 placeholder="Descripción :"
               ></textarea>
             </div>
           </div>
 
-          <div className="lg:col-span-12 flex justify-end">
+          <div className="flex justify-end lg:col-span-12">
             <button
               type="submit"
               id="submit"
               name="send"
-              className="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4"
+              className="mt-4 inline-block rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
             >
               Enviar Propuesta
             </button>

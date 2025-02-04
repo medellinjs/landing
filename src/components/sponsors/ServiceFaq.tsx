@@ -1,7 +1,7 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
-import { sponsorFaqs } from "@/assets/data";
+import { sponsorFaqs } from '@/assets/data';
 
 export function ServiceFaq() {
   const [activeIndex, setActiveIndex] = useState(1);
@@ -18,13 +18,13 @@ export function ServiceFaq() {
     <div
       id="accordion-collapse"
       data-accordion="collapse"
-      className="grid grid-cols-1 mt-8 gap-8"
+      className="mt-8 grid grid-cols-1 gap-8"
     >
       <div>
         {sponsorFaqs.map((item, index) => (
           <div
             key={index}
-            className="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden mt-4"
+            className="relative mt-4 overflow-hidden rounded-md shadow dark:shadow-gray-800"
           >
             <h2
               className="text-base font-semibold"
@@ -33,10 +33,10 @@ export function ServiceFaq() {
               <button
                 type="button"
                 onClick={() => toggleAccordion(item.id)}
-                className={`flex justify-between items-center p-5 w-full font-medium text-start ${
+                className={`flex w-full items-center justify-between p-5 text-start font-medium ${
                   activeIndex === item.id
-                    ? "bg-gray-50 dark:bg-slate-800 text-indigo-600"
-                    : ""
+                    ? 'bg-gray-50 text-indigo-600 dark:bg-slate-800'
+                    : ''
                 }`}
                 data-accordion-target="#accordion-collapse-body-1"
                 aria-expanded="true"
@@ -46,8 +46,8 @@ export function ServiceFaq() {
                 <svg
                   data-accordion-icon
                   className={`${
-                    activeIndex === item.id ? "rotate-180" : "rotate-270"
-                  } size-4 shrink-01`}
+                    activeIndex === item.id ? 'rotate-180' : 'rotate-270'
+                  } shrink-01 size-4`}
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"

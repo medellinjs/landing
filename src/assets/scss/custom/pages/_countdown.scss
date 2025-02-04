@@ -1,21 +1,20 @@
-
 /*********************************/
 /*         Countdown             */
 /*===============================*/
 #token-sale .count-number .count-head {
-    @apply relative block uppercase md:-mt-5 md:text-base text-sm leading-[1px] font-bold;
+  @apply relative block text-sm font-bold uppercase leading-[1px] md:-mt-5 md:text-base;
 }
 #countdown {
-    .count-down {
-        .count-head {
-            @apply relative block -translate-y-[25px] uppercase text-sm tracking-[1px];
-        }
+  .count-down {
+    .count-head {
+      @apply relative block -translate-y-[25px] text-sm uppercase tracking-[1px];
     }
+  }
 }
 
 /* //maintenance */
 #maintenance {
-    .indicator {
-        @apply text-lg;
-    }
+  .indicator {
+    @apply text-lg;
+  }
 }

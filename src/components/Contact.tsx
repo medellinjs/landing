@@ -1,13 +1,13 @@
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
-import { Textarea } from "./ui/textarea"
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="bg-white py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Contáctanos</h2>
-        <div className="max-w-md mx-auto">
+        <h2 className="mb-8 text-center text-3xl font-bold">Contáctanos</h2>
+        <div className="mx-auto max-w-md">
           <form className="space-y-4">
             <Input type="text" placeholder="Nombre" />
             <Input type="email" placeholder="Correo electrónico" />
@@ -18,7 +18,9 @@ export default function Contact() {
           </form>
         </div>
         <div className="mt-12 text-center">
-          <h3 className="text-xl font-semibold mb-4">Síguenos en redes sociales</h3>
+          <h3 className="mb-4 text-xl font-semibold">
+            Síguenos en redes sociales
+          </h3>
           <div className="flex justify-center space-x-4">
             <a href="#" className="text-blue-600 hover:text-blue-800">
               Twitter
@@ -33,6 +35,5 @@ export default function Contact() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

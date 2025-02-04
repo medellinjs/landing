@@ -1,21 +1,21 @@
-import { Button } from "./ui/button"
+import { Button } from './ui/button';
 
 export default function Resources() {
   const resources = [
-    { id: 1, title: "Introducción a ES6", type: "Video" },
-    { id: 2, title: "React Hooks en Profundidad", type: "Artículo" },
-    { id: 3, title: "Node.js para Principiantes", type: "Curso" },
-  ]
+    { id: 1, title: 'Introducción a ES6', type: 'Video' },
+    { id: 2, title: 'React Hooks en Profundidad', type: 'Artículo' },
+    { id: 3, title: 'Node.js para Principiantes', type: 'Curso' },
+  ];
 
   return (
-    <section id="resources" className="py-20 bg-white">
+    <section id="resources" className="bg-white py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Recursos</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+        <h2 className="mb-8 text-center text-3xl font-bold">Recursos</h2>
+        <div className="mb-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {resources.map((resource) => (
-            <div key={resource.id} className="bg-gray-100 rounded-lg p-6">
-              <h3 className="text-xl font-semibold mb-2">{resource.title}</h3>
-              <p className="text-gray-600 mb-4">{resource.type}</p>
+            <div key={resource.id} className="rounded-lg bg-gray-100 p-6">
+              <h3 className="mb-2 text-xl font-semibold">{resource.title}</h3>
+              <p className="mb-4 text-gray-600">{resource.type}</p>
               <Button variant="outline">Ver Recurso</Button>
             </div>
           ))}
@@ -25,6 +25,5 @@ export default function Resources() {
         </div>
       </div>
     </section>
-  )
+  );
 }
-

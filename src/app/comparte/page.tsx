@@ -1,9 +1,9 @@
-"use client";
-import { TypeAnimation } from "react-type-animation";
+'use client';
+import { TypeAnimation } from 'react-type-animation';
 
-import { Navbar } from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { SubmitTalkForm } from "@/components/submitTalk";
+import { Navbar } from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { SubmitTalkForm } from '@/components/submitTalk';
 
 export default function SubmitTalk() {
   return (
@@ -11,20 +11,20 @@ export default function SubmitTalk() {
       <Navbar navClass="nav-light" />
 
       <section
-        className="relative table w-full py-36 lg:py-44 bg-no-repeat bg-center bg-cover bg-green-600"
+        className="relative table w-full bg-green-600 bg-cover bg-center bg-no-repeat py-36 lg:py-44"
         style={{ backgroundImage: "url('/bg3.png')" }}
       >
         <div className="container relative">
-          <div className="grid grid-cols-1 pb-8 text-center mt-10">
-            <h1 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-white">
+          <div className="mt-10 grid grid-cols-1 pb-8 text-center">
+            <h1 className="mb-5 text-4xl font-bold leading-normal text-white lg:text-5xl lg:leading-normal">
               Inscribe tu
               <TypeAnimation
                 sequence={[
-                  " Charla",
+                  ' Charla',
                   2000,
-                  " Taller",
+                  ' Taller',
                   2000,
-                  " Lightning Talk",
+                  ' Lightning Talk',
                   2000,
                 ]}
                 wrapper="span"
@@ -34,8 +34,8 @@ export default function SubmitTalk() {
               />
             </h1>
 
-            <p className="text-slate-300 text-lg max-w-xl mx-auto">
-              ¿Tienes conocimientos que quieres compartir con la comunidad?{" "}
+            <p className="mx-auto max-w-xl text-lg text-slate-300">
+              ¿Tienes conocimientos que quieres compartir con la comunidad?{' '}
               <br /> ¡Postula tu charla o taller aquí!
             </p>
           </div>
@@ -43,9 +43,9 @@ export default function SubmitTalk() {
       </section>
 
       <div className="relative">
-        <div className="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden z-1 text-white dark:text-slate-900">
+        <div className="shape absolute -bottom-[2px] end-0 start-0 z-1 overflow-hidden text-white dark:text-slate-900 sm:-bottom-px">
           <svg
-            className="w-full h-auto scale-[2.0] origin-top"
+            className="h-auto w-full origin-top scale-[2.0]"
             viewBox="0 0 2880 48"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ export default function SubmitTalk() {
         </div>
       </div>
 
-      <section className="relative md:py-24 py-16">
+      <section className="relative py-16 md:py-24">
         <div className="container relative">
           <SubmitTalkForm />
         </div>

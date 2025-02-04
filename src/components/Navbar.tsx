@@ -1,11 +1,11 @@
-"use client";
-import { useState, FC, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
+'use client';
+import { useState, FC, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
 
-import { usePathname } from "next/navigation";
-import { LuSettings } from "react-icons/lu";
-import { BsCart3 } from "react-icons/bs";
+import { usePathname } from 'next/navigation';
+import { LuSettings } from 'react-icons/lu';
+import { BsCart3 } from 'react-icons/bs';
 
 export type NavbarProps = {
   navClass?: string;
@@ -16,49 +16,49 @@ export type NavbarProps = {
 export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
   const [isMenu, setisMenu] = useState(false);
 
-  const [manu, setManu] = useState("");
+  const [manu, setManu] = useState('');
   const pathname = usePathname();
 
   useEffect(() => {
     setManu(pathname);
 
     function windowScroll() {
-      const navbar = document.getElementById("topnav");
+      const navbar = document.getElementById('topnav');
       if (
         document.body.scrollTop >= 50 ||
         document.documentElement.scrollTop >= 50
       ) {
         if (navbar !== null) {
-          navbar?.classList.add("nav-sticky");
+          navbar?.classList.add('nav-sticky');
         }
       } else {
         if (navbar !== null) {
-          navbar?.classList.remove("nav-sticky");
+          navbar?.classList.remove('nav-sticky');
         }
       }
     }
-    window.addEventListener("scroll", windowScroll);
+    window.addEventListener('scroll', windowScroll);
     window.scrollTo(0, 0);
     return () => {
-      window.removeEventListener("scroll", windowScroll);
+      window.removeEventListener('scroll', windowScroll);
     };
   }, [pathname, setManu]);
 
   const toggleMenu = () => {
     setisMenu(!isMenu);
-    const navigation = document.getElementById("navigation");
+    const navigation = document.getElementById('navigation');
     if (navigation) {
-      const anchorArray = Array.from(navigation.getElementsByTagName("a"));
+      const anchorArray = Array.from(navigation.getElementsByTagName('a'));
       anchorArray.forEach((element) => {
-        element.addEventListener("click", (elem) => {
+        element.addEventListener('click', (elem) => {
           const target = (elem.target as HTMLAnchorElement).getAttribute(
-            "href"
+            'href',
           );
           if (target) {
             if ((elem.target as HTMLElement).nextElementSibling) {
               const submenu = (elem.target as HTMLElement).nextElementSibling
                 ?.nextElementSibling as HTMLElement;
-              submenu.classList.toggle("open");
+              submenu.classList.toggle('open');
             }
           }
         });
@@ -70,15 +70,15 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
     <nav
       id="topnav"
       className={`defaultscroll ${
-        navClass === "nav-light"
-          ? ""
-          : navClass === "nav-sticky"
-          ? "bg-white dark:bg-slate-900"
-          : ""
+        navClass === 'nav-light'
+          ? ''
+          : navClass === 'nav-sticky'
+            ? 'bg-white dark:bg-slate-900'
+            : ''
       }`}
     >
       <div className="container relative">
-        {navClass === "nav-light" ? (
+        {navClass === 'nav-light' ? (
           <Link className="logo" href="/">
             <span className="inline-block dark:hidden">
               <Image
@@ -127,7 +127,7 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
           <div className="menu-item">
             <Link
               href="#"
-              className={`navbar-toggle ${isMenu ? "open" : ""}`}
+              className={`navbar-toggle ${isMenu ? 'open' : ''}`}
               id="isToggle"
               onClick={() => toggleMenu()}
             >
@@ -140,38 +140,38 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
           </div>
         </div>
 
-        {navClass !== "nav-light" ? (
-          <ul className={`buy-button list-none space-x-1 mb-0`}>
-            <li className="inline mb-0">
+        {navClass !== 'nav-light' ? (
+          <ul className={`buy-button mb-0 list-none space-x-1`}>
+            <li className="mb-0 inline">
               <Link
                 href="#"
-                className="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600/5 hover:bg-indigo-600 border border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white"
+                className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600/10 bg-indigo-600/5 text-center align-middle text-base tracking-wide text-indigo-600 duration-500 hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
               >
                 <LuSettings className="size-4" />
               </Link>
             </li>
 
-            <li className="inline ps-1 mb-0">
+            <li className="mb-0 inline ps-1">
               <Link
                 href="https://1.envato.market/techwind-next"
                 target="_blank"
-                className="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600 hover:bg-indigo-700 border border-indigo-600 hover:border-indigo-700 text-white"
+                className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600 bg-indigo-600 text-center align-middle text-base tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
               >
                 <BsCart3 className="size-4" />
               </Link>
             </li>
           </ul>
         ) : (
-          <ul className="buy-button list-none space-x-1 mb-0">
-            <li className="inline ps-1 mb-0">
+          <ul className="buy-button mb-0 list-none space-x-1">
+            <li className="mb-0 inline ps-1">
               <Link href="/comparte">
                 <div className="login-btn-primary">
-                  <span className="py-2 px-5  font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md w-full">
+                  <span className="w-full rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700">
                     Inscribe tu charla
                   </span>
                 </div>
                 <div className="login-btn-light">
-                  <span className="py-2 px-5  font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-gray-50 hover:bg-gray-200 dark:bg-slate-900 dark:hover:bg-gray-700 hover:border-gray-100 dark:border-gray-700 dark:hover:border-gray-700 rounded-md w-full">
+                  <span className="w-full rounded-md border bg-gray-50 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide duration-500 hover:border-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-slate-900 dark:hover:border-gray-700 dark:hover:bg-gray-700">
                     Inscribe tu charla
                   </span>
                 </div>
@@ -180,15 +180,15 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
           </ul>
         )}
 
-        <div id="navigation" style={{ display: isMenu ? "block" : "none" }}>
+        <div id="navigation" style={{ display: isMenu ? 'block' : 'none' }}>
           <ul className={`navigation-menu ${navClass} ${navJustify}`}>
-            <li className={manu === "/" || "" ? "active" : ""}>
+            <li className={manu === '/' || '' ? 'active' : ''}>
               <Link href="/" className="sub-menu-item">
                 Inicio
               </Link>
             </li>
 
-            <li className={manu === "/sponsors" || "" ? "active" : ""}>
+            <li className={manu === '/sponsors' || '' ? 'active' : ''}>
               <Link href="/sponsors" className="sub-menu-item">
                 Patrocina
               </Link>

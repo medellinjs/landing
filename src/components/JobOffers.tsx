@@ -1,32 +1,48 @@
-import { Button } from "./ui/button"
+import { Button } from './ui/button';
 
 export default function JobOffers() {
   const jobs = [
-    { id: 1, title: "Desarrollador Frontend", company: "TechCorp", type: "Tiempo Completo" },
-    { id: 2, title: "Ingeniero Backend Node.js", company: "InnovateMDE", type: "Remoto" },
-    { id: 3, title: "Fullstack JavaScript", company: "DevHub", type: "Contrato" },
-  ]
+    {
+      id: 1,
+      title: 'Desarrollador Frontend',
+      company: 'TechCorp',
+      type: 'Tiempo Completo',
+    },
+    {
+      id: 2,
+      title: 'Ingeniero Backend Node.js',
+      company: 'InnovateMDE',
+      type: 'Remoto',
+    },
+    {
+      id: 3,
+      title: 'Fullstack JavaScript',
+      company: 'DevHub',
+      type: 'Contrato',
+    },
+  ];
 
   return (
-    <section id="jobs" className="py-20 bg-gray-100">
+    <section id="jobs" className="bg-gray-100 py-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Ofertas Laborales</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <h2 className="mb-8 text-center text-3xl font-bold">
+          Ofertas Laborales
+        </h2>
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {jobs.map((job) => (
-            <div key={job.id} className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold mb-2">{job.title}</h3>
-              <p className="text-gray-600 mb-4">
+            <div key={job.id} className="rounded-lg bg-white p-6 shadow-md">
+              <h3 className="mb-2 text-xl font-semibold">{job.title}</h3>
+              <p className="mb-4 text-gray-600">
                 {job.company} - {job.type}
               </p>
               <Button variant="outline">Ver Detalles</Button>
             </div>
           ))}
         </div>
-        <div className="text-center mt-8">
+        <div className="mt-8 text-center">
           <Button size="lg">Ver Todas las Ofertas</Button>
         </div>
       </div>
     </section>
-  )
+  );
 }
-

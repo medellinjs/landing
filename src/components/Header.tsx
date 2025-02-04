@@ -1,9 +1,9 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "./ui/button";
-import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { Button } from './ui/button';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,23 +11,23 @@ export default function Header() {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const menuItems = [
-    { href: "/#about", text: "Sobre Nosotros" },
-    { href: "/#events", text: "Eventos" },
-    { href: "/#resources", text: "Recursos" },
-    { href: "/#community", text: "Comunidad" },
-    { href: "/team", text: "Equipo" }, // Added team item
-    { href: "/#sponsors", text: "Sponsors" },
-    { href: "/sponsors", text: "Patrocina" },
-    { href: "/submit-talk", text: "Propón una Charla" },
-    { href: "/team", text: "Equipo" },
-    { href: "/#newsletter", text: "Newsletter" },
-    { href: "/#jobs", text: "Ofertas Laborales" },
-    { href: "/#contact", text: "Contacto" },
+    { href: '/#about', text: 'Sobre Nosotros' },
+    { href: '/#events', text: 'Eventos' },
+    { href: '/#resources', text: 'Recursos' },
+    { href: '/#community', text: 'Comunidad' },
+    { href: '/team', text: 'Equipo' }, // Added team item
+    { href: '/#sponsors', text: 'Sponsors' },
+    { href: '/sponsors', text: 'Patrocina' },
+    { href: '/submit-talk', text: 'Propón una Charla' },
+    { href: '/team', text: 'Equipo' },
+    { href: '/#newsletter', text: 'Newsletter' },
+    { href: '/#jobs', text: 'Ofertas Laborales' },
+    { href: '/#contact', text: 'Contacto' },
   ];
 
   return (
     <header className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <Link
           href="/"
           className="text-2xl font-bold text-blue-600 transition-colors duration-300 hover:text-blue-800"
@@ -41,7 +41,7 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className="flex flex-col md:flex-row absolute md:relative top-16 md:top-0 left-0 right-0 bg-white md:bg-transparent z-20 md:z-auto shadow-md md:shadow-none"
+              className="absolute left-0 right-0 top-16 z-20 flex flex-col bg-white shadow-md md:relative md:top-0 md:z-auto md:flex-row md:bg-transparent md:shadow-none"
             >
               {menuItems.map((item, index) => (
                 <motion.div
@@ -52,7 +52,7 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className="px-4 py-2 text-gray-600 hover:text-blue-600 transition-colors duration-300 md:hidden"
+                    className="px-4 py-2 text-gray-600 transition-colors duration-300 hover:text-blue-600 md:hidden"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.text}

@@ -1,29 +1,29 @@
-"use client";
+'use client';
 
-import { TypeAnimation } from "react-type-animation";
+import { TypeAnimation } from 'react-type-animation';
 
 export const HeroTeam = () => {
   return (
     <section
-      className="relative table w-full py-36 lg:py-44 bg-no-repeat bg-center bg-cover bg-indigo-600"
+      className="relative table w-full bg-indigo-600 bg-cover bg-center bg-no-repeat py-36 lg:py-44"
       style={{ backgroundImage: "url('/bg1.png')" }}
     >
       <div className="container relative">
-        <div className="grid grid-cols-1 pb-8 text-center mt-10">
-          <h1 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-white">
+        <div className="mt-10 grid grid-cols-1 pb-8 text-center">
+          <h1 className="mb-5 text-4xl font-bold leading-normal text-white lg:text-5xl lg:leading-normal">
             <TypeAnimation
               sequence={[
-                "Equipo detrás de la comunidad",
+                'Equipo detrás de la comunidad',
                 2000,
-                "Lideres",
+                'Lideres',
                 2000,
-                "Organizadores",
+                'Organizadores',
                 2000,
-                "Facilitadores de la comunidad",
+                'Facilitadores de la comunidad',
                 2000,
-                "Voluntarios",
+                'Voluntarios',
                 2000,
-                "Mentores",
+                'Mentores',
                 2000,
               ]}
               wrapper="span"
@@ -33,7 +33,7 @@ export const HeroTeam = () => {
             />
           </h1>
 
-          <p className="text-slate-300 text-lg max-w-xl mx-auto">
+          <p className="mx-auto max-w-xl text-lg text-slate-300">
             Nuestros organizadores son el motor que impulsa esta comunidad,
             dedicando su tiempo, energía y creatividad para conectar a los
             amantes de la tecnología en Medellín.

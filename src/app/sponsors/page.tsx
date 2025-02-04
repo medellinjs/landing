@@ -1,12 +1,12 @@
-import { Navbar } from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import { Navbar } from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import {
   ServiceFaq,
   SponsorPlan,
   SponsorQuotes,
-} from "@/components/sponsors/index";
-import Sponsors from "@/components/Sponsors";
-import GetInTuct from "@/components/GetInTuct";
+} from '@/components/sponsors/index';
+import Sponsors from '@/components/Sponsors';
+import GetInTuct from '@/components/GetInTuct';
 
 export default function SponsorsPage() {
   return (
@@ -14,16 +14,16 @@ export default function SponsorsPage() {
       <Navbar navClass="nav-light" />
 
       <section
-        className="relative table w-full py-36 lg:py-44 bg-no-repeat bg-center bg-cover bg-violet-600"
+        className="relative table w-full bg-violet-600 bg-cover bg-center bg-no-repeat py-36 lg:py-44"
         style={{ backgroundImage: "url('/bg2.png')" }}
       >
         <div className="container relative">
-          <div className="grid grid-cols-1 pb-8 text-center mt-10">
-            <h1 className="font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 text-white">
+          <div className="mt-10 grid grid-cols-1 pb-8 text-center">
+            <h1 className="mb-5 text-4xl font-bold leading-normal text-white lg:text-5xl lg:leading-normal">
               Patrocina MedellinJS
             </h1>
 
-            <p className="text-slate-300 text-lg max-w-xl mx-auto">
+            <p className="mx-auto max-w-xl text-lg text-slate-300">
               Ofrecemos oportunidades personalizadas para que tu empresa tenga
               visibilidad, construya relaciones significativas y demuestre su
               compromiso con el ecosistema tecnológico local.
@@ -33,9 +33,9 @@ export default function SponsorsPage() {
       </section>
 
       <div className="relative">
-        <div className="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden z-1 text-white dark:text-slate-900">
+        <div className="shape absolute -bottom-[2px] end-0 start-0 z-1 overflow-hidden text-white dark:text-slate-900 sm:-bottom-px">
           <svg
-            className="w-full h-auto scale-[2.0] origin-top"
+            className="h-auto w-full origin-top scale-[2.0]"
             viewBox="0 0 2880 48"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,20 +48,20 @@ export default function SponsorsPage() {
         </div>
       </div>
 
-      <section className="relative md:py-24 py-16">
+      <section className="relative py-16 md:py-24">
         <SponsorQuotes />
       </section>
 
       <Sponsors hideCTA />
 
-      <section className="relative md:py-24 py-16">
+      <section className="relative py-16 md:py-24">
         <div className="container relative">
           <div className="grid grid-cols-1 pb-8 text-center">
-            <h3 className="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold">
+            <h3 className="mb-4 text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
               Paquetes de Patrocinio
             </h3>
 
-            <p className="text-slate-400 max-w-xl mx-auto">
+            <p className="mx-auto max-w-xl text-slate-400">
               Con nuestros Paquetes de Patrocinio, tu marca puede conectarse con
               desarrolladores, innovadores y líderes de la industria mientras
               apoyas el crecimiento y la educación en tecnología.
@@ -71,13 +71,13 @@ export default function SponsorsPage() {
           <SponsorPlan />
         </div>
 
-        <div className="container relative md:py-24 py-16">
+        <div className="container relative py-16 md:py-24">
           <div className="grid grid-cols-1 pb-8 text-center">
-            <h3 className="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold">
+            <h3 className="mb-4 text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
               Preguntas frecuentes
             </h3>
 
-            <p className="text-slate-400 max-w-xl mx-auto">
+            <p className="mx-auto max-w-xl text-slate-400">
               ¿Quieres patrocinar y aportar a una de las comunidades tech más
               vibrantes de Medellín?
             </p>

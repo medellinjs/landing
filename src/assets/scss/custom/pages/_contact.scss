@@ -4,26 +4,26 @@
 
 /* Validation */
 .error {
-    @apply my-2 mx-0 hidden text-red-600;
+  @apply mx-0 my-2 hidden text-red-600;
 }
-  
+
 #ajaxsuccess {
-    @apply text-base w-full hidden clear-both my-2 mx-0;
+  @apply clear-both mx-0 my-2 hidden w-full text-base;
 }
 
 .error_message,
 #success_page {
-    @apply p-2.5 mb-5 text-center rounded-md;
+  @apply mb-5 rounded-md p-2.5 text-center;
 }
 
 .error_message {
-    @apply bg-red-600/5 text-red-600;
+  @apply bg-red-600/5 text-red-600;
 }
 
 .contact-loader {
-    @apply hidden;
+  @apply hidden;
 }
-  
+
 #success_page {
-    @apply bg-emerald-600/5 text-emerald-600;
+  @apply bg-emerald-600/5 text-emerald-600;
 }
