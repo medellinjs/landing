@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MedellínJS Landing Page
 
-## Getting Started
+## Objetivo del Proyecto
 
-First, run the development server:
+Este proyecto es la landing page oficial de la comunidad MedellínJS, diseñada para ser un punto de encuentro digital para desarrolladores JavaScript en Medellín. Nuestro objetivo es crear una plataforma moderna, accesible y atractiva que represente la vibrante comunidad tecnológica de la ciudad.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Arquitectura del Proyecto
+
+### Diagrama de Arquitectura
+
+```mermaid
+graph TD
+    A[Usuarios] -->|Acceso| B[Página Web Next.js]
+    B -->|Renderizado| C[Componentes React]
+    B -->|Optimización| D[Servidor Next.js]
+    D -->|Generación Estática| E[Páginas Optimizadas]
+
+    subgraph Frontend
+    C
+    E
+    end
+
+    subgraph Infraestructura
+    D
+    F[Vercel Deployment]
+    end
+
+    A --> F
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Stack Tecnológico
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend
+- **Framework:** Next.js 14
+- **Lenguaje:** TypeScript
+- **Estilos:** Tailwind CSS
+- **Fuente:** Geist (Vercel Font)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Infraestructura
+- **Plataforma de Despliegue:** Vercel
+- **Repositorio:** GitHub
+- **Integración Continua:** GitHub Actions
 
-## Learn More
+## Estructura del Proyecto
 
-To learn more about Next.js, take a look at the following resources:
+```
+medellinjs-landing/
+│
+├── app/                # Rutas y componentes principales
+│   ├── page.tsx        # Página principal
+│   ├── layout.tsx      # Diseño base de la aplicación
+│   └── ...
+│
+├── components/         # Componentes reutilizables
+│   ├── Header.tsx
+│   ├── Footer.tsx
+│   └── ...
+│
+├── public/             # Recursos estáticos
+│   ├── images/
+│   └── icons/
+│
+├── styles/             # Estilos globales
+│   └── globals.css
+│
+├── lib/                # Utilidades y helpers
+│   └── utils.ts
+│
+└── README.md           # Documentación del proyecto
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Relaciones de Componentes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Layout Principal:** Gestiona la estructura base de la aplicación
+- **Componentes:** Modularizados y reutilizables
+- **Páginas:** Generadas estáticamente para máximo rendimiento
 
-## Deploy on Vercel
+## Comenzando
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Requisitos Previos
+- Node.js 18+
+- npm/yarn/pnpm
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Instalación
+
+1. Clonar el repositorio
+```bash
+git clone https://github.com/medellinjs/landing.git
+cd landing
+```
+
+2. Instalar dependencias
+```bash
+npm install
+```
+
+3. Ejecutar en desarrollo
+```bash
+npm run dev
+```
+
+## Contribuciones
+
+¡Las contribuciones son bienvenidas! Por favor, lee nuestras [guías de contribución](CONTRIBUTING.md).
+
+## Licencia
+
+[Especificar Licencia]
+
+## Contacto
+
+- **Comunidad:** MedellínJS
+- **Email:** [contacto@medellinjs.org]
+- **Web:** [https://medellinjs.org]
