@@ -262,9 +262,9 @@ export const sponsorTestimonials = [
     name: 'Juan Tobón',
     company: 'Softserve',
     description1:
-      'La comunidad de MedellínJS es vibrante y altamente cualificada.',
+      'Medellin JS es una comunidad, activa, comprometida con la democratización del conocimiento TECH. He tenido la gran oportunidad de compartir y apoyar a la comunidad, en la generación de espacios de valor como co campus Js, cityjs medellin. Asi mismo apoyarlos en el proceso de crecimiento que han tenido a lo largo de los años. La dedicación y compormiso de la comunidad ha  impactado estudiantes y la vida muchos jovenes, por medio de diferentes agendas, que vienen ejecutando, no solo en medellin sino tambien a nivel nacional.',
     image1: '/testimonials/02.jpg',
-    name1: 'Jane Doe',
+    name1: 'Islena',
     company1: 'Ruta N',
   },
   {
