@@ -263,19 +263,19 @@ export const sponsorTestimonials = [
     company: 'Softserve',
     description1:
       'Medellin JS es una comunidad, activa, comprometida con la democratización del conocimiento TECH. He tenido la gran oportunidad de compartir y apoyar a la comunidad, en la generación de espacios de valor como co campus Js, cityjs medellin. Asi mismo apoyarlos en el proceso de crecimiento que han tenido a lo largo de los años. La dedicación y compormiso de la comunidad ha  impactado estudiantes y la vida muchos jovenes, por medio de diferentes agendas, que vienen ejecutando, no solo en medellin sino tambien a nivel nacional.',
-    image1: '/testimonials/02.jpg',
-    name1: 'Islena',
+    image1: '/testimonials/02.jpeg',
+    name1: 'Islena Martinez Velasquez',
     company1: 'Ruta N',
   },
   {
     description:
       'Patrocinar MedellínJS ha sido clave para nuestra estrategia de employer branding ',
-    image: '/testimonials/02.jpg',
+    image: '/testimonials/03.jpg',
     name: 'Jane Doe',
     company: 'Ruta N',
     description1:
       'Como patrocinadores, hemos encontrado en MedellínJS un aliado estratégico para atraer talento de alto nivel. La posibilidad de publicar nuestras ofertas de trabajo y participar en eventos nos ha permitido reclutar a algunos de los mejores profesionales del sector. ¡Una experiencia que repetiríamos sin dudarlo!',
-    image1: '/testimonials/03.jpg',
+    image1: '/testimonials/02.jpg',
     name1: 'Alice Johnson',
     company1: 'Nodo Eafit',
   },
