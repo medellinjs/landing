@@ -21,7 +21,7 @@ interface MedellinJSProposalEmailProps {
   proposalTitle?: string;
 }
 
-const baseUrl = process.env.VERCEL_URL ?? 'http://localhost:3000';
+const baseUrl = process.env.BASE_URL ?? 'http://localhost:3000';
 
 export const SubmitedTalk = ({
   fullName,
