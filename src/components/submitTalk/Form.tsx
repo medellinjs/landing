@@ -1,6 +1,9 @@
 'use client';
+import { useState, useEffect, lazy } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+
+const LazyLottieComponent = lazy(() => import('react-lottie'));
 
 import {
   Form,
@@ -21,9 +24,30 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
+import animationSubmitTalk from '@assets/lotties/talk-submitted.json';
 import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
 
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationSubmitTalk,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
+
 export const SubmitTalkForm = () => {
+  const [isSuccessVisible, setIsSuccessVisible] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const scrollToElement = () => {
+    window.scrollTo({ top: 350, left: 0, behavior: 'smooth' });
+  };
+
   const form = useForm({
     resolver: zodResolver(submitTalkFormSchema),
     defaultValues: {
@@ -53,16 +77,45 @@ export const SubmitTalkForm = () => {
         },
         body: JSON.stringify(data),
       };
-      const result = await fetch('/api/talk', options);
-      console.log('🚀 ~ onSubmit ~ result:', result);
+      await fetch('/api/talk', options);
+
+      scrollToElement();
+      form.reset();
+      setIsSuccessVisible(true);
+      setTimeout(() => {
+        setIsSuccessVisible(false);
+      }, 3000);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error:', error);
     }
   };
 
+  if (!isClient) {
+    return null;
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <div
+        className={`transition-all duration-500 ${
+          isSuccessVisible ? 'block opacity-100' : 'hidden opacity-0'
+        }`}
+      >
+        <h3 className="mb-6 text-center text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
+          Gracias por tu propuesta! 🎉
+        </h3>
+        <LazyLottieComponent
+          options={defaultOptions}
+          height={400}
+          width={400}
+        />
+      </div>
+
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={isSuccessVisible ? 'hidden' : 'block'}
+      >
         <h4 className="my-4 text-2xl font-medium leading-normal md:text-3xl lg:leading-normal">
           Ponente
         </h4>

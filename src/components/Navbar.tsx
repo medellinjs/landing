@@ -153,7 +153,7 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
 
             <li className="mb-0 inline ps-1">
               <Link
-                href="https://1.envato.market/techwind-next"
+                href="#"
                 target="_blank"
                 className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600 bg-indigo-600 text-center align-middle text-base tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
               >
@@ -162,7 +162,7 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
             </li>
           </ul>
         ) : (
-          <ul className="buy-button mb-0 list-none space-x-1">
+          <ul className="buy-button mb-0 hidden list-none space-x-1 sm:block">
             <li className="mb-0 inline ps-1">
               <Link href="/comparte">
                 <div className="login-btn-primary">

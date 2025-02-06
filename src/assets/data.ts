@@ -33,7 +33,7 @@ export const teamData = [
   },
   {
     image: '/team/camilo.jpeg',
-    name: 'Christian Camilo Galeano',
+    name: 'Camilo Galeano',
     title: 'Software Developer',
     desc: 'Tech and programming enthusiast with a great love for communities 🤝',
     background: 'bg-red-600/10 dark:bg-red-600/30',
@@ -45,7 +45,7 @@ export const teamData = [
   },
   {
     image: '/team/dianella.jpeg',
-    name: 'Dianella Restrepo Chaverra',
+    name: 'Dianella Restrepo',
     title: 'Systems Engineer',
     desc: 'Passion for technology 👩🏻‍💻, active participant in the communities.',
     background: 'bg-sky-600/10 dark:bg-sky-600/30',
