@@ -1,9 +1,7 @@
 'use client';
-import { useState, useEffect, lazy } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
-const LazyLottieComponent = lazy(() => import('react-lottie'));
 
 import {
   Form,
@@ -24,26 +22,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import animationSubmitTalk from '@assets/lotties/talk-submitted.json';
 import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationSubmitTalk,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice',
-  },
-};
 
 export const SubmitTalkForm = () => {
   const [isSuccessVisible, setIsSuccessVisible] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   const scrollToElement = () => {
     window.scrollTo({ top: 350, left: 0, behavior: 'smooth' });
   };
@@ -91,10 +73,6 @@ export const SubmitTalkForm = () => {
     }
   };
 
-  if (!isClient) {
-    return null;
-  }
-
   return (
     <Form {...form}>
       <div
@@ -105,11 +83,6 @@ export const SubmitTalkForm = () => {
         <h3 className="mb-6 text-center text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
           Gracias por tu propuesta! 🎉
         </h3>
-        <LazyLottieComponent
-          options={defaultOptions}
-          height={400}
-          width={400}
-        />
       </div>
 
       <form
