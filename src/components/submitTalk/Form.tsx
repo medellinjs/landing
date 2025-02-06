@@ -21,11 +21,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Spinner } from '@/components/ui/spinner';
-import { SubmitTalkFormSchema, SubmitTalkFormType } from './types';
+import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
 
 export const SubmitTalkForm = () => {
   const form = useForm({
-    resolver: zodResolver(SubmitTalkFormSchema),
+    resolver: zodResolver(submitTalkFormSchema),
     defaultValues: {
       speaker: {
         fullName: '',
@@ -44,8 +44,20 @@ export const SubmitTalkForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = (data: SubmitTalkFormType) => {
-    console.log('Datos válidos:', data);
+  const onSubmit = async (data: SubmitTalkFormType) => {
+    try {
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      };
+      const result = await fetch('/api/talk', options);
+      console.log('🚀 ~ onSubmit ~ result:', result);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
