@@ -1,9 +1,5 @@
-import { Resend } from 'resend';
-
-import EmailTemplate from '@/emailTemplates/talkSubmited';
-
+import { createContact, sendSubmittedTalk } from '@/lib/resend';
 import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: Request): Promise<Response> {
   const data: SubmitTalkFormType = await req.json();
@@ -30,14 +26,11 @@ export async function POST(req: Request): Promise<Response> {
 
   const { speaker, talk } = response.data;
 
-  const { error } = await resend.emails.send({
-    from: 'MedellinJS <hola@medellinjs.org>',
-    to: [speaker.email],
-    subject: '¡Hemos recibido tu propuesta para MedellinJS! 🎉',
-    react: EmailTemplate({
-      fullName: speaker.fullName,
-      proposalTitle: talk.title,
-    }),
+  await createContact(speaker.email, speaker.fullName);
+  const { error } = await sendSubmittedTalk({
+    email: speaker.email,
+    fullName: speaker.fullName,
+    proposalTitle: talk.title,
   });
 
   if (error) {
