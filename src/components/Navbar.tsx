@@ -142,22 +142,18 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
 
         {navClass !== 'nav-light' ? (
           <ul className={`buy-button mb-0 list-none space-x-1`}>
-            <li className="mb-0 inline">
-              <Link
-                href="#"
-                className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600/10 bg-indigo-600/5 text-center align-middle text-base tracking-wide text-indigo-600 duration-500 hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
-              >
-                <LuSettings className="size-4" />
-              </Link>
-            </li>
-
             <li className="mb-0 inline ps-1">
-              <Link
-                href="#"
-                target="_blank"
-                className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600 bg-indigo-600 text-center align-middle text-base tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
-              >
-                <BsCart3 className="size-4" />
+              <Link href="/comparte">
+                <div className="login-btn-primary">
+                  <span className="w-full rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700">
+                    Inscribe tu charla
+                  </span>
+                </div>
+                <div className="login-btn-light">
+                  <span className="w-full rounded-md border bg-gray-50 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide duration-500 hover:border-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-slate-900 dark:hover:border-gray-700 dark:hover:bg-gray-700">
+                    Inscribe tu charla
+                  </span>
+                </div>
               </Link>
             </li>
           </ul>
