@@ -1,6 +1,8 @@
 import { createContact, sendSubmittedTalk } from '@/lib/resend';
 import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
+import { insertRecord } from '@/lib/airtableService';
 
+const TABLE_NAME = 'Talks';
 export async function POST(req: Request): Promise<Response> {
   const data: SubmitTalkFormType = await req.json();
 
@@ -25,6 +27,20 @@ export async function POST(req: Request): Promise<Response> {
   }
 
   const { speaker, talk } = response.data;
+
+  const fields = {
+    fullName: speaker.fullName,
+    email: speaker.email,
+    role: speaker.role,
+    profileImage: speaker.profileImage,
+    bio: speaker.bio,
+    talkTitle: talk.title,
+    description: talk.description,
+    level: talk.level,
+    type: talk.type,
+  };
+
+  await insertRecord(TABLE_NAME, fields);
 
   await createContact(speaker.email, speaker.fullName);
   const { error } = await sendSubmittedTalk({
