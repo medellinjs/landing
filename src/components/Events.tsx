@@ -5,14 +5,14 @@ import { Calendar, Clock, MapPin } from 'lucide-react';
 
 export default function Events() {
   const nextEvent = {
-    title: `LLM apps 101 para <br /> Javascript Developers`,
-    date: '08 de Febrero, 2025',
-    time: '09:00 - 11:00',
-    location: 'UPB - Universidad Pontifície Bolivariana',
+    title: `JavaScript a Prueba de Balas: <br /> Transforma tu Código con Estrategias de Testing`,
+    date: '26 de Febrero, 2025',
+    time: '18:30 - 20:30',
+    location: 'Universidad Eafit - Bloque 18, Piso 2',
     description:
-      '¿Quieres crear aplicaciones con inteligencia artificial? En este workshop de 2 horas, aprenderás los fundamentos para desarrollar tus primeras apps con Large Language Models (LLMs) usando JavaScript. ¡Manos a la obra!',
-    speaker: 'Ana Martínez',
-    speakerRole: 'Senior Frontend Developer @ TechCorp',
+      'Una charla acerca de cómo dominar el testing te puede convertir en un mejor desarrollador, brindarte más confianza al mantener una aplicación, además de explorar los diferentes tipos de testing y herramientas (jest, sinon, cypress, playwright) para lograrlo con ejemplos prácticos',
+    speaker: 'Alejandro González',
+    speakerRole: 'Senior FullStack Developer',
   };
 
   return (
@@ -64,10 +64,11 @@ export default function Events() {
                     <div className="mt-8">
                       <div className="section-title text-md-start">
                         <h6 className="text-lg font-semibold text-white/50">
-                          Workshop
+                          Charla
                         </h6>
                         <h3 className="mt-2 text-2xl font-semibold leading-normal text-white md:text-3xl md:leading-normal">
-                          LLM apps 101 para <br /> Javascript Developers
+                          JavaScript a Prueba de Balas: <br /> Transforma tu
+                          Código con Estrategias de Testing
                         </h3>
                       </div>
                     </div>
@@ -78,7 +79,7 @@ export default function Events() {
                           {nextEvent.description}
                         </p>
                         <Link
-                          href="https://www.meetup.com/es-ES/medellinjs/events/305920128/"
+                          href="https://www.meetup.com/es-ES/medellinjs/events/306225397/"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex text-white"
