@@ -14,6 +14,7 @@ export const sendEmailSubmittedTalk = async (data: sendEmailType) => {
   return resend.emails.send({
     from: 'MedellinJS <hola@medellinjs.org>',
     to: [email],
+    bcc: ['contacto@medellinjs.org'],
     subject: '¡Hemos recibido tu propuesta para MedellinJS! 🎉',
     react: TalkSubmited({
       fullName: fullName,

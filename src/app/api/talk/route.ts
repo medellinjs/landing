@@ -1,6 +1,6 @@
 import {
   createContact,
-  sendEmailAdmins,
+  // sendEmailAdmins,
   sendEmailSubmittedTalk,
 } from '@/lib/resend';
 import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
@@ -54,13 +54,13 @@ export async function POST(req: Request): Promise<Response> {
     proposalTitle: talk.title,
   });
 
-  setTimeout(() => {
-    sendEmailAdmins({
-      email: speaker.email,
-      description: talk.description,
-      proposalTitle: talk.title,
-    });
-  }, 10_000);
+  // setTimeout(() => {
+  //   sendEmailAdmins({
+  //     email: speaker.email,
+  //     description: talk.description,
+  //     proposalTitle: talk.title,
+  //   });
+  // }, 10_000);
 
   if (submittedError) {
     return new Response(submittedError.message, { status: 400 });

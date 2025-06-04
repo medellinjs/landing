@@ -5,14 +5,14 @@ import { Calendar, Clock, MapPin } from 'lucide-react';
 
 export default function Events() {
   const nextEvent = {
-    title: `JavaScript a Prueba de Balas: <br /> Transforma tu Código con Estrategias de Testing`,
-    date: '26 de Febrero, 2025',
-    time: '18:30 - 20:30',
-    location: 'Universidad Eafit - Bloque 18, Piso 2',
+    title: `Construye tu primer agente con LangGraph`,
+    date: '14 de Junio, 2025',
+    time: '09:00 - 11:30',
+    location: 'UPB Campus Laureles',
     description:
-      'Una charla acerca de cómo dominar el testing te puede convertir en un mejor desarrollador, brindarte más confianza al mantener una aplicación, además de explorar los diferentes tipos de testing y herramientas (jest, sinon, cypress, playwright) para lograrlo con ejemplos prácticos',
-    speaker: 'Alejandro González',
-    speakerRole: 'Senior FullStack Developer',
+      'En este taller practico vamos a usar una de las plantillas de LangGraph para construir nuestro primer agente AI investigador.',
+    speaker: 'Wbert Adrian',
+    speakerRole: 'FullStack Developer',
   };
 
   return (
@@ -79,7 +79,7 @@ export default function Events() {
                           {nextEvent.description}
                         </p>
                         <Link
-                          href="https://www.meetup.com/es-ES/medellinjs/events/306225397/"
+                          href="https://www.meetup.com/medellinjs/events/308229554"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex text-white"
