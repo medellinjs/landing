@@ -67,8 +67,7 @@ export default function Events() {
                           Charla
                         </h6>
                         <h3 className="mt-2 text-2xl font-semibold leading-normal text-white md:text-3xl md:leading-normal">
-                          JavaScript a Prueba de Balas: <br /> Transforma tu
-                          Código con Estrategias de Testing
+                          {nextEvent.title}
                         </h3>
                       </div>
                     </div>
