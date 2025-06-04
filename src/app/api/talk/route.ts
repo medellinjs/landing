@@ -47,20 +47,23 @@ export async function POST(req: Request): Promise<Response> {
   await insertRecord(TABLE_NAME, fields);
 
   await createContact(speaker.email, speaker.fullName);
-  const { error } = await sendEmailSubmittedTalk({
+
+  const { error: submittedError } = await sendEmailSubmittedTalk({
     email: speaker.email,
     fullName: speaker.fullName,
     proposalTitle: talk.title,
   });
 
-  await sendEmailAdmins({
-    email: speaker.email,
-    description: talk.description,
-    proposalTitle: talk.title,
-  });
+  setTimeout(() => {
+    sendEmailAdmins({
+      email: speaker.email,
+      description: talk.description,
+      proposalTitle: talk.title,
+    });
+  }, 10_000);
 
-  if (error) {
-    return new Response(error.message, { status: 400 });
+  if (submittedError) {
+    return new Response(submittedError.message, { status: 400 });
   }
 
   return new Response(JSON.stringify({ saved: true }), {
