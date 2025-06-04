@@ -351,7 +351,7 @@ export const SubmitTalkForm = () => {
               >
                 <div className="flex items-center justify-center gap-2">
                   {form.formState.isSubmitting
-                    ? 'Enviando propeusta...'
+                    ? 'Enviando propuesta...'
                     : 'Enviar Propuesta'}
                   <Spinner
                     size="small"

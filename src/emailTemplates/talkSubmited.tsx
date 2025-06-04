@@ -22,7 +22,7 @@ interface MedellinJSProposalEmailProps {
 
 const baseUrl = process.env.BASE_URL ?? 'http://localhost:3000';
 
-export const SubmitedTalk = ({
+export const TalkSubmited = ({
   fullName,
   proposalTitle,
 }: MedellinJSProposalEmailProps) => {
@@ -130,9 +130,9 @@ export const SubmitedTalk = ({
   );
 };
 
-SubmitedTalk.PreviewProps = {
+TalkSubmited.PreviewProps = {
   fullName: 'Cristian Moreno',
   proposalTitle: 'Introducción a React Hooks',
 } as MedellinJSProposalEmailProps;
 
-export default SubmitedTalk;
+export default TalkSubmited;

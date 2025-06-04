@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 
-import EmailTemplate from '@/emailTemplates/talkSubmited';
+import { TalkSubmited, TalkRegistered } from '@/emailTemplates';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,14 +9,33 @@ export type sendEmailType = {
   fullName: string;
   proposalTitle: string;
 };
-export const sendSubmittedTalk = async (data: sendEmailType) => {
+export const sendEmailSubmittedTalk = async (data: sendEmailType) => {
   const { email, fullName, proposalTitle } = data;
   return resend.emails.send({
     from: 'MedellinJS <hola@medellinjs.org>',
     to: [email],
     subject: '¡Hemos recibido tu propuesta para MedellinJS! 🎉',
-    react: EmailTemplate({
+    react: TalkSubmited({
       fullName: fullName,
+      proposalTitle,
+    }),
+  });
+};
+
+export type sendEmailAdminsType = {
+  email: string;
+  description: string;
+  proposalTitle: string;
+};
+export const sendEmailAdmins = async (data: sendEmailAdminsType) => {
+  const { email, description, proposalTitle } = data;
+  return resend.emails.send({
+    from: 'MedellinJS <hola@medellinjs.org>',
+    to: ['contacto@medellinjs.org'],
+    subject: '¡Nueva propuesta para MedellinJS! 🎉',
+    react: TalkRegistered({
+      description,
+      email,
       proposalTitle,
     }),
   });

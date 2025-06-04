@@ -1,4 +1,8 @@
-import { createContact, sendSubmittedTalk } from '@/lib/resend';
+import {
+  createContact,
+  sendEmailAdmins,
+  sendEmailSubmittedTalk,
+} from '@/lib/resend';
 import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
 import { insertRecord } from '@/lib/airtableService';
 
@@ -43,9 +47,15 @@ export async function POST(req: Request): Promise<Response> {
   await insertRecord(TABLE_NAME, fields);
 
   await createContact(speaker.email, speaker.fullName);
-  const { error } = await sendSubmittedTalk({
+  const { error } = await sendEmailSubmittedTalk({
     email: speaker.email,
     fullName: speaker.fullName,
+    proposalTitle: talk.title,
+  });
+
+  await sendEmailAdmins({
+    email: speaker.email,
+    description: talk.description,
     proposalTitle: talk.title,
   });
 
