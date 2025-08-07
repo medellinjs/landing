@@ -105,7 +105,7 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
             />
           </Link>
         ) : (
-          <Link className="logo" href="/index">
+          <Link className="logo" href="/">
             <Image
               src="/logo-dark.png"
               width={138}
@@ -141,26 +141,7 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
         </div>
 
         {navClass !== 'nav-light' ? (
-          <ul className={`buy-button mb-0 list-none space-x-1`}>
-            <li className="mb-0 inline">
-              <Link
-                href="#"
-                className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600/10 bg-indigo-600/5 text-center align-middle text-base tracking-wide text-indigo-600 duration-500 hover:border-indigo-600 hover:bg-indigo-600 hover:text-white"
-              >
-                <LuSettings className="size-4" />
-              </Link>
-            </li>
-
-            <li className="mb-0 inline ps-1">
-              <Link
-                href="#"
-                target="_blank"
-                className="inline-flex size-9 items-center justify-center rounded-full border border-indigo-600 bg-indigo-600 text-center align-middle text-base tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
-              >
-                <BsCart3 className="size-4" />
-              </Link>
-            </li>
-          </ul>
+          <ul className={`buy-button mb-0 list-none space-x-1`}></ul>
         ) : (
           <ul className="buy-button mb-0 hidden list-none space-x-1 sm:block">
             <li className="mb-0 inline ps-1">
