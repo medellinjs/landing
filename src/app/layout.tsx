@@ -1,6 +1,7 @@
 import '../assets/scss/tailwind.scss';
 import '../assets/css/material.css';
 import type { Metadata } from 'next';
+import { AuthProvider } from '@/components/auth/auth-provider';
 
 import {
   Nunito,
@@ -61,7 +62,7 @@ export default async function LocaleLayout({
       <body
         className={`${nunito.variable} ${work_sans.variable} ${eb_garamond.variable} ${kaushan.variable} ${alex.variable} font-nunito text-base text-black dark:bg-slate-900 dark:text-white`}
       >
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
