@@ -1,9 +1,13 @@
 'use server';
 
 import { neon } from '@neondatabase/serverless';
-import { createContact } from '@/lib/resend';
+import pino from 'pino';
 
+import { createContact } from '@/lib/resend';
 import { Member } from '@/lib/types/member';
+
+// Create a logger instance
+const logger = pino();
 
 /**
  * Creates a new member
@@ -14,6 +18,10 @@ export async function createMember(member: Member) {
   const sql = neon(`${process.env.DATABASE_URL}`);
 
   try {
+    await createContact(member.email, member.fullName);
+
+    logger.info(`Member created: ${member.email}`);
+
     const result = await sql`
     INSERT INTO members (
       "id",
@@ -35,11 +43,11 @@ export async function createMember(member: Member) {
     RETURNING *
   `;
 
-    await createContact(member.email, member.fullName);
-
     return result;
   } catch (error) {
-    console.error('Error creating member:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    logger.error(`Error creating member: ${member.email} - ${errorMessage}`);
+
     return null;
   }
 }
