@@ -15,10 +15,21 @@ import { Navbar } from '@/components/Navbar';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { FiPhone } from 'react-icons/fi';
 import { FaArrowRight } from 'react-icons/fa';
+import { Calendar, Clock, MapPin } from 'lucide-react';
 
 // import { digitalServices,digitalProduct } from '../Data/data'
 
 export default function Page() {
+  const nextEvent = {
+    title: `Construye tu primer agente con LangGraph`,
+    date: '14 de Junio, 2025',
+    time: '09:00 - 11:30',
+    location: 'UPB Campus Laureles',
+    description:
+      'En este taller practico vamos a usar una de las plantillas de LangGraph para construir nuestro primer agente AI investigador.',
+    speaker: 'Wbert Adrian',
+    speakerRole: 'FullStack Developer',
+  };
   return (
     <>
       <Navbar />
@@ -55,7 +66,29 @@ export default function Page() {
               <div className="content md:mt-8">
                 <div className="grid grid-cols-1 justify-center text-center md:text-start lg:grid-cols-12">
                   <div className="lg:col-span-10 lg:col-start-2">
-                    <div className="grid grid-cols-1 items-center md:grid-cols-2">
+                    <div className="justify-center text-center">
+                      <div className="flex justify-between">
+                        <div className="mb-2 flex items-center">
+                          <Calendar className="mr-2 text-white" />
+                          <span className="font-semibold leading-normal text-white">
+                            {nextEvent.date}
+                          </span>
+                        </div>
+                        <div className="mb-2 flex items-center">
+                          <Clock className="mr-2 text-white" />
+                          <span className="font-semibold leading-normal text-white">
+                            {nextEvent.time}
+                          </span>
+                        </div>
+                        <div className="mb-2 flex items-center">
+                          <MapPin className="mr-2 text-white" />
+                          <span className="font-semibold leading-normal text-white">
+                            {nextEvent.location}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    {/* <div className="grid grid-cols-1 items-center md:grid-cols-2">
                       <div className="mt-8">
                         <div className="section-title text-md-start">
                           <h6 className="text-lg font-semibold text-white/50">
@@ -84,7 +117,7 @@ export default function Page() {
                           </Link>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -95,6 +128,49 @@ export default function Page() {
       </section>
 
       <section className="relative py-16 md:py-24" id="about">
+        <div className="container relative mb-16 md:mb-24">
+          <div className="grid grid-cols-1 pb-8 text-center">
+            <h6 className="mb-2 text-sm font-bold uppercase text-indigo-600">
+              Taller
+            </h6>
+            <h3 className="mb-4 text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
+              {nextEvent.title}
+            </h3>
+
+            <p className="mx-auto mb-4 text-left text-slate-400">
+              En esta charla explicaré cómo crear cinco tipos de mapas de forma
+              incremental, comenzando desde lo más básico hasta aplicaciones
+              avanzadas con datos en tiempo real.
+            </p>
+            <p className="mx-auto mb-4 text-left text-slate-400">
+              Partiremos con un mapa simple en HTML para narrativas interactivas
+              de ficción. Luego usaremos la librería Pretty Maps en Python para
+              generar visualizaciones atractivas de tu vecindario. Avanzaremos
+              con Folium para construir un mapa que localice comunidades
+              tecnológicas en Medellín, y también veremos cómo implementar rutas
+              que optimicen distancia y minimicen zonas de riesgo o acoso,
+              usando Folium y Pydeck (la versión en Python de Deck.gl, creada
+              por Uber).
+            </p>
+            <p className="mx-auto mb-4 text-left text-slate-400">
+              Después, Hablaremos de un Tracker de Satelites en tiempo real
+              utilizando MapLibre y programación asíncrona. Finalmente, mostraré
+              cómo visualizar datos de sensores de calidad del aire sobre un
+              mapa, también con MapLibre. Durante la charla, detallaré qué se
+              puede hacer con mapas, qué tipos de capas y datos se pueden
+              integrar, su potencial interactivo, y las razones personales,
+              técnicas y sociales detrás de cada uno de estos proyectos. Como
+              cierre, explicaré brevemente cómo funcionan internamente estas
+              bibliotecas, cómo fue desarrollado algo como Google Maps, y cómo
+              se pueden obtener imágenes satelitales de forma manual (lo que
+              llamo “hackear satélites y hackear la NASA con HTML”). Presentaré
+              también Werevi, una startup de la cual soy cofundador, enfocada en
+              el uso de mapas y visualización geoespacial para resolver
+              problemas reales. 🚀
+            </p>
+          </div>
+        </div>
+
         <div className="container relative">
           <div className="grid grid-cols-1 items-center gap-[30px] md:grid-cols-12">
             <div className="md:col-span-6 lg:col-span-5">
@@ -114,10 +190,10 @@ export default function Page() {
             <div className="md:col-span-6 lg:col-span-7">
               <div className="lg:ms-5">
                 <h6 className="mb-2 text-sm font-bold uppercase text-indigo-600">
-                  About us
+                  Speaker
                 </h6>
                 <h3 className="mb-4 text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
-                  Better Design <br /> Better Experience
+                  {nextEvent.speaker}
                 </h3>
 
                 <p className="max-w-xl text-slate-400">
@@ -165,22 +241,6 @@ export default function Page() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="container relative mt-16 md:mt-24">
-          <div className="grid grid-cols-1 pb-8 text-center">
-            <h6 className="mb-2 text-sm font-bold uppercase text-indigo-600">
-              Services
-            </h6>
-            <h3 className="mb-4 text-2xl font-semibold leading-normal md:text-3xl md:leading-normal">
-              What do i offer ?
-            </h3>
-
-            <p className="mx-auto max-w-xl text-slate-400">
-              Obviously I am a Web Designer. Experienced with all stages of the
-              development cycle for dynamic web projects.
-            </p>
           </div>
         </div>
       </section>
