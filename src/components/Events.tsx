@@ -5,12 +5,12 @@ import { Calendar, Clock, MapPin } from 'lucide-react';
 
 export default function Events() {
   const nextEvent = {
-    title: `Construye tu primer agente con LangGraph`,
-    date: '14 de Junio, 2025',
-    time: '09:00 - 11:30',
-    location: 'UPB Campus Laureles',
+    title: `SEO técnico en JavaScript: lo que todo dev debería saber`,
+    date: '27 de Agosto, 2025',
+    time: '06:30 - 08:30',
+    location: 'EAFIT - Bloque 38',
     description:
-      'En este taller practico vamos a usar una de las plantillas de LangGraph para construir nuestro primer agente AI investigador.',
+      'Olvídate de los mitos. El SEO en JavaScript no es solo para expertos en marketing. Te mostraremos cómo el rendimiento, la optimización y la experiencia de usuario son pilares fundamentales que todo desarrollador debe dominar',
     speaker: 'Wbert Adrian',
     speakerRole: 'FullStack Developer',
   };
@@ -78,7 +78,7 @@ export default function Events() {
                           {nextEvent.description}
                         </p>
                         <Link
-                          href="https://www.meetup.com/medellinjs/events/308229554"
+                          href="https://www.meetup.com/medellinjs/events/310526034"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex text-white"
