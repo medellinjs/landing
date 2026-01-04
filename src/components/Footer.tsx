@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 import {
   FaRegEnvelope,
@@ -8,7 +8,7 @@ import {
   FaTwitter,
   FaTiktok,
   FaGithub,
-} from 'react-icons/fa';
+} from 'react-icons/fa'
 
 export default function Footer() {
   return (
@@ -144,11 +144,10 @@ export default function Footer() {
         </div>
         <div className="mt-8 border-t border-gray-700 pt-8 text-center">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} MedellínJS. Todos los derechos
-            reservados.
+            &copy; {new Date().getFullYear()} MedellínJS. Todos los derechos reservados.
           </p>
         </div>
       </div>
     </footer>
-  );
+  )
 }

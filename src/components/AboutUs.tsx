@@ -1,5 +1,5 @@
-'use client';
-import CountUp from 'react-countup';
+'use client'
+import CountUp from 'react-countup'
 
 export default function AboutUs() {
   return (
@@ -13,12 +13,7 @@ export default function AboutUs() {
                   <div className="text-center">
                     <h6 className="mb-0 text-slate-400">Miembros</h6>
                     <h2 className="mb-0 mt-3 text-4xl font-bold">
-                      <CountUp
-                        className="counter-value"
-                        start={102}
-                        end={8834}
-                      />
-                      +
+                      <CountUp className="counter-value" start={102} end={8834} />+
                     </h2>
                   </div>
                 </div>
@@ -48,20 +43,18 @@ export default function AboutUs() {
 
       <div className="container relative mt-16 md:mt-24">
         <div className="grid grid-cols-1 pb-8 text-center">
-          <h6 className="mb-2 text-sm font-bold uppercase text-indigo-600">
-            Que hacemos
-          </h6>
+          <h6 className="mb-2 text-sm font-bold uppercase text-indigo-600">Que hacemos</h6>
           <h3 className="mb-4 bg-gradient-to-r from-red-600 to-indigo-600 bg-clip-text text-2xl font-semibold leading-normal text-transparent md:text-3xl md:leading-normal">
             Nos encanta Javascript
           </h3>
 
           <p className="mx-auto max-w-xl text-slate-400">
-            Todo el contenido del grupo es propuesto por los miembros de la
-            comunidad, si tienes alguna charla, conferencia o experiencia que
-            quieras compartir puedes enviar tu propuesta
+            Todo el contenido del grupo es propuesto por los miembros de la comunidad, si tienes
+            alguna charla, conferencia o experiencia que quieras compartir puedes enviar tu
+            propuesta
           </p>
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,11 +1,11 @@
-import { Button } from './ui/button';
+import { Button } from './ui/button'
 
 export default function Resources() {
   const resources = [
     { id: 1, title: 'Introducción a ES6', type: 'Video' },
     { id: 2, title: 'React Hooks en Profundidad', type: 'Artículo' },
     { id: 3, title: 'Node.js para Principiantes', type: 'Curso' },
-  ];
+  ]
 
   return (
     <section id="resources" className="bg-white py-20">
@@ -25,5 +25,5 @@ export default function Resources() {
         </div>
       </div>
     </section>
-  );
+  )
 }

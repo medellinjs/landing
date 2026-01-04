@@ -1,21 +1,12 @@
-'use client';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+'use client'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@components/ui/form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
-import {
-  newsletterSchema,
-  Newsletter as NewsletterType,
-} from '@/lib/types/newsletter';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@components/ui/form'
+import { Button } from '@/components/ui/button'
+import { Input } from '@components/ui/input'
+import { Spinner } from '@/components/ui/spinner'
+import { newsletterSchema, Newsletter as NewsletterType } from '@/lib/types/newsletter'
 
 export default function Newsletter() {
   const form = useForm({
@@ -23,7 +14,7 @@ export default function Newsletter() {
     defaultValues: {
       email: '',
     },
-  });
+  })
 
   const onSubmit = async (data: NewsletterType) => {
     try {
@@ -33,15 +24,14 @@ export default function Newsletter() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      };
-      await fetch('/api/subscribe', options);
+      }
+      await fetch('/api/subscribe', options)
 
-      form.reset();
+      form.reset()
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error:', error);
+      console.error('Error:', error)
     }
-  };
+  }
 
   return (
     <section className="relative table w-full bg-indigo-600 py-36">
@@ -58,17 +48,13 @@ export default function Newsletter() {
               </h3>
 
               <p className="mx-auto max-w-xl text-white/80 lg:ms-auto">
-                Recibe actualizaciones sobre eventos, recursos y oportunidades
-                exclusivas.
+                Recibe actualizaciones sobre eventos, recursos y oportunidades exclusivas.
               </p>
             </div>
           </div>
 
           <Form {...form}>
-            <form
-              className="relative max-w-xl"
-              onSubmit={form.handleSubmit(onSubmit)}
-            >
+            <form className="relative max-w-xl" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
                 name="email"
@@ -93,11 +79,7 @@ export default function Newsletter() {
               >
                 <div className="flex items-center justify-center gap-2">
                   {form.formState.isSubmitting ? 'Enviando...' : 'Suscribirse'}
-                  <Spinner
-                    size="small"
-                    show={form.formState.isSubmitting}
-                    className="text-white"
-                  />
+                  <Spinner size="small" show={form.formState.isSubmitting} className="text-white" />
                 </div>
               </Button>
             </form>
@@ -105,5 +87,5 @@ export default function Newsletter() {
         </div>
       </div>
     </section>
-  );
+  )
 }

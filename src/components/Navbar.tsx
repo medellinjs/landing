@@ -1,70 +1,63 @@
-'use client';
-import { useState, FC, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
+'use client'
+import { useState, FC, useEffect } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
 
-import { usePathname } from 'next/navigation';
-import { LuSettings } from 'react-icons/lu';
-import { BsCart3 } from 'react-icons/bs';
+import { usePathname } from 'next/navigation'
 
 export type NavbarProps = {
-  navClass?: string;
-  navJustify?: string;
-  manu?: string;
-};
+  navClass?: string
+  navJustify?: string
+  manu?: string
+}
 
 export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
-  const [isMenu, setisMenu] = useState(false);
+  const [isMenu, setisMenu] = useState(false)
 
-  const [manu, setManu] = useState('');
-  const pathname = usePathname();
+  const [manu, setManu] = useState('')
+  const pathname = usePathname()
 
   useEffect(() => {
-    setManu(pathname);
+    setManu(pathname)
 
     function windowScroll() {
-      const navbar = document.getElementById('topnav');
-      if (
-        document.body.scrollTop >= 50 ||
-        document.documentElement.scrollTop >= 50
-      ) {
+      const navbar = document.getElementById('topnav')
+      if (document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50) {
         if (navbar !== null) {
-          navbar?.classList.add('nav-sticky');
+          navbar?.classList.add('nav-sticky')
         }
       } else {
         if (navbar !== null) {
-          navbar?.classList.remove('nav-sticky');
+          navbar?.classList.remove('nav-sticky')
         }
       }
     }
-    window.addEventListener('scroll', windowScroll);
-    window.scrollTo(0, 0);
+    window.addEventListener('scroll', windowScroll)
+    window.scrollTo(0, 0)
     return () => {
-      window.removeEventListener('scroll', windowScroll);
-    };
-  }, [pathname, setManu]);
+      window.removeEventListener('scroll', windowScroll)
+    }
+  }, [pathname, setManu])
 
   const toggleMenu = () => {
-    setisMenu(!isMenu);
-    const navigation = document.getElementById('navigation');
+    setisMenu(!isMenu)
+    const navigation = document.getElementById('navigation')
     if (navigation) {
-      const anchorArray = Array.from(navigation.getElementsByTagName('a'));
+      const anchorArray = Array.from(navigation.getElementsByTagName('a'))
       anchorArray.forEach((element) => {
         element.addEventListener('click', (elem) => {
-          const target = (elem.target as HTMLAnchorElement).getAttribute(
-            'href',
-          );
+          const target = (elem.target as HTMLAnchorElement).getAttribute('href')
           if (target) {
             if ((elem.target as HTMLElement).nextElementSibling) {
               const submenu = (elem.target as HTMLElement).nextElementSibling
-                ?.nextElementSibling as HTMLElement;
-              submenu.classList.toggle('open');
+                ?.nextElementSibling as HTMLElement
+              submenu.classList.toggle('open')
             }
           }
-        });
-      });
+        })
+      })
     }
-  };
+  }
 
   return (
     <nav
@@ -81,20 +74,8 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
         {navClass === 'nav-light' ? (
           <Link className="logo" href="/">
             <span className="inline-block dark:hidden">
-              <Image
-                src="/logo-dark.png"
-                className="l-dark"
-                width={138}
-                height={24}
-                alt=""
-              />
-              <Image
-                src="/logo-light.png"
-                className="l-light"
-                width={138}
-                height={24}
-                alt=""
-              />
+              <Image src="/logo-dark.png" className="l-dark" width={138} height={24} alt="" />
+              <Image src="/logo-light.png" className="l-light" width={138} height={24} alt="" />
             </span>
             <Image
               src="/logo-light.png"
@@ -140,26 +121,22 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
           </div>
         </div>
 
-        {navClass !== 'nav-light' ? (
-          <ul className={`buy-button mb-0 list-none space-x-1`}></ul>
-        ) : (
-          <ul className="buy-button mb-0 hidden list-none space-x-1 sm:block">
-            <li className="mb-0 inline ps-1">
-              <Link href="/comparte">
-                <div className="login-btn-primary">
-                  <span className="w-full rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700">
-                    Inscribe tu charla
-                  </span>
-                </div>
-                <div className="login-btn-light">
-                  <span className="w-full rounded-md border bg-gray-50 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide duration-500 hover:border-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-slate-900 dark:hover:border-gray-700 dark:hover:bg-gray-700">
-                    Inscribe tu charla
-                  </span>
-                </div>
-              </Link>
-            </li>
-          </ul>
-        )}
+        <ul className="buy-button mb-0 hidden list-none space-x-1 sm:block">
+          <li className="mb-0 inline ps-1">
+            <Link href="/comparte">
+              <div className="login-btn-primary">
+                <span className="w-full rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700">
+                  Inscribe tu charla
+                </span>
+              </div>
+              <div className="login-btn-light">
+                <span className="w-full rounded-md border bg-gray-50 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide duration-500 hover:border-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-slate-900 dark:hover:border-gray-700 dark:hover:bg-gray-700">
+                  Inscribe tu charla
+                </span>
+              </div>
+            </Link>
+          </li>
+        </ul>
 
         <div id="navigation" style={{ display: isMenu ? 'block' : 'none' }}>
           <ul className={`navigation-menu ${navClass} ${navJustify}`}>
@@ -174,9 +151,15 @@ export const Navbar: FC<NavbarProps> = ({ navClass, navJustify }) => {
                 Patrocina
               </Link>
             </li>
+
+            <li className={manu === '/events' || '' ? 'active' : ''}>
+              <Link href="/events" className="sub-menu-item">
+                Eventos
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}

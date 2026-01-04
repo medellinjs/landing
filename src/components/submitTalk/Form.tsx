@@ -1,34 +1,27 @@
-'use client';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+'use client'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@components/ui/form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@components/ui/input';
-import { Textarea } from '@components/ui/textarea';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/form'
+import { Button } from '@/components/ui/button'
+import { Input } from '@components/ui/input'
+import { Textarea } from '@components/ui/textarea'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Spinner } from '@/components/ui/spinner';
-import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
+} from '@/components/ui/select'
+import { Spinner } from '@/components/ui/spinner'
+import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks'
 
 export const SubmitTalkForm = () => {
-  const [isSuccessVisible, setIsSuccessVisible] = useState(false);
+  const [isSuccessVisible, setIsSuccessVisible] = useState(false)
   const scrollToElement = () => {
-    window.scrollTo({ top: 350, left: 0, behavior: 'smooth' });
-  };
+    window.scrollTo({ top: 350, left: 0, behavior: 'smooth' })
+  }
 
   const form = useForm({
     resolver: zodResolver(submitTalkFormSchema),
@@ -48,7 +41,7 @@ export const SubmitTalkForm = () => {
       },
     },
     mode: 'onBlur',
-  });
+  })
 
   const onSubmit = async (data: SubmitTalkFormType) => {
     try {
@@ -58,20 +51,19 @@ export const SubmitTalkForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      };
-      await fetch('/api/talk', options);
+      }
+      await fetch('/api/talk', options)
 
-      scrollToElement();
-      form.reset();
-      setIsSuccessVisible(true);
+      scrollToElement()
+      form.reset()
+      setIsSuccessVisible(true)
       setTimeout(() => {
-        setIsSuccessVisible(false);
-      }, 3000);
+        setIsSuccessVisible(false)
+      }, 3000)
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error:', error);
+      console.error('Error:', error)
     }
-  };
+  }
 
   return (
     <Form {...form}>
@@ -126,8 +118,7 @@ export const SubmitTalkForm = () => {
                   render={({ field }) => (
                     <FormItem className="mb-4 flex flex-col">
                       <FormLabel className="font-semibold">
-                        Correo Electrónico{' '}
-                        <span className="text-red-500">*</span>
+                        Correo Electrónico <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
                         <Input
@@ -252,8 +243,7 @@ export const SubmitTalkForm = () => {
                 render={({ field }) => (
                   <FormItem className="mb-4 flex flex-col">
                     <FormLabel className="font-semibold">
-                      Tipo de presentación:{' '}
-                      <span className="text-red-500">*</span>
+                      Tipo de presentación: <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Select
@@ -264,15 +254,9 @@ export const SubmitTalkForm = () => {
                           <SelectValue placeholder="Selecciona una opción" />
                         </SelectTrigger>
                         <SelectContent className="bg-white dark:bg-slate-900">
-                          <SelectItem value="charla">
-                            Charla (30-45 minutos)
-                          </SelectItem>
-                          <SelectItem value="taller">
-                            Taller (1-2 horas)
-                          </SelectItem>
-                          <SelectItem value="lightning">
-                            Lightning Talk (5-10 minutos)
-                          </SelectItem>
+                          <SelectItem value="charla">Charla (30-45 minutos)</SelectItem>
+                          <SelectItem value="taller">Taller (1-2 horas)</SelectItem>
+                          <SelectItem value="lightning">Lightning Talk (5-10 minutos)</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -289,8 +273,7 @@ export const SubmitTalkForm = () => {
                 render={({ field }) => (
                   <FormItem className="mb-4 flex flex-col">
                     <FormLabel className="font-semibold">
-                      Nivel de la presentación{' '}
-                      <span className="text-red-500">*</span>
+                      Nivel de la presentación <span className="text-red-500">*</span>
                     </FormLabel>
                     <FormControl>
                       <Select
@@ -301,9 +284,7 @@ export const SubmitTalkForm = () => {
                           <SelectValue placeholder="Selecciona una opción" />
                         </SelectTrigger>
                         <SelectContent className="bg-white dark:bg-slate-900">
-                          <SelectItem value="principiante">
-                            Principiante
-                          </SelectItem>
+                          <SelectItem value="principiante">Principiante</SelectItem>
                           <SelectItem value="intermedio">Intermedio</SelectItem>
                           <SelectItem value="avanzado">Avanzado</SelectItem>
                         </SelectContent>
@@ -345,19 +326,11 @@ export const SubmitTalkForm = () => {
                 type="submit"
                 id="submit"
                 name="send"
-                disabled={
-                  form.formState.isSubmitting || !form.formState.isValid
-                }
+                disabled={form.formState.isSubmitting || !form.formState.isValid}
               >
                 <div className="flex items-center justify-center gap-2">
-                  {form.formState.isSubmitting
-                    ? 'Enviando propuesta...'
-                    : 'Enviar Propuesta'}
-                  <Spinner
-                    size="small"
-                    show={form.formState.isSubmitting}
-                    className="text-white"
-                  />
+                  {form.formState.isSubmitting ? 'Enviando propuesta...' : 'Enviar Propuesta'}
+                  <Spinner size="small" show={form.formState.isSubmitting} className="text-white" />
                 </div>
               </Button>
             </div>
@@ -365,7 +338,7 @@ export const SubmitTalkForm = () => {
         </div>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default SubmitTalkForm;
+export default SubmitTalkForm

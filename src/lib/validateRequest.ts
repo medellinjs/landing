@@ -1,15 +1,15 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const validateRequest = async <T extends z.ZodTypeAny>(
   req: Request,
   schema: T,
 ): Promise<z.infer<T> | Response> => {
-  const data = await req.json();
+  const data = await req.json()
 
-  const response = schema.safeParse(data);
+  const response = schema.safeParse(data)
 
   if (!response.success) {
-    const { errors } = response.error;
+    const { errors } = response.error
 
     return new Response(
       JSON.stringify({
@@ -23,8 +23,8 @@ export const validateRequest = async <T extends z.ZodTypeAny>(
           'Content-Type': 'application/json',
         },
       },
-    );
+    )
   }
 
-  return data;
-};
+  return data
+}

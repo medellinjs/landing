@@ -1,6 +1,6 @@
-'use client';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+'use client'
+import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 export default function SpeakerCTA() {
   return (
@@ -12,12 +12,10 @@ export default function SpeakerCTA() {
           transition={{ duration: 0.8 }}
           className="rounded-lg bg-white p-8 text-center shadow-xl"
         >
-          <h2 className="mb-4 text-3xl font-bold">
-            ¿Tienes una idea para una charla o taller?
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold">¿Tienes una idea para una charla o taller?</h2>
           <p className="mb-8 text-xl">
-            Comparte tu conocimiento con la comunidad MedellínJS. ¡Estamos
-            buscando speakers como tú!
+            Comparte tu conocimiento con la comunidad MedellínJS. ¡Estamos buscando speakers como
+            tú!
           </p>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <div className="text-center">
@@ -32,5 +30,5 @@ export default function SpeakerCTA() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

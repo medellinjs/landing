@@ -1,6 +1,6 @@
-import NextAuth from 'next-auth';
-import LinkedIn from 'next-auth/providers/linkedin';
-import type { NextAuthConfig } from 'next-auth';
+import NextAuth from 'next-auth'
+import LinkedIn from 'next-auth/providers/linkedin'
+import type { NextAuthConfig } from 'next-auth'
 
 export const config = {
   secret: process.env.AUTH_SECRET,
@@ -15,22 +15,22 @@ export const config = {
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const isProtected = nextUrl.pathname.startsWith('/dashboard');
+      const isLoggedIn = !!auth?.user
+      const isProtected = nextUrl.pathname.startsWith('/dashboard')
       if (isProtected) {
-        if (isLoggedIn) return true;
-        return false; // Redirect to login page
+        if (isLoggedIn) return true
+        return false // Redirect to login page
       }
-      return true;
+      return true
     },
     session({ session, token }) {
       // Add user id to session
       if (session.user && token.sub) {
-        session.user.id = token.sub;
+        session.user.id = token.sub
       }
-      return session;
+      return session
     },
   },
-} satisfies NextAuthConfig;
+} satisfies NextAuthConfig
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config);
+export const { handlers, auth, signIn, signOut } = NextAuth(config)

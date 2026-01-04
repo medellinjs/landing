@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { TypeAnimation } from 'react-type-animation';
+import { TypeAnimation } from 'react-type-animation'
 
 export const HeroTeam = () => {
   return (
@@ -34,14 +34,13 @@ export const HeroTeam = () => {
           </h1>
 
           <p className="mx-auto max-w-xl text-lg text-slate-300">
-            Nuestros organizadores son el motor que impulsa esta comunidad,
-            dedicando su tiempo, energía y creatividad para conectar a los
-            amantes de la tecnología en Medellín.
+            Nuestros organizadores son el motor que impulsa esta comunidad, dedicando su tiempo,
+            energía y creatividad para conectar a los amantes de la tecnología en Medellín.
           </p>
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HeroTeam;
+export default HeroTeam

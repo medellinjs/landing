@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 export const PrintButton = () => {
   return (
@@ -8,7 +8,7 @@ export const PrintButton = () => {
     >
       Imprimir
     </button>
-  );
-};
+  )
+}
 
-export default PrintButton;
+export default PrintButton

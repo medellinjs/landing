@@ -1,7 +1,7 @@
-import { Inter } from 'next/font/google';
-import type React from 'react'; // Import React
+import { Inter } from 'next/font/google'
+import type React from 'react' // Import React
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,5 +10,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     >
       {children}
     </div>
-  );
+  )
 }

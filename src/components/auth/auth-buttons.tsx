@@ -1,18 +1,13 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { signOut } from 'next-auth/react';
-import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
+import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,30 +15,30 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu'
 
 interface UserAuthProps {
   user: {
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-  } | null;
+    name?: string | null
+    email?: string | null
+    image?: string | null
+  } | null
 }
 
 export function UserAuthButton({ user }: UserAuthProps) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSignOut = async () => {
     try {
-      setIsLoading(true);
-      await signOut({ callbackUrl: '/' });
+      setIsLoading(true)
+      await signOut({ callbackUrl: '/' })
     } catch (error) {
-      console.error('Error al cerrar sesión:', error);
+      console.error('Error al cerrar sesión:', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   if (!user) {
     return (
@@ -55,7 +50,7 @@ export function UserAuthButton({ user }: UserAuthProps) {
         <FaSignInAlt className="h-4 w-4" />
         <span className="hidden sm:inline">Iniciar sesión</span>
       </Button>
-    );
+    )
   }
 
   return (
@@ -66,10 +61,7 @@ export function UserAuthButton({ user }: UserAuthProps) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-9 w-9 rounded-full">
                 <Avatar className="h-9 w-9">
-                  <AvatarImage
-                    src={user.image || ''}
-                    alt={user.name || 'Usuario'}
-                  />
+                  <AvatarImage src={user.image || ''} alt={user.name || 'Usuario'} />
                   <AvatarFallback>
                     {user.name ? (
                       user.name
@@ -115,5 +107,5 @@ export function UserAuthButton({ user }: UserAuthProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

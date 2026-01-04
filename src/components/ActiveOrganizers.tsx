@@ -1,10 +1,10 @@
-'use client';
-import type { FC } from 'react';
-import Link from 'next/link';
-import { MdKeyboardArrowRight } from 'react-icons/md';
+'use client'
+import type { FC } from 'react'
+import Link from 'next/link'
+import { MdKeyboardArrowRight } from 'react-icons/md'
 
-import { teamData } from '@assets/data';
-import OrganizerCard from './OrganizerCard';
+import { teamData } from '@assets/data'
+import OrganizerCard from './OrganizerCard'
 
 const ActiveOrganizersSection: FC = () => {
   return (
@@ -16,9 +16,8 @@ const ActiveOrganizersSection: FC = () => {
           </h3>
 
           <p className="mx-auto max-w-xl text-slate-400">
-            Detrás de cada evento de MedellínJS hay un equipo apasionado y
-            comprometido que trabaja incansablemente para crear experiencias
-            memorables.
+            Detrás de cada evento de MedellínJS hay un equipo apasionado y comprometido que trabaja
+            incansablemente para crear experiencias memorables.
           </p>
         </div>
 
@@ -36,7 +35,7 @@ const ActiveOrganizersSection: FC = () => {
                   bgIndex={index}
                   socialNetworks={item.socialNetworks}
                 />
-              );
+              )
             })}
         </div>
 
@@ -46,14 +45,13 @@ const ActiveOrganizersSection: FC = () => {
               href="/team"
               className="me-2 mt-2 inline-flex items-center rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
             >
-              Ver Todos los Organizadores{' '}
-              <MdKeyboardArrowRight className="ms-1 text-xl" />
+              Ver Todos los Organizadores <MdKeyboardArrowRight className="ms-1 text-xl" />
             </Link>
           </div>
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default ActiveOrganizersSection;
+export default ActiveOrganizersSection

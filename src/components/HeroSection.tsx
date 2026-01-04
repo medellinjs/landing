@@ -1,9 +1,9 @@
-'use client';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
+'use client'
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import { Button } from './ui/button';
+import { Button } from './ui/button'
 
 export default function HeroSection() {
   return (
@@ -20,16 +20,13 @@ export default function HeroSection() {
                 MedellinJS
               </h1>
               <p className="mx-auto max-w-xl text-lg text-white/70">
-                Somos una comunidad vibrante de desarrolladores JavaScript
-                comprometidos con el aprendizaje continuo y el crecimiento
-                profesional en Medellín.
+                Somos una comunidad vibrante de desarrolladores JavaScript comprometidos con el
+                aprendizaje continuo y el crecimiento profesional en Medellín.
               </p>
 
               <div className="relative mt-8">
                 <Link
-                  href="https://www.meetup.com/medellinjs/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/events"
                   className="me-2 mt-2 inline-flex items-center rounded-md border bg-gray-50 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide duration-500 hover:border-gray-100 hover:bg-gray-200 dark:border-gray-700 dark:bg-slate-900 dark:hover:border-gray-700 dark:hover:bg-gray-700"
                 >
                   Ver Próximos Eventos
@@ -55,7 +52,7 @@ export default function HeroSection() {
         </div>
       </div>
     </>
-  );
+  )
   return (
     <section
       className="relative table w-full overflow-hidden bg-gradient-to-br from-indigo-600/20 to-yellow-500/20 bg-cover bg-fixed bg-top bg-no-repeat py-36 dark:from-indigo-600/20 dark:to-yellow-500/20 md:py-56 md:pb-0 lg:py-44"
@@ -118,5 +115,5 @@ export default function HeroSection() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }
