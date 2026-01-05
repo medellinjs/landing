@@ -1,5 +1,15 @@
 import type { CollectionConfig } from 'payload'
 
+type UserWithRole = {
+  role?: 'admin' | 'organizer' | string
+}
+
+const getUserRole = (user: unknown): UserWithRole['role'] => {
+  if (!user || typeof user !== 'object') return undefined
+  const role = (user as Record<string, unknown>).role
+  return typeof role === 'string' ? role : undefined
+}
+
 export const Members: CollectionConfig = {
   slug: 'members',
   admin: {
@@ -12,15 +22,13 @@ export const Members: CollectionConfig = {
     create: () => false, // No permite registro público
     update: ({ req: { user } }) => {
       if (!user) return false
-      // Type assertion since we know Users collection has role field
-      const userWithRole = user as any
-      if (userWithRole?.role === 'admin' || userWithRole?.role === 'organizer') return true
+      const role = getUserRole(user)
+      if (role === 'admin' || role === 'organizer') return true
       return false
     },
     delete: ({ req: { user } }) => {
       if (!user) return false
-      const userWithRole = user as any
-      return userWithRole?.role === 'admin'
+      return getUserRole(user) === 'admin'
     },
   },
   fields: [

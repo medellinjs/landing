@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prebuild": "pnpm run generate:types",
+    "prebuild": "pnpm run generate:types && pnpm run generate:importmap",
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
@@ -30,6 +30,7 @@
     "@payloadcms/db-vercel-postgres": "3.69.0",
     "@payloadcms/next": "3.69.0",
     "@payloadcms/richtext-lexical": "3.69.0",
+    "@payloadcms/storage-s3": "3.69.0",
     "@payloadcms/ui": "3.69.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",

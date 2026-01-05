@@ -116,7 +116,7 @@ export async function checkEventRegistration(
 export async function checkMemberRegistration(
   eventId: string,
   memberName: string,
-  memberEmail?: string,
+  _memberEmail?: string,
 ): Promise<RegistrationStatusResult> {
   try {
     const event = await getEventById(eventId)
