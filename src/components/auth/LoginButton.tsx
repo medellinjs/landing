@@ -1,33 +1,31 @@
-'use client';
+'use client'
 
-import { useState, FC } from 'react';
-import { signIn } from 'next-auth/react';
-import { FaLinkedin } from 'react-icons/fa';
+import { useState, FC } from 'react'
+import { signIn } from 'next-auth/react'
+import { FaLinkedin } from 'react-icons/fa'
 
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@/components/ui/button'
+import { Spinner } from '@/components/ui/spinner'
 
 export type LoginButtonProps = {
-  title?: string;
-};
+  title?: string
+}
 
-export const LoginButton: FC<LoginButtonProps> = ({
-  title = 'Continuar con LinkedIn',
-}) => {
-  const [connecting, setConnecting] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+export const LoginButton: FC<LoginButtonProps> = ({ title = 'Continuar con LinkedIn' }) => {
+  const [connecting, setConnecting] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSignIn = async (provider: string) => {
     try {
-      setConnecting(true);
-      setIsLoading(true);
-      await signIn(provider);
+      setConnecting(true)
+      setIsLoading(true)
+      await signIn(provider)
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
+      console.error('Error al iniciar sesión:', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <Button
@@ -47,7 +45,7 @@ export const LoginButton: FC<LoginButtonProps> = ({
         </>
       )}
     </Button>
-  );
-};
+  )
+}
 
-export default LoginButton;
+export default LoginButton

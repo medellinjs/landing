@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from 'next/link'
+import Image from 'next/image'
 
-import { communityTestimonials } from '@assets/data';
+import { communityTestimonials } from '@assets/data'
 
 export default function Community() {
   return (
@@ -12,9 +12,9 @@ export default function Community() {
             Nuestra Comunidad
           </h3>
           <p className="mx-auto max-w-xl text-slate-400">
-            En MedellínJS, nuestra comunidad es el corazón de todo lo que
-            hacemos. Aquí, desarrolladores, entusiastas y expertos en tecnología
-            se reúnen para compartir conocimientos, inspirarse y crecer juntos.
+            En MedellínJS, nuestra comunidad es el corazón de todo lo que hacemos. Aquí,
+            desarrolladores, entusiastas y expertos en tecnología se reúnen para compartir
+            conocimientos, inspirarse y crecer juntos.
           </p>
         </div>
       </div>
@@ -24,10 +24,7 @@ export default function Community() {
             <div className="slide-track flex items-center">
               {communityTestimonials.map((item, index) => {
                 return (
-                  <div
-                    className="slide m-2 h-auto w-72 md:w-[360px]"
-                    key={index}
-                  >
+                  <div className="slide m-2 h-auto w-72 md:w-[360px]" key={index}>
                     <ul className="space-y-4">
                       <li className="rounded-lg p-6 shadow dark:shadow-gray-800">
                         <div className="flex items-center border-b border-gray-100 pb-6 dark:border-gray-800">
@@ -82,12 +79,12 @@ export default function Community() {
                       </li>
                     </ul>
                   </div>
-                );
+                )
               })}
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -1,24 +1,19 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { RiMapPinLine } from 'react-icons/ri';
+import Link from 'next/link'
+import Image from 'next/image'
+import { RiMapPinLine } from 'react-icons/ri'
 
-import { FC } from 'react';
-import { sponsors } from '@/assets/data';
+import { FC } from 'react'
+import { sponsors } from '@/assets/data'
 
 export type SponsorProps = {
-  hideCTA?: boolean;
-};
+  hideCTA?: boolean
+}
 
 export const Sponsors: FC<SponsorProps> = ({ hideCTA = false }) => {
   return (
-    <section
-      id="sponsors"
-      className="relative bg-gray-50 py-16 dark:bg-slate-800 md:py-24"
-    >
+    <section id="sponsors" className="relative bg-gray-50 py-16 dark:bg-slate-800 md:py-24">
       <div className="container relative">
-        <h2 className="mb-8 text-center text-3xl font-bold">
-          Nuestros Sponsors
-        </h2>
+        <h2 className="mb-8 text-center text-3xl font-bold">Nuestros Sponsors</h2>
         <div className="mb-8 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {sponsors.map((data, index) => {
             return (
@@ -48,7 +43,7 @@ export const Sponsors: FC<SponsorProps> = ({ hideCTA = false }) => {
                   </span>
                 </div>
               </Link>
-            );
+            )
           })}
         </div>
         {hideCTA ? null : (
@@ -63,7 +58,7 @@ export const Sponsors: FC<SponsorProps> = ({ hideCTA = false }) => {
         )}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Sponsors;
+export default Sponsors

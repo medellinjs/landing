@@ -1,7 +1,7 @@
-'use client';
-import Image from 'next/image';
+'use client'
+import Image from 'next/image'
 
-import { sponsorTestimonials } from '@assets/data';
+import { sponsorTestimonials } from '@assets/data'
 
 export const SponsorQuotes = () => {
   return (
@@ -12,10 +12,9 @@ export const SponsorQuotes = () => {
         </h3>
 
         <p className="mx-auto max-w-xl text-slate-400">
-          Aquí compartimos las experiencias y testimonios de nuestros
-          patrocinadores sobre cómo ser parte de nuestra comunidad ha impactado
-          positivamente sus marcas y les ha permitido conectarse con talento
-          excepcional
+          Aquí compartimos las experiencias y testimonios de nuestros patrocinadores sobre cómo ser
+          parte de nuestra comunidad ha impactado positivamente sus marcas y les ha permitido
+          conectarse con talento excepcional
         </p>
       </div>
 
@@ -69,11 +68,11 @@ export const SponsorQuotes = () => {
                 </div>
               </li>
             </ul>
-          );
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SponsorQuotes;
+export default SponsorQuotes

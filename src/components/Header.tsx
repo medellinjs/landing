@@ -1,14 +1,14 @@
-'use client';
-import { useState } from 'react';
-import Link from 'next/link';
-import { Button } from './ui/button';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+'use client'
+import { useState } from 'react'
+import Link from 'next/link'
+import { Button } from './ui/button'
+import { Menu, X } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
 
   const menuItems = [
     { href: '/#about', text: 'Sobre Nosotros' },
@@ -23,7 +23,7 @@ export default function Header() {
     { href: '/#newsletter', text: 'Newsletter' },
     { href: '/#jobs', text: 'Ofertas Laborales' },
     { href: '/#contact', text: 'Contacto' },
-  ];
+  ]
 
   return (
     <header className="bg-white shadow-md">
@@ -86,5 +86,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  );
+  )
 }

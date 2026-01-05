@@ -1,15 +1,15 @@
-'use client';
-import React, { useState } from 'react';
+'use client'
+import React, { useState } from 'react'
 
-import { BsCheckCircle } from 'react-icons/bs';
-import { sponsorPackages } from '@/assets/data';
+import { BsCheckCircle } from 'react-icons/bs'
+import { sponsorPackages } from '@/assets/data'
 
 export const SponsorPlan = () => {
-  const [isOpenTab, setisOpenTab] = useState(0);
+  const [isOpenTab, setisOpenTab] = useState(0)
 
   const handleTabClick = (index: number) => {
-    setisOpenTab(index);
-  };
+    setisOpenTab(index)
+  }
 
   return (
     <div className="grid grid-cols-1">
@@ -54,9 +54,7 @@ export const SponsorPlan = () => {
                     Best
                   </span>
                 ) : null}
-                <h6 className="mb-5 font-bold uppercase text-indigo-600">
-                  {plan.name}
-                </h6>
+                <h6 className="mb-5 font-bold uppercase text-indigo-600">{plan.name}</h6>
 
                 <div className="mb-5 flex">
                   <span className="text-xl">$</span>
@@ -88,7 +86,7 @@ export const SponsorPlan = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SponsorPlan;
+export default SponsorPlan

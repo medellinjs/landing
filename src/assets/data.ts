@@ -137,7 +137,7 @@ export const teamData = [
     background: 'bg-sky-600/10 dark:bg-sky-600/30',
     isActive: false,
   },
-];
+]
 
 export const sponsors = [
   {
@@ -168,7 +168,7 @@ export const sponsors = [
     location: 'Praga',
     link: 'https://www.jetbrains.com',
   },
-];
+]
 
 export const sponsorPackages = [
   {
@@ -176,10 +176,7 @@ export const sponsorPackages = [
     name: 'Bronce',
     priceMonthly: (900000 / 12) * 1.25,
     priceYearly: 900000,
-    benefits: [
-      'Mención en materiales digitales',
-      'Acceso a estadísticas básicas de la comunidad',
-    ],
+    benefits: ['Mención en materiales digitales', 'Acceso a estadísticas básicas de la comunidad'],
   },
   {
     id: 2,
@@ -206,7 +203,7 @@ export const sponsorPackages = [
     tag: 'Preferido',
   },
   {
-    id: 3,
+    id: 4,
     name: 'Conference',
     priceMonthly: 5500000,
     priceYearly: 5500000,
@@ -218,7 +215,7 @@ export const sponsorPackages = [
       'Stand en la conferencia',
     ],
   },
-];
+]
 
 export const sponsorFaqs = [
   {
@@ -241,8 +238,7 @@ export const sponsorFaqs = [
   },
   {
     id: 4,
-    question:
-      '¿Qué ofrece el plan Conference y en qué se diferencia de los demás?',
+    question: '¿Qué ofrece el plan Conference y en qué se diferencia de los demás?',
     answer:
       'El plan Conference está especialmente diseñado para la JSConf Latam. Incluye promoción exclusiva durante la conferencia, 10 entradas VIP, un stand en el evento y todos los beneficios del plan Plata en MedellínJS. Este plan es ideal para empresas que desean maximizar su visibilidad en uno de los eventos más importantes de la comunidad tech en Latinoamérica..',
   },
@@ -252,7 +248,7 @@ export const sponsorFaqs = [
     answer:
       'Ofrecemos ambas opciones. Puedes elegir pagar mensualmente con un pequeño incremento del 25% sobre el costo anual, o realizar un pago único anual para ahorrar en el costo total.',
   },
-];
+]
 
 export const sponsorTestimonials = [
   {
@@ -291,7 +287,7 @@ export const sponsorTestimonials = [
     name1: 'Carlos Gómez',
     company1: 'Nodo Eafit',
   },
-];
+]
 
 export const communityTestimonials = [
   {
@@ -475,4 +471,4 @@ export const communityTestimonials = [
     title2: 'Ingeniera informática',
     des2: 'Charlas muy interesantes, gente muy amable y un ambiente muy agradable. Me encanta MedellínJS.',
   },
-];
+]

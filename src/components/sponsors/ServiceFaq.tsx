@@ -1,42 +1,33 @@
-'use client';
-import React, { useState } from 'react';
+'use client'
+import React, { useState } from 'react'
 
-import { sponsorFaqs } from '@/assets/data';
+import { sponsorFaqs } from '@/assets/data'
 
 export function ServiceFaq() {
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(1)
 
   const toggleAccordion = (index: number) => {
     if (activeIndex === index) {
-      setActiveIndex(0);
+      setActiveIndex(0)
     } else {
-      setActiveIndex(index);
+      setActiveIndex(index)
     }
-  };
+  }
 
   return (
-    <div
-      id="accordion-collapse"
-      data-accordion="collapse"
-      className="mt-8 grid grid-cols-1 gap-8"
-    >
+    <div id="accordion-collapse" data-accordion="collapse" className="mt-8 grid grid-cols-1 gap-8">
       <div>
         {sponsorFaqs.map((item, index) => (
           <div
             key={index}
             className="relative mt-4 overflow-hidden rounded-md shadow dark:shadow-gray-800"
           >
-            <h2
-              className="text-base font-semibold"
-              id="accordion-collapse-heading-1"
-            >
+            <h2 className="text-base font-semibold" id="accordion-collapse-heading-1">
               <button
                 type="button"
                 onClick={() => toggleAccordion(item.id)}
                 className={`flex w-full items-center justify-between p-5 text-start font-medium ${
-                  activeIndex === item.id
-                    ? 'bg-gray-50 text-indigo-600 dark:bg-slate-800'
-                    : ''
+                  activeIndex === item.id ? 'bg-gray-50 text-indigo-600 dark:bg-slate-800' : ''
                 }`}
                 data-accordion-target="#accordion-collapse-body-1"
                 aria-expanded="true"
@@ -63,9 +54,7 @@ export function ServiceFaq() {
             {activeIndex === item.id && (
               <div>
                 <div className="p-5">
-                  <p className="text-slate-400 dark:text-gray-400">
-                    {item.answer}
-                  </p>
+                  <p className="text-slate-400 dark:text-gray-400">{item.answer}</p>
                 </div>
               </div>
             )}
@@ -73,7 +62,7 @@ export function ServiceFaq() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default ServiceFaq;
+export default ServiceFaq

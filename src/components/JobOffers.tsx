@@ -1,4 +1,4 @@
-import { Button } from './ui/button';
+import { Button } from './ui/button'
 
 export default function JobOffers() {
   const jobs = [
@@ -20,14 +20,12 @@ export default function JobOffers() {
       company: 'DevHub',
       type: 'Contrato',
     },
-  ];
+  ]
 
   return (
     <section id="jobs" className="bg-gray-100 py-20">
       <div className="container mx-auto px-4">
-        <h2 className="mb-8 text-center text-3xl font-bold">
-          Ofertas Laborales
-        </h2>
+        <h2 className="mb-8 text-center text-3xl font-bold">Ofertas Laborales</h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {jobs.map((job) => (
             <div key={job.id} className="rounded-lg bg-white p-6 shadow-md">
@@ -44,5 +42,5 @@ export default function JobOffers() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -2,18 +2,18 @@ import {
   createContact,
   // sendEmailAdmins,
   sendEmailSubmittedTalk,
-} from '@/lib/resend';
-import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks';
-import { insertRecord } from '@/lib/airtableService';
+} from '@/lib/resend'
+import { submitTalkFormSchema, SubmitTalkFormType } from '@/lib/types/talks'
+import { insertRecord } from '@/lib/airtableService'
 
-const TABLE_NAME = 'Talks';
+const TABLE_NAME = 'Talks'
 export async function POST(req: Request): Promise<Response> {
-  const data: SubmitTalkFormType = await req.json();
+  const data: SubmitTalkFormType = await req.json()
 
-  const response = submitTalkFormSchema.safeParse(data);
+  const response = submitTalkFormSchema.safeParse(data)
 
   if (!response.success) {
-    const { errors } = response.error;
+    const { errors } = response.error
 
     return new Response(
       JSON.stringify({
@@ -27,10 +27,10 @@ export async function POST(req: Request): Promise<Response> {
           'Content-Type': 'application/json',
         },
       },
-    );
+    )
   }
 
-  const { speaker, talk } = response.data;
+  const { speaker, talk } = response.data
 
   const fields = {
     fullName: speaker.fullName,
@@ -42,17 +42,17 @@ export async function POST(req: Request): Promise<Response> {
     description: talk.description,
     level: talk.level,
     type: talk.type,
-  };
+  }
 
-  await insertRecord(TABLE_NAME, fields);
+  await insertRecord(TABLE_NAME, fields)
 
-  await createContact(speaker.email, speaker.fullName);
+  await createContact(speaker.email, speaker.fullName)
 
   const { error: submittedError } = await sendEmailSubmittedTalk({
     email: speaker.email,
     fullName: speaker.fullName,
     proposalTitle: talk.title,
-  });
+  })
 
   // setTimeout(() => {
   //   sendEmailAdmins({
@@ -63,7 +63,7 @@ export async function POST(req: Request): Promise<Response> {
   // }, 10_000);
 
   if (submittedError) {
-    return new Response(submittedError.message, { status: 400 });
+    return new Response(submittedError.message, { status: 400 })
   }
 
   return new Response(JSON.stringify({ saved: true }), {
@@ -71,5 +71,5 @@ export async function POST(req: Request): Promise<Response> {
     headers: {
       'Content-Type': 'application/json',
     },
-  });
+  })
 }

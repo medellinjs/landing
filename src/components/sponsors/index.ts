@@ -1,3 +1,3 @@
-export * from './Plan';
-export * from './Quotes';
-export * from './ServiceFaq';
+export * from './Plan'
+export * from './Quotes'
+export * from './ServiceFaq'

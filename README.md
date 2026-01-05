@@ -1,114 +1,100 @@
-# MedellínJS Landing Page
+# MedellínJS Web + Admin (Payload CMS)
 
-## Objetivo del Proyecto
+This repository contains the **public MedellínJS website** (Next.js) and an **events platform** managed via **Payload CMS** (Admin at `/admin`).
 
-Este proyecto es la landing page oficial de la comunidad MedellínJS, diseñada para ser un punto de encuentro digital para desarrolladores JavaScript en Medellín. Nuestro objetivo es crear una plataforma moderna, accesible y atractiva que represente la vibrante comunidad tecnológica de la ciudad.
+## Documentation / Onboarding
 
-## Arquitectura del Proyecto
+Onboarding docs live in `docs/onboarding/`:
 
-### Diagrama de Arquitectura
+- `docs/onboarding/01-project-overview.md` (architecture, diagrams, structure)
+- `docs/onboarding/02-technical-decisions.md` (technical decisions, patterns, testing)
+- `docs/onboarding/03-getting-started.md` (setup, env vars, workflows)
+
+## Architecture (summary)
 
 ```mermaid
-graph TD
-    A[Usuarios] -->|Acceso| B[Página Web Next.js]
-    B -->|Renderizado| C[Componentes React]
-    B -->|Optimización| D[Servidor Next.js]
-    D -->|Generación Estática| E[Páginas Optimizadas]
+flowchart LR
+  U[Users] --> FE[Next.js Frontend\nsrc/app/(frontend)]
+  O[Organizers] --> ADM[Payload Admin\n/admin]
 
-    subgraph Frontend
-    C
-    E
-    end
+  FE --> APP[Next.js + Payload Runtime]
+  ADM --> APP
 
-    subgraph Infraestructura
-    D
-    F[Vercel Deployment]
-    end
+  APP --> DB[(Vercel Postgres)]
+  APP --> IMG[Sharp (images)]
 
-    A --> F
+  FE --> TALK[/api/talk\nAirtable + Resend/]
+  FE --> NEWS[/api/subscribe\nResend/]
 ```
 
-## Stack Tecnológico
+## Tech stack (current)
 
-### Frontend
-- **Framework:** Next.js 14
-- **Lenguaje:** TypeScript
-- **Estilos:** Tailwind CSS
-- **Fuente:** Geist (Vercel Font)
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript + React
+- **CMS**: Payload CMS v3 (embedded Admin at `/admin`, embedded REST/GraphQL routes)
+- **DB**: Postgres (Vercel Postgres adapter)
+- **Styling**: Tailwind CSS + SCSS (includes `src/app/(payload)/custom.scss`)
+- **Images**: Sharp
+- **Integrations**: Airtable (talk submissions), Resend (emails/contacts)
+- **Testing**: Vitest (int), Playwright (e2e)
+- **Auth**:
+  - Payload Auth for Admin
+  - NextAuth (LinkedIn) for middleware-protected routes (`/dashboard/*`)
 
-### Infraestructura
-- **Plataforma de Despliegue:** Vercel
-- **Repositorio:** GitHub
-- **Integración Continua:** GitHub Actions
+## Project structure (high-signal)
 
-## Estructura del Proyecto
-
-```
-medellinjs-landing/
-│
-├── app/                # Rutas y componentes principales
-│   ├── page.tsx        # Página principal
-│   ├── layout.tsx      # Diseño base de la aplicación
-│   └── ...
-│
-├── components/         # Componentes reutilizables
-│   ├── Header.tsx
-│   ├── Footer.tsx
-│   └── ...
-│
-├── public/             # Recursos estáticos
-│   ├── images/
-│   └── icons/
-│
-├── styles/             # Estilos globales
-│   └── globals.css
-│
-├── lib/                # Utilidades y helpers
-│   └── utils.ts
-│
-└── README.md           # Documentación del proyecto
+```text
+.
+├── docs/
+│   └── onboarding/                 # Onboarding (new)
+├── src/
+│   ├── app/
+│   │   ├── (frontend)/             # Public routes
+│   │   ├── (payload)/              # Payload Admin + REST/GraphQL routes
+│   │   └── api/                    # API routes: talk / subscribe
+│   ├── actions/                    # Server Actions (event/member flows)
+│   ├── collections/                # Payload collections (Events, Speakers, etc.)
+│   ├── components/                 # UI components
+│   ├── emailTemplates/             # React Email templates
+│   ├── lib/                        # Resend/Airtable/Payload helpers, etc.
+│   └── payload.config.ts           # Configuración Payload
+├── tests/
+│   ├── int/                        # Vitest
+│   └── e2e/                        # Playwright
+└── package.json
 ```
 
-## Relaciones de Componentes
+## Getting started (quick)
 
-- **Layout Principal:** Gestiona la estructura base de la aplicación
-- **Componentes:** Modularizados y reutilizables
-- **Páginas:** Generadas estáticamente para máximo rendimiento
+Requirements:
 
-## Comenzando
+- Node.js `^18.20.2` or `>=20.9.0`
+- pnpm `^9` or `^10`
 
-### Requisitos Previos
-- Node.js 18+
-- npm/yarn/pnpm
+Install + dev:
 
-### Instalación
-
-1. Clonar el repositorio
 ```bash
-git clone https://github.com/medellinjs/landing.git
-cd landing
+pnpm install
+pnpm dev
 ```
 
-2. Instalar dependencias
-```bash
-npm install
-```
+URLs:
 
-3. Ejecutar en desarrollo
-```bash
-npm run dev
-```
+- Public site: `http://localhost:3000`
+- Admin (Payload): `http://localhost:3000/admin`
 
-## Contribuciones
+> For full setup (env vars, workflows, troubleshooting), see `docs/onboarding/03-getting-started.md`.
 
-¡Las contribuciones son bienvenidas! Por favor, lee nuestras [guías de contribución](CONTRIBUTING.md).
+## Contributing
 
-## Licencia
+Contributions are welcome! Please read `CONTRIBUTING.md` (if present) and open a PR with a clear description of the change.
 
-[Especificar Licencia]
+## License
 
-## Contacto
+MIT (see `package.json`).
 
-- **Comunidad:** MedellínJS
-- **Email:** [contacto@medellinjs.org]
-- **Web:** [https://medellinjs.org]
+## Contact
+
+- **Community**: MedellínJS
+- **Email**: `contacto@medellinjs.org`
+- **Web**: `https://medellinjs.org`
