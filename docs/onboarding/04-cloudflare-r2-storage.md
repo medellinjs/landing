@@ -125,6 +125,29 @@ Después de re-subir, las relaciones (Speakers/Events) deberían empezar a mostr
 
 ## Troubleshooting rápido
 
+### Build / runtime rompe con: `column "prefix" does not exist`
+
+Esto significa que tu tabla `media` en Postgres **no tiene una columna que Payload espera** para uploads (por ejemplo al usar storage adapters).
+
+**Solución rápida (SQL seguro e idempotente)**: agrega la columna faltante.
+
+Si usas Vercel Postgres:
+
+1. Vercel → **Storage** → **Postgres** → **Query**
+2. Ejecuta:
+
+```sql
+ALTER TABLE "media" ADD COLUMN IF NOT EXISTS "prefix" text;
+```
+
+Alternativa por consola (si tienes `psql` y `POSTGRES_URL`):
+
+```bash
+psql "$POSTGRES_URL" -c 'ALTER TABLE "media" ADD COLUMN IF NOT EXISTS "prefix" text;'
+```
+
+Luego vuelve a correr el build / redeploy.
+
 ### “500 /api/media/file/...” en producción
 
 - Falta configurar el storage en Vercel (revisa `S3_*`)

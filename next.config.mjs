@@ -3,6 +3,11 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
+  // Silence Dart Sass deprecation warnings coming from 3rd-party SCSS (e.g. @payloadcms/ui)
+  // related to legacy `@import` usage.
+  sassOptions: {
+    silenceDeprecations: ['import'],
+  },
   images: {
     remotePatterns: [
       {

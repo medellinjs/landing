@@ -40,12 +40,21 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
   // Extract description from Lexical content
   let description = 'Evento de la comunidad MedellinJS'
   if (typeof event.description === 'object' && event.description?.root) {
-    const extractText = (node: any): string => {
-      if (node.type === 'text') return node.text || ''
-      if (node.children) return node.children.map(extractText).join('')
+    const extractText = (node: unknown): string => {
+      if (!node || typeof node !== 'object') return ''
+
+      const obj = node as Record<string, unknown>
+      if (obj.type === 'text') return typeof obj.text === 'string' ? obj.text : ''
+
+      const children = obj.children
+      if (Array.isArray(children)) return children.map(extractText).join('')
+
       return ''
     }
-    const fullText = event.description.root.children.map(extractText).join(' ')
+
+    const root = event.description.root as { children?: unknown }
+    const children = Array.isArray(root?.children) ? root.children : []
+    const fullText = children.map(extractText).join(' ')
     description = fullText.slice(0, 160)
   }
 

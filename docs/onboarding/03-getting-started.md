@@ -113,6 +113,8 @@ Common tasks:
 - **Can’t log into `/admin`**: confirm `PAYLOAD_SECRET` is set and `POSTGRES_URL` points to a reachable database.
 - **Talk submission fails**: confirm Airtable env vars exist, and that the table name matches the code (`Talks`).
 - **Emails not sending**: confirm `RESEND_API_KEY` is set and the sender domain is configured in Resend.
+- **Build fails with `column "prefix" does not exist`**: your DB schema is missing an uploads column on `media`. Run:
+  - `ALTER TABLE "media" ADD COLUMN IF NOT EXISTS "prefix" text;`
 - **Images return 500 on Vercel (`/api/media/file/...`)**: configure R2 storage env vars (`S3_*`) so uploads do not rely on the serverless filesystem, and ensure the files are publicly accessible (or served via a public custom domain).
 
 
