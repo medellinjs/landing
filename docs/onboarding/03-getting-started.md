@@ -24,6 +24,13 @@ Create `.env.local` in the repo root.
 
 ### Optional (features)
 
+- **Payload uploads (Cloudflare R2 / S3 compatible)**
+  - `S3_ENDPOINT` (R2 S3 endpoint, e.g. `https://<accountid>.r2.cloudflarestorage.com`)
+  - `S3_BUCKET` (bucket name)
+  - `S3_ACCESS_KEY_ID`
+  - `S3_SECRET_ACCESS_KEY`
+  - `S3_REGION` (optional; for R2 use `auto`)
+  - `S3_PUBLIC_HOSTNAME` (required if using `next/image`; set to your public R2 domain, e.g. `pub-xxxx.r2.dev` or your custom domain)
 - **NextAuth (LinkedIn)**
   - `AUTH_SECRET`
   - `LINKEDIN_CLIENT_ID`
@@ -106,5 +113,6 @@ Common tasks:
 - **Can’t log into `/admin`**: confirm `PAYLOAD_SECRET` is set and `POSTGRES_URL` points to a reachable database.
 - **Talk submission fails**: confirm Airtable env vars exist, and that the table name matches the code (`Talks`).
 - **Emails not sending**: confirm `RESEND_API_KEY` is set and the sender domain is configured in Resend.
+- **Images return 500 on Vercel (`/api/media/file/...`)**: configure R2 storage env vars (`S3_*`) so uploads do not rely on the serverless filesystem, and ensure the files are publicly accessible (or served via a public custom domain).
 
 

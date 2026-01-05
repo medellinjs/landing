@@ -9,6 +9,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'media.licdn.com',
       },
+      ...(process.env.S3_PUBLIC_HOSTNAME
+        ? [
+            {
+              protocol: 'https',
+              hostname: process.env.S3_PUBLIC_HOSTNAME,
+            },
+          ]
+        : []),
     ],
   },
   webpack: (webpackConfig) => {
