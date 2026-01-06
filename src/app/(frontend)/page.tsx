@@ -13,6 +13,7 @@ import ActiveOrganizersSection from '@/components/ActiveOrganizers'
 // import Contact from "../components/Contact";
 import Footer from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
+// import Switcher from '@/components/Switcher'
 
 export default async function HomePage() {
   return (
@@ -32,6 +33,7 @@ export default async function HomePage() {
         <ActiveOrganizersSection />
         {/* <Contact /> */}
       </main>
+      {/* <Switcher /> */}
       <Footer />
     </>
   )
