@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
@@ -101,12 +102,12 @@ export const MigrationPage = () => {
             Ya eres parte de la comunidad MedellínJS en este nuevo espacio. 🎊 <br />
             Pronto recibirás información sobre nuestros eventos, recursos y oportunidades.
           </p>
-          <Button
+          <Link
             className="mt-4 inline-block rounded-md border border-indigo-600 bg-indigo-600 px-5 py-2 text-center align-middle text-base font-semibold tracking-wide text-white duration-500 hover:border-indigo-700 hover:bg-indigo-700"
-            onClick={() => console.log('Ver próximos eventos')}
+            href="/events"
           >
             Ver próximos eventos
-          </Button>
+          </Link>
         </>
       ) : (
         <>
