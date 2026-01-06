@@ -8,7 +8,7 @@ import { LuUser } from 'react-icons/lu'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { MemberRegistrationModal } from '@/components/members/MemberRegistrationModal'
-import { retrieveMember } from '@/actions/member'
+import { retrieveMember, retrieveMemberByEmail } from '@/actions/member'
 
 const MEMBER_JOIN_INTENT_KEY = 'medellinjs:member-join-intent'
 
@@ -19,31 +19,52 @@ export const RegisterLoginButton = () => {
   const [showRegistrationModal, setShowRegistrationModal] = useState(false)
 
   const nextAuthId = session?.user?.id
+  const email = session?.user?.email
+
+  const findMember = async () => {
+    // Try NextAuth id first (fast path)
+    if (nextAuthId) {
+      const byId = await retrieveMember(String(nextAuthId))
+      if (byId) return byId
+    }
+
+    // Fallback to email (more stable across auth/session changes)
+    if (email) {
+      return await retrieveMemberByEmail(String(email))
+    }
+
+    return null
+  }
 
   useEffect(() => {
     const checkMember = async () => {
-      if (sessionStatus !== 'authenticated' || !nextAuthId) return
+      if (sessionStatus !== 'authenticated') return
       setIsLoading(true)
 
       try {
-        const member = await retrieveMember(String(nextAuthId))
+        // Read-and-clear intent immediately so it can't linger across refreshes
+        // and accidentally open the modal later.
+        let shouldOpenFromIntent = false
+        if (typeof window !== 'undefined') {
+          shouldOpenFromIntent = window.sessionStorage.getItem(MEMBER_JOIN_INTENT_KEY) === '1'
+          window.sessionStorage.removeItem(MEMBER_JOIN_INTENT_KEY)
+        }
+
+        const member = await findMember()
         if (member) {
           setIsMember(true)
           setShowRegistrationModal(false)
+          // Ensure any stale intent never survives if the user is already a member
+          if (typeof window !== 'undefined') {
+            window.sessionStorage.removeItem(MEMBER_JOIN_INTENT_KEY)
+          }
           return
         }
 
         setIsMember(false)
         // Do NOT auto-open modal on page load/refresh.
         // Only open it after an explicit user click that initiated login.
-        if (typeof window !== 'undefined') {
-          const shouldOpen =
-            window.sessionStorage.getItem(MEMBER_JOIN_INTENT_KEY) === '1' && Boolean(nextAuthId)
-          if (shouldOpen) {
-            window.sessionStorage.removeItem(MEMBER_JOIN_INTENT_KEY)
-            setShowRegistrationModal(true)
-          }
-        }
+        if (shouldOpenFromIntent) setShowRegistrationModal(true)
       } catch (error) {
         console.error('Error checking member:', error)
         setIsMember(false)
@@ -57,7 +78,7 @@ export const RegisterLoginButton = () => {
     }
 
     checkMember()
-  }, [sessionStatus, nextAuthId])
+  }, [sessionStatus, nextAuthId, email])
 
   // Handle LinkedIn sign-in
   const handleSignIn = async (provider: string) => {
@@ -78,11 +99,11 @@ export const RegisterLoginButton = () => {
   }
 
   const checkMemberAndOpenModalIfMissing = async () => {
-    if (sessionStatus !== 'authenticated' || !nextAuthId) return
+    if (sessionStatus !== 'authenticated') return
 
     setIsLoading(true)
     try {
-      const member = await retrieveMember(String(nextAuthId))
+      const member = await findMember()
       if (member) {
         setIsMember(true)
         setShowRegistrationModal(false)
