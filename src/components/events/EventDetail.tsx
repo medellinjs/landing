@@ -121,7 +121,7 @@ export function EventDetail({ event }: EventDetailProps) {
                               href={event.venue.googleMapsUrl || undefined}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-1 block text-sm text-white hover:text-violet-600"
+                              className="mt-1 block text-sm text-white underline hover:text-violet-600"
                             >
                               <p className="font-semibold leading-normal text-white">
                                 {event.venue.name}
