@@ -36,6 +36,7 @@ export const Members: CollectionConfig = {
       name: 'nextAuthId',
       type: 'text',
       unique: true,
+      index: true, // Creates indexed unique constraint for fast lookups
       admin: {
         description: 'ID del usuario en NextAuth',
         position: 'sidebar',
@@ -54,6 +55,7 @@ export const Members: CollectionConfig = {
       type: 'email',
       required: true,
       unique: true,
+      index: true, // Fast lookups by email
       admin: {
         description: 'Email del miembro',
       },

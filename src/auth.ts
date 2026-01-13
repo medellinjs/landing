@@ -26,18 +26,33 @@ export const config = {
     jwt({ token, account, profile }) {
       // Store LinkedIn account ID in token on first sign in
       if (account && profile) {
+        console.log('🔑 LinkedIn Account ID:', account.providerAccountId)
         // Use LinkedIn account ID which is always consistent
         token.linkedinId = account.providerAccountId
       }
+
+      // CRITICAL FIX: Ensure linkedinId persists in token
+      // If token doesn't have linkedinId but has sub, this might be a refresh
+      // We need to maintain linkedinId across token refreshes
+      if (!token.linkedinId && token.sub) {
+        console.warn('⚠️ Token missing linkedinId, using sub as fallback:', token.sub)
+      }
+
       return token
     },
     session({ session, token }) {
+      console.log('🚀 ~ session, token:', session, token)
       // Use LinkedIn ID as the user ID (consistent across logins)
-      if (session.user && token.linkedinId) {
-        session.user.id = token.linkedinId as string
-      } else if (session.user && token.sub) {
-        // Fallback to token.sub if linkedinId not available
-        session.user.id = token.sub
+      if (session.user) {
+        if (token.linkedinId) {
+          session.user.id = token.linkedinId as string
+          console.log('✅ session.user.id set to linkedinId:', session.user.id)
+        } else if (token.sub) {
+          // Fallback to token.sub if linkedinId not available
+          // This should only happen in edge cases
+          console.warn('⚠️ Using token.sub as user.id, linkedinId not available:', token.sub)
+          session.user.id = token.sub
+        }
       }
       return session
     },

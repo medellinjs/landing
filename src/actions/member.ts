@@ -33,7 +33,7 @@ export async function createMember(member: Member) {
   try {
     const payload = await getPayload({ config })
 
-    // Check if member already exists
+    // Check if member already exists by email
     const existing = await payload.find({
       collection: 'members',
       where: {
@@ -44,8 +44,29 @@ export async function createMember(member: Member) {
     })
 
     if (existing.docs.length > 0) {
+      const existingMember = existing.docs[0]
       logger.info(`Member already exists: ${member.email}`)
-      return existing.docs[0]
+
+      // CRITICAL FIX: Update nextAuthId if it's different (handles LinkedIn ID migration)
+      if (existingMember.nextAuthId !== member.nextAuthId) {
+        logger.warn(
+          `Updating nextAuthId for ${member.email} from ${existingMember.nextAuthId} to ${member.nextAuthId}`,
+        )
+        await payload.update({
+          collection: 'members',
+          id: existingMember.id,
+          data: {
+            nextAuthId: member.nextAuthId,
+          },
+        })
+        // Return updated member
+        return {
+          ...existingMember,
+          nextAuthId: member.nextAuthId,
+        }
+      }
+
+      return existingMember
     }
 
     await createContact(member.email, member.fullName)

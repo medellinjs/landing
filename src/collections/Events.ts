@@ -197,6 +197,7 @@ export const Events: CollectionConfig = {
       name: 'isPublished',
       type: 'checkbox',
       defaultValue: false,
+      index: true, // Fast filtering of published/unpublished events
       label: 'Publicado',
       admin: {
         description: 'Si está marcado, el evento será visible para el público',
@@ -207,6 +208,7 @@ export const Events: CollectionConfig = {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,
+      index: true, // Fast filtering of featured events
       label: 'Destacado',
       admin: {
         description: 'Si está marcado, el evento aparecerá en la página principal',

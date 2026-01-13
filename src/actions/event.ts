@@ -62,6 +62,7 @@ export async function checkEventRegistration(
 ): Promise<RegistrationStatusResult> {
   try {
     const payload = await getPayload({ config })
+    console.log('🚀 ~ checkEventRegistration ~ payload:', payload)
 
     // First, find the member by nextAuthId
     const memberResult = await payload.find({

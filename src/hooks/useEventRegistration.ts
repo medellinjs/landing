@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { checkEventRegistration, registerExistingMemberToEvent } from '@/actions/event'
 import { retrieveMember } from '@/actions/member'
 import type { EventRegistrationResult } from '@/lib/types/event'
+import { EventRegistrationError } from '@/lib/types/event'
 
 /**
  * Registration flow states
@@ -61,8 +62,9 @@ export function useEventRegistration(eventId: string): UseEventRegistrationResul
     setError(null)
 
     try {
-      // Check if user is registered using their nextAuthId (LinkedIn ID)
-      const registrationStatus = await checkEventRegistration(eventId, session.user.id)
+      // CRITICAL FIX: Check by user ID first, then fallback to email
+      // This handles cases where linkedinId might not be properly set
+      let registrationStatus = await checkEventRegistration(eventId, session.user.id)
 
       if (registrationStatus.isRegistered) {
         // User is already registered
@@ -72,8 +74,28 @@ export function useEventRegistration(eventId: string): UseEventRegistrationResul
         return
       }
 
-      // User not registered, check if they are a member
-      const member = await retrieveMember(session.user.id)
+      // User not registered by ID, check if they are a member
+      let member = await retrieveMember(session.user.id)
+
+      // FALLBACK: If no member found by ID, try by email
+      // This handles edge cases where session.user.id might differ
+      if (!member && session.user.email) {
+        const { retrieveMemberByEmail } = await import('@/actions/member')
+        member = await retrieveMemberByEmail(session.user.email)
+
+        if (member) {
+          console.log('✅ Member found by email fallback:', session.user.email)
+          // Check registration again with the correct member ID
+          registrationStatus = await checkEventRegistration(eventId, String(member.id))
+
+          if (registrationStatus.isRegistered) {
+            setState('registered')
+            setIsRegistered(true)
+            setNeedsMemberForm(false)
+            return
+          }
+        }
+      }
 
       if (!member) {
         // User is not a member, needs to complete registration form
@@ -107,7 +129,25 @@ export function useEventRegistration(eventId: string): UseEventRegistrationResul
     setError(null)
 
     try {
-      const result = await registerExistingMemberToEvent(eventId, session.user.id)
+      let result = await registerExistingMemberToEvent(eventId, session.user.id)
+
+      // FALLBACK: If registration failed because member not found, try by email
+      if (
+        !result.success &&
+        result.error === EventRegistrationError.MEMBER_NOT_FOUND &&
+        session.user.email
+      ) {
+        console.log('🔄 Retrying registration with email fallback:', session.user.email)
+
+        const { retrieveMemberByEmail } = await import('@/actions/member')
+        const member = await retrieveMemberByEmail(session.user.email)
+
+        if (member) {
+          // Try registration again with the member found by email
+          const { registerMemberToEvent } = await import('@/actions/event')
+          result = await registerMemberToEvent(eventId, String(member.id))
+        }
+      }
 
       if (result.success) {
         setState('registered')
