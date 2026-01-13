@@ -6,7 +6,6 @@ import config from '@payload-config'
 
 import type { Event } from '@/payload-types'
 import {
-  AttendeeInput,
   EventRegistrationError,
   EventRegistrationResult,
   RegistrationStatusResult,
@@ -51,47 +50,79 @@ export async function getEventById(eventId: string): Promise<Event | null> {
 
 /**
  * T003: Check if user is registered for an event
- * Checks if a user is already in the event's attendees list
+ * Checks if a user (by nextAuthId) is already in the event's attendees relationship
  *
  * @param eventId - The event ID to check
- * @param userEmail - User's email to match against attendees
+ * @param nextAuthId - User's NextAuth ID to match against members
  * @returns Registration status with attendee data if registered
  */
 export async function checkEventRegistration(
   eventId: string,
-  userEmail: string,
+  nextAuthId: string,
 ): Promise<RegistrationStatusResult> {
   try {
-    const event = await getEventById(eventId)
+    const payload = await getPayload({ config })
 
-    if (!event) {
-      logger.warn(`Event not found for registration check: ${eventId}`)
+    // First, find the member by nextAuthId
+    const memberResult = await payload.find({
+      collection: 'members',
+      where: {
+        nextAuthId: {
+          equals: nextAuthId,
+        },
+      },
+      limit: 1,
+      select: {
+        id: true,
+        fullName: true,
+        profileImage: true,
+      },
+    })
+
+    if (!memberResult.docs || memberResult.docs.length === 0) {
       return { isRegistered: false }
     }
 
-    // Check if attendees array exists and has items
-    if (!event.attendees || !Array.isArray(event.attendees) || event.attendees.length === 0) {
+    const member = memberResult.docs[0]
+
+    // Check if this member is in the event's attendees (optimized query - only fetch attendees)
+    const eventResult = await payload.find({
+      collection: 'events',
+      where: {
+        id: {
+          equals: eventId,
+        },
+      },
+      limit: 1,
+      depth: 0, // Only get attendee IDs, no need to populate
+      select: {
+        attendees: true,
+      },
+    })
+
+    const event = eventResult.docs[0]
+    if (!event || !event.attendees || !Array.isArray(event.attendees)) {
       return { isRegistered: false }
     }
 
-    // Find attendee by matching name with email (case-insensitive)
-    // This is a temporary solution - ideally we'd store email or ID
-    const attendee = event.attendees.find((a) => {
-      if (typeof a === 'object' && a !== null && 'name' in a) {
-        // For now, we'll need to check by email lookup
-        // In production, you might want to add an email field to attendees
-        return false // Will be enhanced with member lookup
+    // Check if member ID is in attendees (will be just numbers with depth: 0)
+    const isAttendee = event.attendees.some((attendee) => {
+      if (typeof attendee === 'number') {
+        return attendee === Number(member.id)
+      }
+      if (typeof attendee === 'object' && attendee !== null && 'id' in attendee) {
+        return attendee.id === Number(member.id)
       }
       return false
     })
 
-    if (attendee && typeof attendee === 'object' && 'name' in attendee) {
-      logger.info(`User ${userEmail} is registered for event ${eventId}`)
+    if (isAttendee) {
+      logger.info(`User ${nextAuthId} is registered for event ${eventId}`)
       return {
         isRegistered: true,
         attendee: {
-          name: attendee.name as string,
-          avatarUrl: attendee.avatarUrl as string | undefined,
+          name: member.fullName,
+          avatarUrl: member.profileImage || undefined,
         },
       }
     }
@@ -105,50 +136,49 @@ export async function checkEventRegistration(
 }
 
 /**
- * T003 Enhanced: Check registration by member data
- * More accurate check using member information
+ * T003 Enhanced: Check registration by member ID
+ * Checks if a specific member is registered for an event
  *
  * @param eventId - The event ID to check
- * @param memberName - Member's full name
- * @param memberEmail - Member's email (optional fallback)
+ * @param memberId - The member's ID
  * @returns Registration status
  */
 export async function checkMemberRegistration(
   eventId: string,
-  memberName: string,
-  _memberEmail?: string,
+  memberId: string,
 ): Promise<RegistrationStatusResult> {
   try {
+    const payload = await getPayload({ config })
+
     const event = await getEventById(eventId)
 
     if (!event || !event.attendees || !Array.isArray(event.attendees)) {
       return { isRegistered: false }
     }
 
-    // Check by name (primary) or email (fallback)
-    const attendee = event.attendees.find((a) => {
-      if (typeof a === 'object' && a !== null && 'name' in a) {
-        const attendeeName = (a.name as string).toLowerCase().trim()
-        const searchName = memberName.toLowerCase().trim()
-
-        // Exact name match
-        if (attendeeName === searchName) {
-          return true
-        }
-
-        // If email is provided, could add email-based matching in future
-        // For now, rely on name matching
-        return false
+    // Check if member ID is in attendees
+    const isAttendee = event.attendees.some((attendee) => {
+      if (typeof attendee === 'number') {
+        return attendee === Number(memberId)
+      }
+      if (typeof attendee === 'object' && attendee !== null && 'id' in attendee) {
+        return attendee.id === Number(memberId)
       }
       return false
     })
 
-    if (attendee && typeof attendee === 'object' && 'name' in attendee) {
+    if (isAttendee) {
+      // Fetch member details for return data
+      const member = await payload.findByID({
+        collection: 'members',
+        id: Number(memberId),
+      })
+
       return {
         isRegistered: true,
         attendee: {
-          name: attendee.name as string,
-          avatarUrl: (attendee.avatarUrl as string) || undefined,
+          name: member.fullName,
+          avatarUrl: member.profileImage || undefined,
         },
       }
     }
@@ -162,27 +192,32 @@ export async function checkMemberRegistration(
 }
 
 /**
- * T004: Register attendee to event
- * Adds an attendee to the event's attendees array with validation
+ * T004: Register member to event
+ * Adds a member to the event's attendees relationship with validation
  *
  * @param eventId - The event ID to register for
- * @param attendee - Attendee data (name and optional avatarUrl)
+ * @param memberId - The member ID to register
  * @returns Registration result with success/error status
  */
-export async function registerAttendeeToEvent(
+export async function registerMemberToEvent(
   eventId: string,
-  attendee: AttendeeInput,
+  memberId: string,
 ): Promise<EventRegistrationResult> {
   try {
     const payload = await getPayload({ config })
 
-    // Validate input
-    if (!attendee.name || attendee.name.trim().length === 0) {
-      logger.warn('Invalid attendee data: name is required')
+    // Validate member exists
+    const member = await payload.findByID({
+      collection: 'members',
+      id: Number(memberId),
+    })
+
+    if (!member) {
+      logger.warn(`Member not found: ${memberId}`)
       return {
         success: false,
-        error: EventRegistrationError.INVALID_DATA,
-        message: 'El nombre del asistente es requerido.',
+        error: EventRegistrationError.MEMBER_NOT_FOUND,
+        message: 'No se encontró tu perfil de miembro.',
       }
     }
 
@@ -234,9 +269,9 @@ export async function registerAttendeeToEvent(
     }
 
     // Check for duplicate registration
-    const registrationCheck = await checkMemberRegistration(eventId, attendee.name)
+    const registrationCheck = await checkMemberRegistration(eventId, memberId)
     if (registrationCheck.isRegistered) {
-      logger.info(`User already registered: ${attendee.name} for event ${eventId}`)
+      logger.info(`Member already registered: ${memberId} for event ${eventId}`)
       return {
         success: false,
         error: EventRegistrationError.ALREADY_REGISTERED,
@@ -244,38 +279,35 @@ export async function registerAttendeeToEvent(
       }
     }
 
-    // Add attendee to event
-    const currentAttendees = event.attendees || []
-    const updatedAttendees = [
-      ...currentAttendees,
-      {
-        name: attendee.name.trim(),
-        avatarUrl: attendee.avatarUrl || undefined,
-      },
-    ]
+    // Add member to event's attendees relationship
+    const currentAttendees = Array.isArray(event.attendees) ? event.attendees : []
+    const attendeeIds = currentAttendees.map((a) =>
+      typeof a === 'number' ? a : typeof a === 'object' && a !== null ? a.id : null,
+    )
+    const updatedAttendeeIds = [...attendeeIds.filter((id) => id !== null), Number(memberId)]
 
     await payload.update({
       collection: 'events',
       id: eventId,
       data: {
-        attendees: updatedAttendees,
+        attendees: updatedAttendeeIds,
       },
     })
 
-    logger.info(`Attendee registered successfully: ${attendee.name} to event ${eventId}`)
+    logger.info(`Member registered successfully: ${memberId} to event ${eventId}`)
 
     return {
       success: true,
       message: '¡Registro exitoso! Te esperamos en el evento.',
       attendee: {
-        name: attendee.name.trim(),
-        avatarUrl: attendee.avatarUrl,
+        name: member.fullName,
+        avatarUrl: member.profileImage || undefined,
       },
       eventId,
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
-    logger.error(`Error registering attendee to event ${eventId}: ${errorMessage}`)
+    logger.error(`Error registering member to event ${eventId}: ${errorMessage}`)
 
     return {
       success: false,
@@ -315,11 +347,8 @@ export async function registerNewMemberToEvent(
 
     logger.info(`Member created: ${member.id}`)
 
-    // Step 2: Register to event
-    const registrationResult = await registerAttendeeToEvent(eventId, {
-      name: member.fullName,
-      avatarUrl: member.profileImage || undefined,
-    })
+    // Step 2: Register to event using member ID
+    const registrationResult = await registerMemberToEvent(eventId, String(member.id))
 
     if (!registrationResult.success) {
       logger.warn('Member created but event registration failed')
@@ -383,11 +412,8 @@ export async function registerExistingMemberToEvent(
       }
     }
 
-    // Step 2: Register to event
-    return await registerAttendeeToEvent(eventId, {
-      name: member.fullName,
-      avatarUrl: member.profileImage || undefined,
-    })
+    // Step 2: Register to event using member ID
+    return await registerMemberToEvent(eventId, String(member.id))
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     logger.error(`Error in registerExistingMemberToEvent: ${errorMessage}`)

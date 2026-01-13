@@ -1,6 +1,7 @@
 import * as z from 'zod'
 
 export const memberSchema = z.object({
+  id: z.union([z.string(), z.number()]).optional(),
   nextAuthId: z.string().nonempty({ message: 'El id de NextAuth es requerido' }),
   fullName: z.string().nonempty({ message: 'El nombre es requerido' }),
   email: z.string().email({ message: 'El email es requerido' }),

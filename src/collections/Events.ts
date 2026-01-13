@@ -184,37 +184,14 @@ export const Events: CollectionConfig = {
     },
     {
       name: 'attendees',
-      type: 'array',
+      type: 'relationship',
+      relationTo: 'members',
+      hasMany: true,
+      maxDepth: 1,
       label: 'Asistentes confirmados',
       admin: {
-        description: 'Lista de personas que asistieron al evento (para mostrar en el detalle)',
+        description: 'Miembros registrados para este evento',
       },
-      fields: [
-        {
-          name: 'name',
-          type: 'text',
-          required: true,
-          label: 'Nombre',
-        },
-        {
-          name: 'avatarUrl',
-          type: 'text',
-          label: 'URL del avatar',
-          admin: {
-            description: 'URL de la foto de perfil del asistente (opcional)',
-          },
-          validate: (value: unknown) => {
-            if (!value) return true
-            if (typeof value !== 'string') return 'Debe ser un texto'
-            try {
-              new URL(value)
-              return true
-            } catch {
-              return 'Debe ser una URL válida'
-            }
-          },
-        },
-      ],
     },
     {
       name: 'isPublished',
