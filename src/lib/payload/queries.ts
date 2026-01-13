@@ -106,12 +106,14 @@ export async function getPublishedEvents(
 /**
  * Fetch a single event by slug
  * Returns unpublished events only for admin/organizer users
+ * Optimized to load minimal attendee data
  */
 export async function getEventBySlug(slug: string): Promise<Event | null> {
   const payload = await getPayload()
   const user = await getPayloadUser()
   const canSeeUnpublished = isAdminOrOrganizer(user)
 
+  // First, get event with attendees as IDs only (depth: 0 for attendees)
   const result = await payload.find({
     collection: 'events',
     where: canSeeUnpublished
@@ -134,11 +136,62 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
             },
           ],
         },
-    depth: 2, // Populate speakers and media
+    depth: 0, // Get IDs only initially
     limit: 1,
   })
 
-  return result.docs[0] || null
+  const event = result.docs[0]
+  if (!event) return null
+
+  // Manually populate speakers and media with full depth
+  if (event.speakers && Array.isArray(event.speakers) && event.speakers.length > 0) {
+    const speakerIds = event.speakers.filter((s) => typeof s === 'number')
+    if (speakerIds.length > 0) {
+      const speakers = await payload.find({
+        collection: 'speakers',
+        where: {
+          id: {
+            in: speakerIds,
+          },
+        },
+        depth: 1,
+      })
+      event.speakers = speakers.docs
+    }
+  }
+
+  if (event.previewImage && typeof event.previewImage === 'number') {
+    const media = await payload.findByID({
+      collection: 'media',
+      id: event.previewImage,
+    })
+    event.previewImage = media
+  }
+
+  // Populate attendees with only necessary fields
+  if (event.attendees && Array.isArray(event.attendees) && event.attendees.length > 0) {
+    const attendeeIds = event.attendees.filter((a) => typeof a === 'number')
+    if (attendeeIds.length > 0) {
+      const members = await payload.find({
+        collection: 'members',
+        where: {
+          id: {
+            in: attendeeIds,
+          },
+        },
+        select: {
+          id: true,
+          nextAuthId: true, // Needed for registration check
+          fullName: true,
+          profileImage: true,
+        },
+        limit: attendeeIds.length,
+      })
+      event.attendees = members.docs
+    }
+  }
+
+  return event as Event
 }
 
 /**

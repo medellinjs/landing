@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 
-import { checkMemberRegistration, registerExistingMemberToEvent } from '@/actions/event'
+import { checkEventRegistration, registerExistingMemberToEvent } from '@/actions/event'
 import { retrieveMember } from '@/actions/member'
 import type { EventRegistrationResult } from '@/lib/types/event'
 
@@ -54,9 +54,6 @@ export function useEventRegistration(eventId: string): UseEventRegistrationResul
   const [isRegistered, setIsRegistered] = useState(false)
   const [needsMemberForm, setNeedsMemberForm] = useState(false)
 
-  /**
-   * Check if user is already registered for the event
-   */
   const checkRegistration = useCallback(async () => {
     if (!session?.user || !eventId) return
 
@@ -64,7 +61,18 @@ export function useEventRegistration(eventId: string): UseEventRegistrationResul
     setError(null)
 
     try {
-      // First, check if user is a member
+      // Check if user is registered using their nextAuthId (LinkedIn ID)
+      const registrationStatus = await checkEventRegistration(eventId, session.user.id)
+
+      if (registrationStatus.isRegistered) {
+        // User is already registered
+        setState('registered')
+        setIsRegistered(true)
+        setNeedsMemberForm(false)
+        return
+      }
+
+      // User not registered, check if they are a member
       const member = await retrieveMember(session.user.id)
 
       if (!member) {
@@ -75,22 +83,10 @@ export function useEventRegistration(eventId: string): UseEventRegistrationResul
         return
       }
 
-      // User is a member, check if already registered for event
-      const registrationStatus = await checkMemberRegistration(
-        eventId,
-        member.fullName,
-        member.email,
-      )
-
-      if (registrationStatus.isRegistered) {
-        setState('registered')
-        setIsRegistered(true)
-        setNeedsMemberForm(false)
-      } else {
-        setState('not_registered')
-        setIsRegistered(false)
-        setNeedsMemberForm(false)
-      }
+      // User is a member but not registered for this event
+      setState('not_registered')
+      setIsRegistered(false)
+      setNeedsMemberForm(false)
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Error al verificar registro'
       setError(errorMessage)

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { Calendar, Clock, MapPin } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
-import type { Event, Media, Speaker } from '@/payload-types'
+import type { Event, Media, Speaker, Member } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
@@ -49,7 +49,32 @@ export function EventDetail({ event }: EventDetailProps) {
   const previewImage = event.previewImage as Media | undefined
   const imageUrl = previewImage?.url
   const speakers = (event.speakers as Speaker[]) || []
-  const attendees = event.attendees || []
+  const attendeesRaw = event.attendees || []
+
+  // Transform attendees (can be Member objects or IDs)
+  const attendees = attendeesRaw.map((attendee) => {
+    if (typeof attendee === 'number') {
+      // If it's just an ID, return minimal data
+      return {
+        id: String(attendee),
+        name: 'Asistente',
+        avatarUrl: undefined,
+      }
+    } else if (typeof attendee === 'object' && attendee !== null) {
+      // If it's a populated Member object
+      const member = attendee as Member
+      return {
+        id: String(member.id),
+        name: member.fullName,
+        avatarUrl: member.profileImage || undefined,
+      }
+    }
+    return {
+      id: undefined,
+      name: 'Asistente',
+      avatarUrl: undefined,
+    }
+  })
 
   // Check if event is in the future
   const isUpcomingEvent = new Date(event.startDate) > new Date()
@@ -189,13 +214,7 @@ export function EventDetail({ event }: EventDetailProps) {
         <SpeakerList speakers={speakers} />
       </section>
 
-      <AttendeeList
-        attendees={attendees.map((a) => ({
-          name: a.name || '',
-          avatarUrl: a.avatarUrl || undefined,
-          id: a.id || undefined,
-        }))}
-      />
+      <AttendeeList attendees={attendees} />
     </>
   )
 }

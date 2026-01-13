@@ -23,9 +23,20 @@ export const config = {
       }
       return true
     },
+    jwt({ token, account, profile }) {
+      // Store LinkedIn account ID in token on first sign in
+      if (account && profile) {
+        // Use LinkedIn account ID which is always consistent
+        token.linkedinId = account.providerAccountId
+      }
+      return token
+    },
     session({ session, token }) {
-      // Add user id to session
-      if (session.user && token.sub) {
+      // Use LinkedIn ID as the user ID (consistent across logins)
+      if (session.user && token.linkedinId) {
+        session.user.id = token.linkedinId as string
+      } else if (session.user && token.sub) {
+        // Fallback to token.sub if linkedinId not available
         session.user.id = token.sub
       }
       return session

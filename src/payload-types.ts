@@ -306,18 +306,9 @@ export interface Event {
    */
   speakers?: (number | Speaker)[] | null
   /**
-   * Lista de personas que asistieron al evento (para mostrar en el detalle)
+   * Miembros registrados para este evento
    */
-  attendees?:
-    | {
-        name: string
-        /**
-         * URL de la foto de perfil del asistente (opcional)
-         */
-        avatarUrl?: string | null
-        id?: string | null
-      }[]
-    | null
+  attendees?: (number | Member)[] | null
   /**
    * Si está marcado, el evento será visible para el público
    */
@@ -566,13 +557,7 @@ export interface EventsSelect<T extends boolean = true> {
         extraInfo?: T
       }
   speakers?: T
-  attendees?:
-    | T
-    | {
-        name?: T
-        avatarUrl?: T
-        id?: T
-      }
+  attendees?: T
   isPublished?: T
   featured?: T
   maxAttendees?: T

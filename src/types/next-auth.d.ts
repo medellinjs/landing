@@ -45,5 +45,6 @@ declare module 'next-auth/jwt' {
     email?: string
     name?: string
     picture?: string
+    linkedinId?: string // LinkedIn account ID (consistent across logins)
   }
 }
