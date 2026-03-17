@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 
 import { createContact } from '@/lib/resend'
+import { downloadAndStoreProfileImage } from '@/lib/download-profile-image'
 import { Member } from '@/lib/types/member'
 
 // Create a logger instance
@@ -47,23 +48,33 @@ export async function createMember(member: Member) {
       const existingMember = existing.docs[0]
       logger.info(`Member already exists: ${member.email}`)
 
-      // CRITICAL FIX: Update nextAuthId if it's different (handles LinkedIn ID migration)
+      const updates: Record<string, string | undefined> = {}
+
       if (existingMember.nextAuthId !== member.nextAuthId) {
         logger.warn(
           `Updating nextAuthId for ${member.email} from ${existingMember.nextAuthId} to ${member.nextAuthId}`,
         )
+        updates.nextAuthId = member.nextAuthId
+      }
+
+      // Download a fresh profile image when the LinkedIn URL changes (URLs expire)
+      if (member.profileImage && existingMember.profileImage !== member.profileImage) {
+        logger.info(`Downloading fresh profileImage for ${member.email}`)
+        const localUrl = await downloadAndStoreProfileImage(member.profileImage, member.fullName)
+        if (localUrl) {
+          updates.profileImage = localUrl
+        } else {
+          updates.profileImage = member.profileImage
+        }
+      }
+
+      if (Object.keys(updates).length > 0) {
         await payload.update({
           collection: 'members',
           id: existingMember.id,
-          data: {
-            nextAuthId: member.nextAuthId,
-          },
+          data: updates,
         })
-        // Return updated member
-        return {
-          ...existingMember,
-          nextAuthId: member.nextAuthId,
-        }
+        return { ...existingMember, ...updates }
       }
 
       return existingMember
@@ -73,6 +84,14 @@ export async function createMember(member: Member) {
 
     logger.info(`Creating member: ${member.email}`)
 
+    let storedProfileImage = member.profileImage
+    if (member.profileImage) {
+      const localUrl = await downloadAndStoreProfileImage(member.profileImage, member.fullName)
+      if (localUrl) {
+        storedProfileImage = localUrl
+      }
+    }
+
     const result = await payload.create({
       collection: 'members',
       data: {
@@ -80,7 +99,7 @@ export async function createMember(member: Member) {
         fullName: member.fullName.trim(),
         email: member.email.trim().toLowerCase(),
         jobPosition: member.jobPosition.trim(),
-        ...(member.profileImage && { profileImage: member.profileImage }),
+        ...(storedProfileImage && { profileImage: storedProfileImage }),
         jobLevel: mapJobLevel(member.jobLevel),
         role: 'MEMBER',
       },

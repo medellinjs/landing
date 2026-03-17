@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Image from 'next/image'
 import { FaArrowRight } from 'react-icons/fa'
 
@@ -12,6 +12,37 @@ interface Attendee {
 
 interface AttendeeListProps {
   attendees: Attendee[]
+}
+
+function AvatarFallback({ name }: { name: string }) {
+  return (
+    <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-purple-500 text-xl font-bold text-white">
+      {name.charAt(0).toUpperCase()}
+    </div>
+  )
+}
+
+function AttendeeAvatar({ name, avatarUrl }: { name: string; avatarUrl?: string | null }) {
+  const [hasError, setHasError] = useState(false)
+
+  const handleError = useCallback(() => {
+    setHasError(true)
+  }, [])
+
+  if (!avatarUrl || hasError) {
+    return <AvatarFallback name={name} />
+  }
+
+  return (
+    <Image
+      src={avatarUrl}
+      alt={name}
+      fill
+      className="mx-auto size-14 rounded-full shadow-md dark:shadow-gray-800"
+      sizes="64px"
+      onError={handleError}
+    />
+  )
 }
 
 const INITIAL_DISPLAY_COUNT = 15
@@ -47,24 +78,10 @@ export function AttendeeList({ attendees }: AttendeeListProps) {
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {displayedAttendees.map((attendee, index) => (
                 <div key={attendee.id || index} className="flex flex-col items-center text-center">
-                  {/* Attendee Avatar */}
                   <div className="relative mb-2 h-16 w-16">
-                    {attendee.avatarUrl ? (
-                      <Image
-                        src={attendee.avatarUrl}
-                        alt={attendee.name}
-                        fill
-                        className="mx-auto size-14 rounded-full shadow-md dark:shadow-gray-800"
-                        sizes="64px"
-                      />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-purple-500 text-xl font-bold text-white">
-                        {attendee.name.charAt(0).toUpperCase()}
-                      </div>
-                    )}
+                    <AttendeeAvatar name={attendee.name} avatarUrl={attendee.avatarUrl} />
                   </div>
 
-                  {/* Attendee Name */}
                   <p className="w-full truncate text-sm text-gray-700" title={attendee.name}>
                     {attendee.name}
                   </p>
