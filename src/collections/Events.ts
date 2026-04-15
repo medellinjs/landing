@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache'
 import type { CollectionConfig } from 'payload'
 
 export const Events: CollectionConfig = {
@@ -253,6 +254,18 @@ export const Events: CollectionConfig = {
             .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
         }
         return data
+      },
+    ],
+    afterChange: [
+      ({ doc, previousDoc }) => {
+        const isPublished = doc.isPublished
+        const wasPublished = previousDoc?.isPublished
+
+        // Revalidate when publishing, unpublishing, or updating a published event
+        if (isPublished || wasPublished) {
+          revalidatePath('/')
+          revalidatePath('/events/[slug]', 'page')
+        }
       },
     ],
   },
