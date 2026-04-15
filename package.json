@@ -103,6 +103,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@next/eslint-plugin-next": "^16.2.3",
     "@playwright/test": "1.56.1",
     "@tailwindcss/typography": "^0.5.19",
     "@testing-library/react": "16.3.0",
@@ -117,11 +118,11 @@
     "@typescript-eslint/parser": "^8.51.0",
     "@vitejs/plugin-react": "4.5.2",
     "eslint": "^9.39.2",
-    "eslint-config-next": "15.4.7",
+    "eslint-config-next": "15.4.10",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^9.1.7",
     "jsdom": "26.1.0",
     "lint-staged": "^16.4.0",
@@ -146,7 +147,10 @@
       "sharp",
       "esbuild",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "@rushstack/eslint-patch": "^1.10.4"
+    }
   },
   "husky": {
     "hooks": {
