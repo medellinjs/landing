@@ -6,7 +6,8 @@ const nextConfig = {
   // Silence Dart Sass deprecation warnings coming from 3rd-party SCSS (e.g. @payloadcms/ui)
   // related to legacy `@import` usage.
   sassOptions: {
-    silenceDeprecations: ['import'],
+    silenceDeprecations: ['import', 'mixed-decls', 'global-builtin', 'color-functions', 'legacy-js-api'],
+    quietDeps: true,
   },
   images: {
     remotePatterns: [

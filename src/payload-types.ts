@@ -72,6 +72,7 @@ export interface Config {
     speakers: Speaker
     events: Event
     members: Member
+    sponsors: Sponsor
     'payload-kv': PayloadKv
     'payload-locked-documents': PayloadLockedDocument
     'payload-preferences': PayloadPreference
@@ -84,6 +85,7 @@ export interface Config {
     speakers: SpeakersSelect<false> | SpeakersSelect<true>
     events: EventsSelect<false> | EventsSelect<true>
     members: MembersSelect<false> | MembersSelect<true>
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
     'payload-locked-documents':
       | PayloadLockedDocumentsSelect<false>
@@ -306,6 +308,10 @@ export interface Event {
    */
   speakers?: (number | Speaker)[] | null
   /**
+   * Empresas patrocinadoras de este evento
+   */
+  sponsors?: (number | Sponsor)[] | null
+  /**
    * Miembros registrados para este evento
    */
   attendees?: (number | Member)[] | null
@@ -330,6 +336,45 @@ export interface Event {
         id?: string | null
       }[]
     | null
+  updatedAt: string
+  createdAt: string
+}
+/**
+ * Empresas y organizaciones que patrocinan los eventos de MedellinJS
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors".
+ */
+export interface Sponsor {
+  id: number
+  /**
+   * Nombre de la empresa u organización patrocinadora
+   */
+  name: string
+  /**
+   * Logo oficial del sponsor (preferiblemente en PNG con fondo transparente)
+   */
+  logo: number | Media
+  /**
+   * URL del sitio web oficial del sponsor (ej: https://example.com)
+   */
+  websiteUrl: string
+  /**
+   * Ubicación principal de la empresa (ej: Medellín, Austin, Praga)
+   */
+  location?: string | null
+  /**
+   * Breve descripción del sponsor y su relación con la comunidad (opcional)
+   */
+  description?: string | null
+  /**
+   * Indica si el sponsor está activo y debe mostrarse públicamente
+   */
+  isActive?: boolean | null
+  /**
+   * Nivel de patrocinio — define la jerarquía visual en la página del evento
+   */
+  tier?: ('platinum' | 'gold' | 'silver' | 'community') | null
   updatedAt: string
   createdAt: string
 }
@@ -436,6 +481,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'members'
         value: number | Member
+      } | null)
+    | ({
+        relationTo: 'sponsors'
+        value: number | Sponsor
       } | null)
   globalSlug?: string | null
   user: {
@@ -557,6 +606,7 @@ export interface EventsSelect<T extends boolean = true> {
         extraInfo?: T
       }
   speakers?: T
+  sponsors?: T
   attendees?: T
   isPublished?: T
   featured?: T
@@ -593,6 +643,21 @@ export interface MembersSelect<T extends boolean = true> {
       }
   joinedAt?: T
   isActive?: T
+  updatedAt?: T
+  createdAt?: T
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sponsors_select".
+ */
+export interface SponsorsSelect<T extends boolean = true> {
+  name?: T
+  logo?: T
+  websiteUrl?: T
+  location?: T
+  description?: T
+  isActive?: T
+  tier?: T
   updatedAt?: T
   createdAt?: T
 }

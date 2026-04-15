@@ -2,12 +2,13 @@ import Image from 'next/image'
 import { Calendar, Clock, MapPin } from 'lucide-react'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
-import type { Event, Media, Speaker, Member } from '@/payload-types'
+import type { Event, Media, Speaker, Member, Sponsor } from '@/payload-types'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 import { SpeakerList } from './SpeakerList'
 import { AttendeeList } from './AttendeeList'
+import { EventSponsors } from './EventSponsors'
 import AttendButton from '../auth/AttendButton'
 import styles from './RichTextContent.module.css'
 
@@ -49,6 +50,7 @@ export function EventDetail({ event }: EventDetailProps) {
   const previewImage = event.previewImage as Media | undefined
   const imageUrl = previewImage?.url
   const speakers = (event.speakers as Speaker[]) || []
+  const sponsors = (event.sponsors as (Sponsor | number)[]) || []
   const attendeesRaw = event.attendees || []
 
   // Transform attendees (can be Member objects or IDs)
@@ -213,6 +215,8 @@ export function EventDetail({ event }: EventDetailProps) {
 
         <SpeakerList speakers={speakers} />
       </section>
+
+      <EventSponsors sponsors={sponsors} />
 
       <AttendeeList attendees={attendees} />
     </>

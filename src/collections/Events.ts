@@ -184,6 +184,16 @@ export const Events: CollectionConfig = {
       },
     },
     {
+      name: 'sponsors',
+      type: 'relationship',
+      relationTo: 'sponsors',
+      hasMany: true,
+      label: 'Sponsors',
+      admin: {
+        description: 'Empresas patrocinadoras de este evento',
+      },
+    },
+    {
       name: 'attendees',
       type: 'relationship',
       relationTo: 'members',
