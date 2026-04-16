@@ -168,6 +168,23 @@ export async function getEventBySlug(slug: string): Promise<Event | null> {
     event.previewImage = media
   }
 
+  // Populate sponsors with logo media
+  if (event.sponsors && Array.isArray(event.sponsors) && event.sponsors.length > 0) {
+    const sponsorIds = event.sponsors.filter((s) => typeof s === 'number')
+    if (sponsorIds.length > 0) {
+      const sponsors = await payload.find({
+        collection: 'sponsors',
+        where: {
+          id: {
+            in: sponsorIds,
+          },
+        },
+        depth: 1, // Populate logo (media)
+      })
+      event.sponsors = sponsors.docs
+    }
+  }
+
   // Populate attendees with only necessary fields
   if (event.attendees && Array.isArray(event.attendees) && event.attendees.length > 0) {
     const attendeeIds = event.attendees.filter((a) => typeof a === 'number')
