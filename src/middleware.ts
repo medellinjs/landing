@@ -1,9 +1,8 @@
-import { auth } from '@/auth'
+import NextAuth from 'next-auth'
+import { authConfig } from './auth.config'
 
-export default auth
+export default NextAuth(authConfig).auth
 
-// Configuración específica del middleware de NextAuth.js
 export const config = {
-  // Aplicar middleware a rutas que comiencen con /dashboard
-  matcher: ['/dashboard/:path*'],
+  matcher: ['/dashboard/:path*', '/profile/:path*'],
 }

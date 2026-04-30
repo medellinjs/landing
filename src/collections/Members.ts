@@ -64,7 +64,15 @@ export const Members: CollectionConfig = {
       name: 'profileImage',
       type: 'text',
       admin: {
-        description: 'URL de la imagen de perfil',
+        description: 'URL permanente de la imagen de perfil (R2/local)',
+      },
+    },
+    {
+      name: 'linkedinImageUrl',
+      type: 'text',
+      admin: {
+        description: 'URL original de LinkedIn (para detectar cambios y evitar re-descargas)',
+        hidden: true,
       },
     },
     {

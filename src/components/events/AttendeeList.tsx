@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import Image from 'next/image'
 import { FaArrowRight } from 'react-icons/fa'
 
 interface Attendee {
@@ -34,12 +33,11 @@ function AttendeeAvatar({ name, avatarUrl }: { name: string; avatarUrl?: string 
   }
 
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={avatarUrl}
       alt={name}
-      fill
-      className="mx-auto size-14 rounded-full shadow-md dark:shadow-gray-800"
-      sizes="64px"
+      className="h-full w-full rounded-full object-cover shadow-md dark:shadow-gray-800"
       onError={handleError}
     />
   )

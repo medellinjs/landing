@@ -8,6 +8,7 @@ import { LuUser } from 'react-icons/lu'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { MemberRegistrationModal } from '@/components/members/MemberRegistrationModal'
+import { UserAuthButton } from '@/components/auth/auth-buttons'
 import { retrieveMember, retrieveMemberByEmail } from '@/actions/member'
 
 const MEMBER_JOIN_INTENT_KEY = 'medellinjs:member-join-intent'
@@ -159,9 +160,21 @@ export const RegisterLoginButton = () => {
   // Determine if button should be disabled
   const isButtonDisabled = isLoading || sessionStatus === 'loading'
 
-  // If user is already a member, hide the button completely
+  // When user is already a member, show the avatar/dropdown menu with profile link
   if (sessionStatus === 'authenticated' && isMember === true) {
-    return null
+    return (
+      <UserAuthButton
+        user={
+          session?.user
+            ? {
+                name: session.user.name,
+                email: session.user.email,
+                image: session.user.image,
+              }
+            : null
+        }
+      />
+    )
   }
 
   return (

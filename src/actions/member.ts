@@ -3,10 +3,12 @@
 import pino from 'pino'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { revalidatePath } from 'next/cache'
 
+import { auth } from '@/auth'
 import { createContact } from '@/lib/resend'
 import { downloadAndStoreProfileImage } from '@/lib/download-profile-image'
-import { Member } from '@/lib/types/member'
+import { Member, memberProfileUpdateSchema, MemberProfileUpdate } from '@/lib/types/member'
 
 // Create a logger instance
 const logger = pino()
@@ -57,15 +59,15 @@ export async function createMember(member: Member) {
         updates.nextAuthId = member.nextAuthId
       }
 
-      // Download a fresh profile image when the LinkedIn URL changes (URLs expire)
-      if (member.profileImage && existingMember.profileImage !== member.profileImage) {
-        logger.info(`Downloading fresh profileImage for ${member.email}`)
+      // Re-download only when LinkedIn sends a new source URL (their URLs expire ~30 days)
+      if (member.profileImage && existingMember.linkedinImageUrl !== member.profileImage) {
+        logger.info(`New LinkedIn image URL detected for ${member.email}, downloading…`)
         const localUrl = await downloadAndStoreProfileImage(member.profileImage, member.fullName)
         if (localUrl) {
           updates.profileImage = localUrl
-        } else {
-          updates.profileImage = member.profileImage
+          updates.linkedinImageUrl = member.profileImage
         }
+        // If download fails, keep existing profileImage — do NOT store the expiring LinkedIn URL
       }
 
       if (Object.keys(updates).length > 0) {
@@ -84,12 +86,15 @@ export async function createMember(member: Member) {
 
     logger.info(`Creating member: ${member.email}`)
 
-    let storedProfileImage = member.profileImage
+    let storedProfileImage: string | undefined
+    let linkedinImageUrl: string | undefined
     if (member.profileImage) {
       const localUrl = await downloadAndStoreProfileImage(member.profileImage, member.fullName)
       if (localUrl) {
         storedProfileImage = localUrl
+        linkedinImageUrl = member.profileImage
       }
+      // If download fails, leave profileImage empty — never store an expiring LinkedIn URL
     }
 
     const result = await payload.create({
@@ -100,6 +105,7 @@ export async function createMember(member: Member) {
         email: member.email.trim().toLowerCase(),
         jobPosition: member.jobPosition.trim(),
         ...(storedProfileImage && { profileImage: storedProfileImage }),
+        ...(linkedinImageUrl && { linkedinImageUrl }),
         jobLevel: mapJobLevel(member.jobLevel),
         role: 'MEMBER',
       },
@@ -169,5 +175,125 @@ export async function retrieveMemberByEmail(email: string) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     logger.error(`Error retrieving member by email: ${email} - ${errorMessage}`)
     return null
+  }
+}
+
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024 // 5MB
+
+export type UpdateProfileResult = { success: true } | { success: false; error: string }
+
+/**
+ * Updates the profile of the currently authenticated member.
+ * Authorization is enforced via NextAuth session (nextAuthId),
+ * never trusting a client-supplied member ID.
+ */
+export async function updateOwnProfile(
+  input: MemberProfileUpdate,
+  imageFile?: File,
+): Promise<UpdateProfileResult> {
+  try {
+    const session = await auth()
+
+    if (!session?.user?.id) {
+      return { success: false, error: 'No autenticado' }
+    }
+
+    const nextAuthId = String(session.user.id)
+
+    const parsed = memberProfileUpdateSchema.safeParse(input)
+    if (!parsed.success) {
+      const firstError = parsed.error.errors[0]?.message ?? 'Datos inválidos'
+      return { success: false, error: firstError }
+    }
+
+    const payload = await getPayload({ config })
+
+    // Always look up member by session nextAuthId to prevent IDOR
+    const result = await payload.find({
+      collection: 'members',
+      where: { nextAuthId: { equals: nextAuthId } },
+      limit: 1,
+    })
+
+    if (result.docs.length === 0) {
+      return { success: false, error: 'Perfil no encontrado' }
+    }
+
+    const member = result.docs[0]
+    const updateData: Record<string, unknown> = { ...parsed.data }
+
+    if (imageFile) {
+      if (!ALLOWED_IMAGE_TYPES.includes(imageFile.type)) {
+        return { success: false, error: 'Formato de imagen no válido (usa JPG, PNG o WebP)' }
+      }
+      if (imageFile.size > MAX_IMAGE_SIZE) {
+        return { success: false, error: 'La imagen no puede superar los 5MB' }
+      }
+
+      const arrayBuffer = await imageFile.arrayBuffer()
+      const media = await payload.create({
+        collection: 'media',
+        data: { alt: `Foto de perfil de ${member.fullName}` },
+        file: {
+          data: Buffer.from(arrayBuffer),
+          mimetype: imageFile.type,
+          name: imageFile.name,
+          size: imageFile.size,
+        },
+      })
+
+      if (media?.url) {
+        updateData.profileImage = media.url
+        // Clear the LinkedIn source URL so the auto-redownload flow doesn't overwrite the new image
+        updateData.linkedinImageUrl = null
+        logger.info(`Profile image updated for member ${member.id}: ${media.url}`)
+      }
+    }
+
+    await payload.update({
+      collection: 'members',
+      id: member.id,
+      data: updateData,
+      overrideAccess: true,
+    })
+
+    revalidatePath('/profile')
+    logger.info(`Member profile updated: ${member.id}`)
+
+    return { success: true }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    logger.error(`Error updating member profile: ${errorMessage}`)
+    return { success: false, error: 'Error al actualizar el perfil. Intenta nuevamente.' }
+  }
+}
+
+/**
+ * Returns the past events (startDate < now) where the given member is listed as an attendee.
+ */
+export async function getAttendedPastEvents(memberId: number) {
+  try {
+    const payload = await getPayload({ config })
+
+    const result = await payload.find({
+      collection: 'events',
+      where: {
+        and: [
+          { attendees: { contains: memberId } },
+          { startDate: { less_than: new Date().toISOString() } },
+          { isPublished: { equals: true } },
+        ],
+      },
+      sort: '-startDate',
+      depth: 1,
+      limit: 50,
+    })
+
+    return result.docs
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    logger.error(`Error fetching attended past events for member ${memberId}: ${errorMessage}`)
+    return []
   }
 }

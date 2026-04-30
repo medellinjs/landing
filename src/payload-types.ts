@@ -399,9 +399,13 @@ export interface Member {
    */
   email: string
   /**
-   * URL de la imagen de perfil
+   * URL permanente de la imagen de perfil (R2/local)
    */
   profileImage?: string | null
+  /**
+   * URL original de LinkedIn (para detectar cambios y evitar re-descargas)
+   */
+  linkedinImageUrl?: string | null
   /**
    * Cargo o posición laboral
    */
@@ -629,6 +633,7 @@ export interface MembersSelect<T extends boolean = true> {
   fullName?: T
   email?: T
   profileImage?: T
+  linkedinImageUrl?: T
   jobPosition?: T
   jobLevel?: T
   role?: T
