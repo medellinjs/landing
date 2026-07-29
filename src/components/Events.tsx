@@ -74,7 +74,7 @@ export default async function Events() {
           <div className="relative z-1">
             <div className="grid grid-cols-1 justify-center text-center md:text-start lg:grid-cols-12">
               <div className="lg:col-span-10 lg:col-start-2">
-                <div className="relative">
+                <Link href={`/events/${event.slug}`} className="relative block">
                   <Image
                     src={imageUrl}
                     width={0}
@@ -84,7 +84,7 @@ export default async function Events() {
                     className="rounded-md shadow-lg"
                     alt={event.title}
                   />
-                </div>
+                </Link>
               </div>
             </div>
             <div className="content md:mt-8">
@@ -114,9 +114,11 @@ export default async function Events() {
                     <div className="mt-8">
                       <div className="section-title text-md-start">
                         <h6 className="text-lg font-semibold text-white/50">{eventTypeLabel}</h6>
-                        <h3 className="mt-2 text-2xl font-semibold leading-normal text-white md:text-3xl md:leading-normal">
-                          {event.title}
-                        </h3>
+                        <Link href={`/events/${event.slug}`}>
+                          <h3 className="mt-2 text-2xl font-semibold leading-normal text-white transition-colors hover:text-white/80 md:text-3xl md:leading-normal">
+                            {event.title}
+                          </h3>
+                        </Link>
                       </div>
                     </div>
 
