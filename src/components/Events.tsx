@@ -24,16 +24,18 @@ export default async function Events() {
   }
 
   // Format date and time
+  const timezone = event.timezone || 'America/Bogota'
   const eventDate = new Date(event.startDate)
   const formattedDate = eventDate.toLocaleDateString('es-CO', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    timeZone: timezone,
   })
 
   const formattedTime = event.endDate
-    ? `${eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.endDate).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })}`
-    : eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })
+    ? `${eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: timezone })} - ${new Date(event.endDate).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: timezone })}`
+    : eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: timezone })
 
   // Get venue name
   const venueName = event.venue?.name || 'Por definir'
