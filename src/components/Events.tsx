@@ -24,16 +24,18 @@ export default async function Events() {
   }
 
   // Format date and time
+  const timezone = event.timezone || 'America/Bogota'
   const eventDate = new Date(event.startDate)
   const formattedDate = eventDate.toLocaleDateString('es-CO', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    timeZone: timezone,
   })
 
   const formattedTime = event.endDate
-    ? `${eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })} - ${new Date(event.endDate).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })}`
-    : eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })
+    ? `${eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: timezone })} - ${new Date(event.endDate).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: timezone })}`
+    : eventDate.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', timeZone: timezone })
 
   // Get venue name
   const venueName = event.venue?.name || 'Por definir'
@@ -72,7 +74,7 @@ export default async function Events() {
           <div className="relative z-1">
             <div className="grid grid-cols-1 justify-center text-center md:text-start lg:grid-cols-12">
               <div className="lg:col-span-10 lg:col-start-2">
-                <div className="relative">
+                <Link href={`/events/${event.slug}`} className="relative block">
                   <Image
                     src={imageUrl}
                     width={0}
@@ -82,7 +84,7 @@ export default async function Events() {
                     className="rounded-md shadow-lg"
                     alt={event.title}
                   />
-                </div>
+                </Link>
               </div>
             </div>
             <div className="content md:mt-8">
@@ -112,9 +114,11 @@ export default async function Events() {
                     <div className="mt-8">
                       <div className="section-title text-md-start">
                         <h6 className="text-lg font-semibold text-white/50">{eventTypeLabel}</h6>
-                        <h3 className="mt-2 text-2xl font-semibold leading-normal text-white md:text-3xl md:leading-normal">
-                          {event.title}
-                        </h3>
+                        <Link href={`/events/${event.slug}`}>
+                          <h3 className="mt-2 text-2xl font-semibold leading-normal text-white transition-colors hover:text-white/80 md:text-3xl md:leading-normal">
+                            {event.title}
+                          </h3>
+                        </Link>
                       </div>
                     </div>
 

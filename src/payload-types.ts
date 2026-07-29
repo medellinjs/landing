@@ -59,72 +59,70 @@ export type SupportedTimezones =
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
   | 'Pacific/Auckland'
-  | 'Pacific/Fiji'
+  | 'Pacific/Fiji';
 
 export interface Config {
   auth: {
-    users: UserAuthOperations
-  }
-  blocks: {}
+    users: UserAuthOperations;
+  };
+  blocks: {};
   collections: {
-    users: User
-    media: Media
-    speakers: Speaker
-    events: Event
-    members: Member
-    sponsors: Sponsor
-    'payload-kv': PayloadKv
-    'payload-locked-documents': PayloadLockedDocument
-    'payload-preferences': PayloadPreference
-    'payload-migrations': PayloadMigration
-  }
-  collectionsJoins: {}
+    users: User;
+    media: Media;
+    speakers: Speaker;
+    events: Event;
+    members: Member;
+    sponsors: Sponsor;
+    'payload-kv': PayloadKv;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
+  };
+  collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>
-    media: MediaSelect<false> | MediaSelect<true>
-    speakers: SpeakersSelect<false> | SpeakersSelect<true>
-    events: EventsSelect<false> | EventsSelect<true>
-    members: MembersSelect<false> | MembersSelect<true>
-    sponsors: SponsorsSelect<false> | SponsorsSelect<true>
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>
-    'payload-locked-documents':
-      | PayloadLockedDocumentsSelect<false>
-      | PayloadLockedDocumentsSelect<true>
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>
-  }
+    users: UsersSelect<false> | UsersSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
+    speakers: SpeakersSelect<false> | SpeakersSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    members: MembersSelect<false> | MembersSelect<true>;
+    sponsors: SponsorsSelect<false> | SponsorsSelect<true>;
+    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+  };
   db: {
-    defaultIDType: number
-  }
-  fallbackLocale: null
-  globals: {}
-  globalsSelect: {}
-  locale: null
+    defaultIDType: number;
+  };
+  fallbackLocale: null;
+  globals: {};
+  globalsSelect: {};
+  locale: null;
   user: User & {
-    collection: 'users'
-  }
+    collection: 'users';
+  };
   jobs: {
-    tasks: unknown
-    workflows: unknown
-  }
+    tasks: unknown;
+    workflows: unknown;
+  };
 }
 export interface UserAuthOperations {
   forgotPassword: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   login: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   registerFirstUser: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
   unlock: {
-    email: string
-    password: string
-  }
+    email: string;
+    password: string;
+  };
 }
 /**
  * Usuarios con acceso al panel de administración
@@ -133,102 +131,102 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number
+  id: number;
   /**
    * Nombre del usuario administrativo
    */
-  name: string
+  name: string;
   /**
    * Rol del usuario en la plataforma (determina permisos en el admin)
    */
-  role: 'admin' | 'organizer'
-  updatedAt: string
-  createdAt: string
+  role: 'admin' | 'organizer';
+  updatedAt: string;
+  createdAt: string;
   /**
    * Solo se permiten correos con dominio @medellinjs.org
    */
-  email: string
-  resetPasswordToken?: string | null
-  resetPasswordExpiration?: string | null
-  salt?: string | null
-  hash?: string | null
-  loginAttempts?: number | null
-  lockUntil?: string | null
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
   sessions?:
     | {
-        id: string
-        createdAt?: string | null
-        expiresAt: string
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
       }[]
-    | null
-  password?: string | null
+    | null;
+  password?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
-  id: number
-  alt: string
-  prefix?: string | null
-  updatedAt: string
-  createdAt: string
-  url?: string | null
-  thumbnailURL?: string | null
-  filename?: string | null
-  mimeType?: string | null
-  filesize?: number | null
-  width?: number | null
-  height?: number | null
-  focalX?: number | null
-  focalY?: number | null
+  id: number;
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "speakers".
  */
 export interface Speaker {
-  id: number
+  id: number;
   /**
    * Nombre completo del speaker
    */
-  name: string
+  name: string;
   /**
    * Ejemplo: Senior Frontend Engineer, Tech Lead, etc.
    */
-  role: string
+  role: string;
   /**
    * Empresa donde trabaja actualmente (opcional)
    */
-  company?: string | null
+  company?: string | null;
   /**
    * Foto de perfil del speaker
    */
-  image: number | Media
+  image: number | Media;
   /**
    * Link a perfil social (Twitter, LinkedIn, GitHub, website personal)
    */
-  link?: string | null
+  link?: string | null;
   /**
    * Biografía del speaker (puede incluir experiencia, logros, etc.)
    */
   bio?: {
     root: {
-      type: string
+      type: string;
       children: {
-        type: any
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  } | null
-  updatedAt: string
-  createdAt: string
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Gestiona los eventos de MedellinJS
@@ -237,49 +235,49 @@ export interface Speaker {
  * via the `definition` "events".
  */
 export interface Event {
-  id: number
+  id: number;
   /**
    * Nombre descriptivo del evento
    */
-  title: string
+  title: string;
   /**
    * Categoría del evento según su formato y contenido
    */
-  eventType: 'charla' | 'taller' | 'panel' | 'hackathon' | 'networking' | 'lightning-talks'
+  eventType: 'charla' | 'taller' | 'panel' | 'hackathon' | 'networking' | 'lightning-talks';
   /**
    * Se genera automáticamente desde el título. Usado en la URL del evento.
    */
-  slug?: string | null
+  slug?: string | null;
   /**
    * Descripción completa del evento. Soporta formato rico (negritas, enlaces, etc.)
    */
   description: {
     root: {
-      type: string
+      type: string;
       children: {
-        type: any
-        version: number
-        [k: string]: unknown
-      }[]
-      direction: ('ltr' | 'rtl') | null
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | ''
-      indent: number
-      version: number
-    }
-    [k: string]: unknown
-  }
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
    * Imagen principal del evento para preview y detalle
    */
-  previewImage?: (number | null) | Media
+  previewImage?: (number | null) | Media;
   /**
    * Fecha y hora cuando comienza el evento
    */
-  startDate: string
+  startDate: string;
   /**
    * Fecha y hora cuando termina el evento (opcional)
    */
-  endDate?: string | null
+  endDate?: string | null;
   /**
    * Zona horaria del evento
    */
@@ -288,56 +286,56 @@ export interface Event {
     | 'America/Mexico_City'
     | 'America/Argentina/Buenos_Aires'
     | 'America/Santiago'
-    | 'Europe/Madrid'
+    | 'Europe/Madrid';
   venue: {
     /**
      * Ej: Ruta N, Centro de Innovación, Virtual
      */
-    name: string
+    name: string;
     /**
      * Enlace a Google Maps con la ubicación exacta (opcional)
      */
-    googleMapsUrl?: string | null
+    googleMapsUrl?: string | null;
     /**
      * Detalles extra sobre el lugar: piso, sala, indicaciones, etc. (opcional)
      */
-    extraInfo?: string | null
-  }
+    extraInfo?: string | null;
+  };
   /**
    * Selecciona los speakers que participarán en este evento
    */
-  speakers?: (number | Speaker)[] | null
+  speakers?: (number | Speaker)[] | null;
   /**
    * Empresas patrocinadoras de este evento
    */
-  sponsors?: (number | Sponsor)[] | null
+  sponsors?: (number | Sponsor)[] | null;
   /**
    * Miembros registrados para este evento
    */
-  attendees?: (number | Member)[] | null
+  attendees?: (number | Member)[] | null;
   /**
    * Si está marcado, el evento será visible para el público
    */
-  isPublished?: boolean | null
+  isPublished?: boolean | null;
   /**
    * Si está marcado, el evento aparecerá en la página principal
    */
-  featured?: boolean | null
+  featured?: boolean | null;
   /**
    * Número máximo de asistentes permitidos (opcional)
    */
-  maxAttendees?: number | null
+  maxAttendees?: number | null;
   /**
    * Etiquetas para categorizar el evento (React, Node.js, Workshop, etc.)
    */
   tags?:
     | {
-        tag: string
-        id?: string | null
+        tag: string;
+        id?: string | null;
       }[]
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Empresas y organizaciones que patrocinan los eventos de MedellinJS
@@ -346,37 +344,37 @@ export interface Event {
  * via the `definition` "sponsors".
  */
 export interface Sponsor {
-  id: number
+  id: number;
   /**
    * Nombre de la empresa u organización patrocinadora
    */
-  name: string
+  name: string;
   /**
    * Logo oficial del sponsor (preferiblemente en PNG con fondo transparente)
    */
-  logo: number | Media
+  logo: number | Media;
   /**
    * URL del sitio web oficial del sponsor (ej: https://example.com)
    */
-  websiteUrl: string
+  websiteUrl: string;
   /**
    * Ubicación principal de la empresa (ej: Medellín, Austin, Praga)
    */
-  location?: string | null
+  location?: string | null;
   /**
    * Breve descripción del sponsor y su relación con la comunidad (opcional)
    */
-  description?: string | null
+  description?: string | null;
   /**
    * Indica si el sponsor está activo y debe mostrarse públicamente
    */
-  isActive?: boolean | null
+  isActive?: boolean | null;
   /**
    * Nivel de patrocinio — define la jerarquía visual en la página del evento
    */
-  tier?: ('platinum' | 'gold' | 'silver' | 'community') | null
-  updatedAt: string
-  createdAt: string
+  tier?: ('platinum' | 'gold' | 'silver' | 'community') | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Miembros de la comunidad MedellinJS
@@ -385,334 +383,335 @@ export interface Sponsor {
  * via the `definition` "members".
  */
 export interface Member {
-  id: number
+  id: number;
   /**
    * ID del usuario en NextAuth
    */
-  nextAuthId?: string | null
+  nextAuthId?: string | null;
   /**
    * Nombre completo del miembro
    */
-  fullName: string
+  fullName: string;
   /**
    * Email del miembro
    */
-  email: string
+  email: string;
   /**
    * URL permanente de la imagen de perfil (R2/local)
    */
-  profileImage?: string | null
+  profileImage?: string | null;
   /**
    * URL original de LinkedIn (para detectar cambios y evitar re-descargas)
    */
-  linkedinImageUrl?: string | null
+  linkedinImageUrl?: string | null;
   /**
    * Cargo o posición laboral
    */
-  jobPosition: string
+  jobPosition: string;
   /**
    * Nivel de experiencia
    */
-  jobLevel: 'JUNIOR' | 'MID_LEVEL' | 'SENIOR' | 'LEAD' | 'STAFF' | 'PRINCIPAL'
+  jobLevel: 'JUNIOR' | 'MID_LEVEL' | 'SENIOR' | 'LEAD' | 'STAFF' | 'PRINCIPAL';
   /**
    * Rol del miembro en la comunidad
    */
-  role: 'MEMBER' | 'ORGANIZER' | 'SPEAKER'
+  role: 'MEMBER' | 'ORGANIZER' | 'SPEAKER';
   /**
    * Biografía o descripción del miembro (opcional)
    */
-  bio?: string | null
+  bio?: string | null;
   /**
    * Redes sociales del miembro (opcional)
    */
   socialLinks?: {
-    twitter?: string | null
-    linkedin?: string | null
-    github?: string | null
-    website?: string | null
-  }
+    twitter?: string | null;
+    linkedin?: string | null;
+    github?: string | null;
+    website?: string | null;
+  };
   /**
    * Fecha en que se unió a la comunidad
    */
-  joinedAt?: string | null
+  joinedAt?: string | null;
   /**
    * Miembro activo en la comunidad
    */
-  isActive?: boolean | null
-  updatedAt: string
-  createdAt: string
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number
-  key: string
+  id: number;
+  key: string;
   data:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
+    | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number
+  id: number;
   document?:
     | ({
-        relationTo: 'users'
-        value: number | User
+        relationTo: 'users';
+        value: number | User;
       } | null)
     | ({
-        relationTo: 'media'
-        value: number | Media
+        relationTo: 'media';
+        value: number | Media;
       } | null)
     | ({
-        relationTo: 'speakers'
-        value: number | Speaker
+        relationTo: 'speakers';
+        value: number | Speaker;
       } | null)
     | ({
-        relationTo: 'events'
-        value: number | Event
+        relationTo: 'events';
+        value: number | Event;
       } | null)
     | ({
-        relationTo: 'members'
-        value: number | Member
+        relationTo: 'members';
+        value: number | Member;
       } | null)
     | ({
-        relationTo: 'sponsors'
-        value: number | Sponsor
-      } | null)
-  globalSlug?: string | null
+        relationTo: 'sponsors';
+        value: number | Sponsor;
+      } | null);
+  globalSlug?: string | null;
   user: {
-    relationTo: 'users'
-    value: number | User
-  }
-  updatedAt: string
-  createdAt: string
+    relationTo: 'users';
+    value: number | User;
+  };
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number
+  id: number;
   user: {
-    relationTo: 'users'
-    value: number | User
-  }
-  key?: string | null
+    relationTo: 'users';
+    value: number | User;
+  };
+  key?: string | null;
   value?:
     | {
-        [k: string]: unknown
+        [k: string]: unknown;
       }
     | unknown[]
     | string
     | number
     | boolean
-    | null
-  updatedAt: string
-  createdAt: string
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number
-  name?: string | null
-  batch?: number | null
-  updatedAt: string
-  createdAt: string
+  id: number;
+  name?: string | null;
+  batch?: number | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  name?: T
-  role?: T
-  updatedAt?: T
-  createdAt?: T
-  email?: T
-  resetPasswordToken?: T
-  resetPasswordExpiration?: T
-  salt?: T
-  hash?: T
-  loginAttempts?: T
-  lockUntil?: T
+  name?: T;
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
   sessions?:
     | T
     | {
-        id?: T
-        createdAt?: T
-        expiresAt?: T
-      }
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T
-  prefix?: T
-  updatedAt?: T
-  createdAt?: T
-  url?: T
-  thumbnailURL?: T
-  filename?: T
-  mimeType?: T
-  filesize?: T
-  width?: T
-  height?: T
-  focalX?: T
-  focalY?: T
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "speakers_select".
  */
 export interface SpeakersSelect<T extends boolean = true> {
-  name?: T
-  role?: T
-  company?: T
-  image?: T
-  link?: T
-  bio?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  role?: T;
+  company?: T;
+  image?: T;
+  link?: T;
+  bio?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
-  title?: T
-  eventType?: T
-  slug?: T
-  description?: T
-  previewImage?: T
-  startDate?: T
-  endDate?: T
-  timezone?: T
+  title?: T;
+  eventType?: T;
+  slug?: T;
+  description?: T;
+  previewImage?: T;
+  startDate?: T;
+  endDate?: T;
+  timezone?: T;
   venue?:
     | T
     | {
-        name?: T
-        googleMapsUrl?: T
-        extraInfo?: T
-      }
-  speakers?: T
-  sponsors?: T
-  attendees?: T
-  isPublished?: T
-  featured?: T
-  maxAttendees?: T
+        name?: T;
+        googleMapsUrl?: T;
+        extraInfo?: T;
+      };
+  speakers?: T;
+  sponsors?: T;
+  attendees?: T;
+  isPublished?: T;
+  featured?: T;
+  maxAttendees?: T;
   tags?:
     | T
     | {
-        tag?: T
-        id?: T
-      }
-  updatedAt?: T
-  createdAt?: T
+        tag?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "members_select".
  */
 export interface MembersSelect<T extends boolean = true> {
-  nextAuthId?: T
-  fullName?: T
-  email?: T
-  profileImage?: T
-  linkedinImageUrl?: T
-  jobPosition?: T
-  jobLevel?: T
-  role?: T
-  bio?: T
+  nextAuthId?: T;
+  fullName?: T;
+  email?: T;
+  profileImage?: T;
+  linkedinImageUrl?: T;
+  jobPosition?: T;
+  jobLevel?: T;
+  role?: T;
+  bio?: T;
   socialLinks?:
     | T
     | {
-        twitter?: T
-        linkedin?: T
-        github?: T
-        website?: T
-      }
-  joinedAt?: T
-  isActive?: T
-  updatedAt?: T
-  createdAt?: T
+        twitter?: T;
+        linkedin?: T;
+        github?: T;
+        website?: T;
+      };
+  joinedAt?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "sponsors_select".
  */
 export interface SponsorsSelect<T extends boolean = true> {
-  name?: T
-  logo?: T
-  websiteUrl?: T
-  location?: T
-  description?: T
-  isActive?: T
-  tier?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  logo?: T;
+  websiteUrl?: T;
+  location?: T;
+  description?: T;
+  isActive?: T;
+  tier?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
-  key?: T
-  data?: T
+  key?: T;
+  data?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
-  document?: T
-  globalSlug?: T
-  user?: T
-  updatedAt?: T
-  createdAt?: T
+  document?: T;
+  globalSlug?: T;
+  user?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-preferences_select".
  */
 export interface PayloadPreferencesSelect<T extends boolean = true> {
-  user?: T
-  key?: T
-  value?: T
-  updatedAt?: T
-  createdAt?: T
+  user?: T;
+  key?: T;
+  value?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-migrations_select".
  */
 export interface PayloadMigrationsSelect<T extends boolean = true> {
-  name?: T
-  batch?: T
-  updatedAt?: T
-  createdAt?: T
+  name?: T;
+  batch?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
-  [k: string]: unknown
+  [k: string]: unknown;
 }
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}
