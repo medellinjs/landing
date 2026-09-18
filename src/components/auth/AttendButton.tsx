@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import { EventRegistrationModal } from '@/components/events/EventRegistrationModal'
+import AddToCalendar from '@/components/events/AddToCalendar'
 import { useEventRegistration } from '@/hooks/useEventRegistration'
 import type { EventRegistrationResult } from '@/lib/types/event'
 
@@ -19,6 +20,10 @@ export type AttendButtonProps = {
   eventTime?: string
   eventId: string
   eventSlug?: string
+  eventStartDate?: string
+  eventEndDate?: string | null
+  venueName?: string | null
+  venueUrl?: string | null
 }
 
 export const AttendButton: FC<AttendButtonProps> = ({
@@ -27,7 +32,11 @@ export const AttendButton: FC<AttendButtonProps> = ({
   eventDate,
   eventTime,
   eventId,
-  eventSlug: _eventSlug,
+  eventSlug,
+  eventStartDate,
+  eventEndDate,
+  venueName,
+  venueUrl,
 }) => {
   const router = useRouter()
   const { data: session, status: sessionStatus } = useSession()
@@ -263,8 +272,21 @@ export const AttendButton: FC<AttendButtonProps> = ({
       {/* Botón original o texto de registrado */}
       <div ref={buttonRef}>
         {isRegistered ? (
-          <div className="me-2 mt-2 inline-flex items-center text-base font-semibold text-white">
-            <FaCheckCircle className="me-2 text-lg" /> Ya estás registrado
+          <div className="me-2 mt-2">
+            <div className="inline-flex items-center text-base font-semibold text-white">
+              <FaCheckCircle className="me-2 text-lg" /> Ya estás registrado
+            </div>
+            {eventStartDate && (
+              <AddToCalendar
+                eventId={eventId}
+                eventTitle={eventTitle}
+                startDate={eventStartDate}
+                endDate={eventEndDate}
+                venueName={venueName}
+                venueUrl={venueUrl}
+                eventSlug={eventSlug}
+              />
+            )}
           </div>
         ) : (
           <Button
