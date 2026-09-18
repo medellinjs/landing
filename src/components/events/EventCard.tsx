@@ -1,18 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Event, Media } from '@/payload-types'
+import { formatEventDateTime } from '@/lib/dates'
 
 interface EventCardProps {
   event: Event
-}
-
-function formatDate(dateString: string, timezone: string = 'America/Bogota'): string {
-  const date = new Date(dateString)
-  return new Intl.DateTimeFormat('es-CO', {
-    dateStyle: 'full',
-    timeStyle: 'short',
-    timeZone: timezone,
-  }).format(date)
 }
 
 function isEventPast(dateString: string): boolean {
@@ -77,7 +69,7 @@ export function EventCard({ event }: EventCardProps) {
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          {formatDate(event.startDate, event.timezone)}
+          {formatEventDateTime(event.startDate, event.timezone)}
         </div>
 
         {typeof event.venue === 'object' && event.venue?.name && (

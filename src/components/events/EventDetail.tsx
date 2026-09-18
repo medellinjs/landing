@@ -11,39 +11,11 @@ import { AttendeeList } from './AttendeeList'
 import { EventSponsors } from './EventSponsors'
 import AttendButton from '../auth/AttendButton'
 import styles from './RichTextContent.module.css'
+import { formatEventDateOnly, formatEventTimeRange } from '@/lib/dates'
+import { extractPlainText } from '@/lib/richText'
 
 interface EventDetailProps {
   event: Event
-}
-
-function formatDateOnly(dateString: string, timezone: string = 'America/Bogota'): string {
-  const date = new Date(dateString)
-  return new Intl.DateTimeFormat('es-CO', {
-    dateStyle: 'full',
-    timeZone: timezone,
-  }).format(date)
-}
-
-function formatTimeRange(
-  startDate: string,
-  endDate: string | null | undefined,
-  timezone: string = 'America/Bogota',
-): string {
-  const start = new Date(startDate)
-  const startTime = new Intl.DateTimeFormat('es-CO', {
-    timeStyle: 'short',
-    timeZone: timezone,
-  }).format(start)
-
-  if (!endDate) return startTime
-
-  const end = new Date(endDate)
-  const endTime = new Intl.DateTimeFormat('es-CO', {
-    timeStyle: 'short',
-    timeZone: timezone,
-  }).format(end)
-
-  return `${startTime} - ${endTime}`
 }
 
 export function EventDetail({ event }: EventDetailProps) {
@@ -80,6 +52,10 @@ export function EventDetail({ event }: EventDetailProps) {
 
   // Check if event is in the future
   const isUpcomingEvent = new Date(event.startDate) > new Date()
+
+  // Short plain-text excerpt of the event description, used in the calendar
+  // (Google Calendar / .ics) description.
+  const descriptionExcerpt = extractPlainText(event.description, 160)
 
   return (
     <>
@@ -131,13 +107,13 @@ export function EventDetail({ event }: EventDetailProps) {
                         <div className="mb-2 flex items-center">
                           <Calendar className="mr-2 text-white" />
                           <span className="font-semibold leading-normal text-white">
-                            {formatDateOnly(event.startDate, event.timezone)}
+                            {formatEventDateOnly(event.startDate, event.timezone)}
                           </span>
                         </div>
                         <div className="mb-2 flex items-center">
                           <Clock className="mr-2 text-white" />
                           <span className="font-semibold leading-normal text-white">
-                            {formatTimeRange(event.startDate, event.endDate, event.timezone)}
+                            {formatEventTimeRange(event.startDate, event.endDate, event.timezone)}
                           </span>
                         </div>
 
@@ -187,6 +163,15 @@ export function EventDetail({ event }: EventDetailProps) {
                             locale: es,
                           })}
                           eventTime={`${format(new Date(event.startDate), 'h:mm a')} COT`}
+                          eventStartDate={event.startDate}
+                          eventEndDate={event.endDate}
+                          venueName={
+                            typeof event.venue === 'object' ? event.venue?.name : undefined
+                          }
+                          venueUrl={
+                            typeof event.venue === 'object' ? event.venue?.googleMapsUrl : undefined
+                          }
+                          descriptionExcerpt={descriptionExcerpt || undefined}
                         />
                       )}
                     </div>
