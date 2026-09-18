@@ -12,6 +12,7 @@ import { EventSponsors } from './EventSponsors'
 import AttendButton from '../auth/AttendButton'
 import styles from './RichTextContent.module.css'
 import { formatEventDateOnly, formatEventTimeRange } from '@/lib/dates'
+import { extractPlainText } from '@/lib/richText'
 
 interface EventDetailProps {
   event: Event
@@ -51,6 +52,10 @@ export function EventDetail({ event }: EventDetailProps) {
 
   // Check if event is in the future
   const isUpcomingEvent = new Date(event.startDate) > new Date()
+
+  // Short plain-text excerpt of the event description, used in the calendar
+  // (Google Calendar / .ics) description.
+  const descriptionExcerpt = extractPlainText(event.description, 160)
 
   return (
     <>
@@ -166,6 +171,7 @@ export function EventDetail({ event }: EventDetailProps) {
                           venueUrl={
                             typeof event.venue === 'object' ? event.venue?.googleMapsUrl : undefined
                           }
+                          descriptionExcerpt={descriptionExcerpt || undefined}
                         />
                       )}
                     </div>

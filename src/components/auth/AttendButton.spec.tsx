@@ -91,4 +91,21 @@ describe('AttendButton — AddToCalendar gating', () => {
 
     expect(screen.queryByLabelText('Agregar evento a Google Calendar')).toBeNull()
   })
+
+  it('threads descriptionExcerpt through to AddToCalendar so it reaches the built calendar link', async () => {
+    mockUseEventRegistration.mockReturnValue(registeredHookState)
+
+    render(
+      <AttendButton
+        eventId="42"
+        eventTitle="MedellínJS Meetup"
+        eventStartDate="2026-03-10T23:30:00.000Z"
+        descriptionExcerpt="Charla sobre IA y desarrollo."
+      />,
+    )
+
+    const link = await screen.findByLabelText('Agregar evento a Google Calendar')
+    const url = new URL(link.getAttribute('href') || '')
+    expect(url.searchParams.get('details')).toContain('Charla sobre IA y desarrollo.')
+  })
 })

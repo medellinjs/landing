@@ -18,6 +18,25 @@ export interface CalendarEventInput {
   venueUrl?: string | null
   slug?: string | null
   origin: string
+  /**
+   * Plain-text excerpt of the event description, already extracted from any
+   * rich text source. `calendar.ts` stays decoupled from Lexical/Payload
+   * types on purpose, so this is a plain string, not rich text.
+   */
+  descriptionExcerpt?: string
+}
+
+/**
+ * Prefix applied to every calendar event title so entries created from
+ * MedellinJS are easily recognizable in a user's calendar.
+ */
+export const CALENDAR_TITLE_PREFIX = '[MedellinJS] '
+
+/**
+ * Builds the calendar event title with the MedellinJS prefix applied.
+ */
+export function buildCalendarTitle(input: CalendarEventInput): string {
+  return `${CALENDAR_TITLE_PREFIX}${input.title}`
 }
 
 /**
@@ -44,11 +63,18 @@ export function buildCalendarLocation(input: CalendarEventInput): string {
 }
 
 /**
- * Builds a short calendar description: a one-line summary plus the absolute
- * event URL. Deliberately NOT the serialized Lexical rich text description.
+ * Builds the calendar description: when a `descriptionExcerpt` is provided,
+ * it is prepended to the absolute event URL; otherwise falls back to a
+ * link-only summary. Deliberately NOT the serialized Lexical rich text
+ * description — callers must pass an already-extracted plain-text excerpt.
  */
 export function buildCalendarDescription(input: CalendarEventInput): string {
   const url = buildEventUrl(input)
+
+  if (input.descriptionExcerpt) {
+    return `${input.descriptionExcerpt}\n\nMás información y registro: ${url}`
+  }
+
   return `Más detalles e información de registro: ${url}`
 }
 
@@ -61,7 +87,7 @@ export function buildGoogleCalendarUrl(input: CalendarEventInput): string {
 
   const params = new URLSearchParams({
     action: 'TEMPLATE',
-    text: input.title,
+    text: buildCalendarTitle(input),
     dates: `${toCalendarUTC(start)}/${toCalendarUTC(end)}`,
     details: buildCalendarDescription(input),
     location: buildCalendarLocation(input),
@@ -118,7 +144,7 @@ export function buildIcsContent(input: CalendarEventInput, now: Date = new Date(
     `DTSTAMP:${toCalendarUTC(now)}`,
     `DTSTART:${toCalendarUTC(start)}`,
     `DTEND:${toCalendarUTC(end)}`,
-    `SUMMARY:${escapeIcsText(input.title)}`,
+    `SUMMARY:${escapeIcsText(buildCalendarTitle(input))}`,
     `LOCATION:${escapeIcsText(buildCalendarLocation(input))}`,
     `DESCRIPTION:${escapeIcsText(buildCalendarDescription(input))}`,
     'BEGIN:VALARM',

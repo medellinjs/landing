@@ -2,11 +2,14 @@ import { describe, it, expect } from 'vitest'
 import {
   escapeIcsText,
   buildCalendarLocation,
+  buildCalendarDescription,
+  buildCalendarTitle,
   buildGoogleCalendarUrl,
   buildEventUrl,
   buildIcsUid,
   buildIcsContent,
   buildIcsFilename,
+  CALENDAR_TITLE_PREFIX,
   type CalendarEventInput,
 } from './calendar'
 
@@ -65,6 +68,53 @@ describe('buildCalendarLocation', () => {
   })
 })
 
+describe('buildCalendarTitle', () => {
+  it('prefixes the event title with the MedellinJS calendar prefix', () => {
+    expect(
+      buildCalendarTitle({
+        eventId: '1',
+        title: 'Cómo domesticar Claude Code',
+        startDate: '2026-03-10T23:30:00.000Z',
+        origin: 'https://medellinjs.org',
+      }),
+    ).toBe(`${CALENDAR_TITLE_PREFIX}Cómo domesticar Claude Code`)
+  })
+})
+
+describe('buildCalendarDescription', () => {
+  const baseInput: CalendarEventInput = {
+    eventId: '42',
+    title: 'MedellínJS Meetup',
+    startDate: '2026-03-10T23:30:00.000Z',
+    slug: 'medellinjs-meetup',
+    origin: 'https://medellinjs.org',
+  }
+
+  it('falls back to link-only description when no excerpt is provided', () => {
+    const description = buildCalendarDescription(baseInput)
+    expect(description).toBe(
+      'Más detalles e información de registro: https://medellinjs.org/events/medellinjs-meetup',
+    )
+  })
+
+  it('falls back to link-only description when excerpt is an empty string', () => {
+    const description = buildCalendarDescription({ ...baseInput, descriptionExcerpt: '' })
+    expect(description).toBe(
+      'Más detalles e información de registro: https://medellinjs.org/events/medellinjs-meetup',
+    )
+  })
+
+  it('includes the excerpt plus the link when descriptionExcerpt is provided', () => {
+    const description = buildCalendarDescription({
+      ...baseInput,
+      descriptionExcerpt: 'Charla sobre IA y desarrollo.',
+    })
+    expect(description).toBe(
+      'Charla sobre IA y desarrollo.\n\nMás información y registro: https://medellinjs.org/events/medellinjs-meetup',
+    )
+  })
+})
+
 describe('buildGoogleCalendarUrl', () => {
   const input: CalendarEventInput = {
     eventId: '42',
@@ -87,12 +137,29 @@ describe('buildGoogleCalendarUrl', () => {
     const url = buildGoogleCalendarUrl(input)
     const parsed = new URL(url)
     expect(parsed.searchParams.get('action')).toBe('TEMPLATE')
-    expect(parsed.searchParams.get('text')).toBe('MedellínJS Meetup')
+    expect(parsed.searchParams.get('text')).toBe(`${CALENDAR_TITLE_PREFIX}MedellínJS Meetup`)
     expect(parsed.searchParams.get('dates')).toBeTruthy()
     expect(parsed.searchParams.get('details')).toContain(
       'https://medellinjs.org/events/medellinjs-meetup',
     )
     expect(parsed.searchParams.get('location')).toBe('Ruta N (https://maps.google.com/ruta-n)')
+  })
+
+  it('includes the title prefix in the text param', () => {
+    const url = buildGoogleCalendarUrl(input)
+    const parsed = new URL(url)
+    expect(parsed.searchParams.get('text')).toContain(CALENDAR_TITLE_PREFIX)
+  })
+
+  it('includes the description excerpt in the details param when provided, still URL-safe', () => {
+    const url = buildGoogleCalendarUrl({
+      ...input,
+      descriptionExcerpt: 'Charla especial; con caracteres, raros & símbolos',
+    })
+    const parsed = new URL(url)
+    expect(parsed.searchParams.get('details')).toContain(
+      'Charla especial; con caracteres, raros & símbolos',
+    )
   })
 })
 
@@ -155,10 +222,20 @@ describe('buildIcsContent', () => {
     expect(ics).toContain('DTEND:20260311T013000Z')
   })
 
-  it('escapes SUMMARY and LOCATION', () => {
+  it('escapes SUMMARY and LOCATION, and prefixes SUMMARY with the MedellinJS calendar prefix', () => {
     const ics = buildIcsContent(input, now)
-    expect(ics).toContain('SUMMARY:MedellínJS Meetup\\; Edición #10\\, especial')
+    expect(ics).toContain(
+      `SUMMARY:${escapeIcsText(CALENDAR_TITLE_PREFIX)}MedellínJS Meetup\\; Edición #10\\, especial`,
+    )
     expect(ics).toContain('LOCATION:Ruta N (https://maps.google.com/ruta-n)')
+  })
+
+  it('includes the description excerpt in DESCRIPTION when provided, still escaped per RFC 5545', () => {
+    const ics = buildIcsContent(
+      { ...input, descriptionExcerpt: 'Charla especial; con comas, y saltos' },
+      now,
+    )
+    expect(ics).toContain('DESCRIPTION:Charla especial\\; con comas\\, y saltos')
   })
 
   it('contains exactly one VALARM block with ACTION:DISPLAY and TRIGGER:-PT1H', () => {

@@ -17,6 +17,7 @@ export interface AddToCalendarProps {
   venueName?: string | null
   venueUrl?: string | null
   eventSlug?: string
+  descriptionExcerpt?: string
 }
 
 /**
@@ -35,6 +36,7 @@ const AddToCalendar: FC<AddToCalendarProps> = ({
   venueName,
   venueUrl,
   eventSlug,
+  descriptionExcerpt,
 }) => {
   const [origin, setOrigin] = useState<string | null>(null)
 
@@ -53,8 +55,19 @@ const AddToCalendar: FC<AddToCalendarProps> = ({
       venueUrl,
       slug: eventSlug,
       origin,
+      descriptionExcerpt,
     }
-  }, [origin, eventId, eventTitle, startDate, endDate, venueName, venueUrl, eventSlug])
+  }, [
+    origin,
+    eventId,
+    eventTitle,
+    startDate,
+    endDate,
+    venueName,
+    venueUrl,
+    eventSlug,
+    descriptionExcerpt,
+  ])
 
   const googleCalendarUrl = useMemo(() => {
     if (!calendarInput) return null

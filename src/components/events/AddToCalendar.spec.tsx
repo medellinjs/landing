@@ -61,6 +61,18 @@ describe('AddToCalendar', () => {
     expect(linkLabel).not.toBe(buttonLabel)
   })
 
+  it('includes the descriptionExcerpt in the Google Calendar details param when provided', async () => {
+    render(<AddToCalendar {...baseProps} descriptionExcerpt="Charla sobre IA y desarrollo." />)
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('link').length).toBe(1)
+    })
+
+    const link = screen.getByRole('link')
+    const url = new URL(link.getAttribute('href') || '')
+    expect(url.searchParams.get('details')).toContain('Charla sobre IA y desarrollo.')
+  })
+
   it('creates and revokes an object URL when the .ics download button is clicked', async () => {
     render(<AddToCalendar {...baseProps} />)
 

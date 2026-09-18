@@ -24,6 +24,7 @@ export type AttendButtonProps = {
   eventEndDate?: string | null
   venueName?: string | null
   venueUrl?: string | null
+  descriptionExcerpt?: string
 }
 
 export const AttendButton: FC<AttendButtonProps> = ({
@@ -37,6 +38,7 @@ export const AttendButton: FC<AttendButtonProps> = ({
   eventEndDate,
   venueName,
   venueUrl,
+  descriptionExcerpt,
 }) => {
   const router = useRouter()
   const { data: session, status: sessionStatus } = useSession()
@@ -285,6 +287,7 @@ export const AttendButton: FC<AttendButtonProps> = ({
                 venueName={venueName}
                 venueUrl={venueUrl}
                 eventSlug={eventSlug}
+                descriptionExcerpt={descriptionExcerpt}
               />
             )}
           </div>

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getEventBySlug, getPublishedEvents } from '@/lib/payload/queries'
 import { EventDetail } from '@/components/events/EventDetail'
 import { EventSchema } from '@/components/events/EventSchema'
+import { extractPlainText } from '@/lib/richText'
 import type { Media } from '@/payload-types'
 import Footer from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
@@ -42,25 +43,8 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
   }
 
   // Extract description from Lexical content
-  let description = 'Evento de la comunidad MedellinJS'
-  if (typeof event.description === 'object' && event.description?.root) {
-    const extractText = (node: unknown): string => {
-      if (!node || typeof node !== 'object') return ''
-
-      const obj = node as Record<string, unknown>
-      if (obj.type === 'text') return typeof obj.text === 'string' ? obj.text : ''
-
-      const children = obj.children
-      if (Array.isArray(children)) return children.map(extractText).join('')
-
-      return ''
-    }
-
-    const root = event.description.root as { children?: unknown }
-    const children = Array.isArray(root?.children) ? root.children : []
-    const fullText = children.map(extractText).join(' ')
-    description = fullText.slice(0, 160)
-  }
+  const extractedDescription = extractPlainText(event.description, 160)
+  const description = extractedDescription || 'Evento de la comunidad MedellinJS'
 
   const previewImage = event.previewImage as Media | undefined
   const imageUrl = previewImage?.url
